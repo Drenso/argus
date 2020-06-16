@@ -1,0 +1,12 @@
+jms_serializer:
+  default_context:
+    serialization:
+      serialize_null: true # Always serialize null to avoid typing issues
+      enable_max_depth_checks: true # Check for max depth annotations
+  handlers:
+    datetime:
+      default_format: 'Y-m-d\TH:i:s\Z'
+      default_timezone: 'UTC'
+  visitors:
+    xml_serialization:
+      format_output: '%kernel.debug%'

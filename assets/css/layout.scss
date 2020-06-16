@@ -1,0 +1,12 @@
+@import 'colors';
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Add custom Bootstrap Vue styles
+@import '~bootstrap-vue/src/index';
+
+body {
+  background-color: $dark;
+}

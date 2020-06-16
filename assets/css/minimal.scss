@@ -1,0 +1,29 @@
+@import 'colors';
+@import 'variables';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/reboot';
+
+body {
+  background-color: $dark;
+}
+
+$fa-css-prefix: fa;
+@import '~@fortawesome/fontawesome-free/scss/animated';
+
+.loader {
+  color: #ffffff;
+  margin-top: map-get($spacers, 5);
+  text-align: center;
+}
+
+.loader-icon {
+  font-size: 8rem;
+  width: 1em;
+}
+
+.loader-text {
+  font-size: larger;
+  margin-top: map-get($spacers, 3);
+}
