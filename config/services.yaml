@@ -16,6 +16,8 @@ parameters:
   router.request_context.host: '%env(HTTP_HOST)%'
   router.request_context.scheme: '%env(HTTP_SCHEMA)%'
 
+  gitlab.auth.enabled: '%env(bool:GITLAB_AUTH_ENABLED)%'
+  gitlab.auth.token: '%env(string:key:gitlab_auth_token:json:file:resolve:SECRETS_FILE)%'
 
 services:
   # default configuration for services in *this* file
