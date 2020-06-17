@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Events\Incoming;
+namespace App\Events;
 
+/**
+ * This interface should be implemented by every incoming event
+ */
 interface IncomingEvent
 {
 

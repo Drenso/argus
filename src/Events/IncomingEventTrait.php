@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Events\Incoming;
+namespace App\Events;
 
 trait IncomingEventTrait
 {

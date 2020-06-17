@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Webhook;
+namespace App\Provider\Gitlab\Controller;
 
-use App\Events\Incoming\IncomingGitlabEvent;
+use App\Provider\Gitlab\Events\IncomingGitlabEvent;
 use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

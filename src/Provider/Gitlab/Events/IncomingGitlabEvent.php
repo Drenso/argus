@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Events\Incoming;
+namespace App\Provider\Gitlab\Events;
 
+use App\Events\IncomingEvent;
+use App\Events\IncomingEventTrait;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class IncomingGitlabEvent extends Event implements IncomingEvent

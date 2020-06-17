@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\EventHandlers\Incoming;
+namespace App\EventHandlers;
 
 use App\Entity\StoredEvent;
-use App\Events\Incoming\IncomingEvent;
+use App\Events\IncomingEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializerInterface;
 use ReflectionClass;

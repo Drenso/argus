@@ -9,6 +9,8 @@
         "php": "^7.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
+        "ext-sockets": "*",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "drenso/symfony-shared": "^1.6",
         "friendsofsymfony/jsrouting-bundle": "^2.6",
