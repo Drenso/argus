@@ -25,13 +25,13 @@ import * as Integrations from '@sentry/integrations';
 
 // Only bind when production mode is set
 if (window.SENTRY_DSN) {
-    // Create the default sentry client
-    // This instance will communicate any default JS errors, as long as the Vue integration does not override it
-    // Vue must always be loaded after this default app.ts!
-    Sentry.init({
-        dsn: window.SENTRY_DSN,
-        release: window.SENTRY_RELEASE,
-    });
+  // Create the default sentry client
+  // This instance will communicate any default JS errors, as long as the Vue integration does not override it
+  // Vue must always be loaded after this default app.ts!
+  Sentry.init({
+    dsn: window.SENTRY_DSN,
+    release: window.SENTRY_RELEASE,
+  });
 }
 
 // Drenso shared
@@ -57,15 +57,16 @@ import fosRoutes from '@/_fos_routes.json';
 Vue.use(Plugins.Auth);
 Vue.use(Plugins.Modal);
 Vue.use(Plugins.Moment, {
-    default_tz: 'Europe/Amsterdam',
+  default_tz: 'Europe/Amsterdam',
 });
 Vue.use(Plugins.Http, {
-    loginRoute: 'index',
+  loginRoute: 'index',
+  testRoute: 'auth_test',
 });
 Vue.use(Plugins.Random);
 Vue.use(Plugins.Router, {
-    router: Router,
-    routes: fosRoutes,
+  router: Router,
+  routes: fosRoutes,
 });
 Vue.use(Plugins.Text);
 Vue.use(Plugins.Translator, I18n);
@@ -73,16 +74,16 @@ Vue.use(Plugins.Validation);
 
 // Only bind when production mode is set
 if (window.SENTRY_DSN) {
-    // Bind the new error client with Vue integration
-    // This instance will communicate any JS errors and overrides the default integration in app.ts
-    // Vue must always be loaded after out default app!
-    Sentry.getCurrentHub().bindClient(
-        new Sentry.BrowserClient({
-            dsn: window.SENTRY_DSN,
-            release: window.SENTRY_RELEASE,
-            integrations: [new Integrations.Vue({Vue, attachProps: true, logErrors: true})],
-        }),
-    );
+  // Bind the new error client with Vue integration
+  // This instance will communicate any JS errors and overrides the default integration in app.ts
+  // Vue must always be loaded after out default app!
+  Sentry.getCurrentHub().bindClient(
+      new Sentry.BrowserClient({
+        dsn: window.SENTRY_DSN,
+        release: window.SENTRY_RELEASE,
+        integrations: [new Integrations.Vue({Vue, attachProps: true, logErrors: true})],
+      }),
+  );
 }
 
 // Prepare routing
@@ -91,14 +92,20 @@ import routes from './routes';
 
 Vue.use(VueRouter);
 const router = new VueRouter({routes});
+router.beforeEach((to, from, next) => {
+  document.title = Vue.prototype.$translator.trans(to.meta.title || 'menu.home')
+      + ' | ' + Vue.prototype.$translator.trans('brand.argus');
+
+  next();
+});
 
 import App from './App.vue';
 
 // Create Vue instance
 Vue.config.productionTip = false;
 const root = new Vue({
-    render: (h) => h(App),
-    router,
+  render: (h) => h(App),
+  router,
 });
 
 root.$mount('#app');

@@ -1,0 +1,20 @@
+.fade-fast {
+  &-enter-active, &-leave-active {
+    transition: opacity .2s;
+  }
+
+  &-enter, &-leave-to {
+    opacity: 0;
+  }
+}
+
+
+.fade {
+  &-enter-active, &-leave-active {
+    transition: opacity .5s;
+  }
+
+  &-enter, &-leave-to {
+    opacity: 0;
+  }
+}

@@ -27,8 +27,8 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     // Frontend entry point
-    .addEntry('layout', './assets/ts/layout.ts')
-    .addEntry('app', './assets/ts/app.ts')
+    .addEntry('layout', './assets/js/layout.js')
+    .addEntry('app', './assets/vue/app.ts')
     .addEntry('minimal', './assets/css/minimal.scss')
 
     // Enable Vue load

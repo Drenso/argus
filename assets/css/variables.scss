@@ -1,1 +1,6 @@
 $font-family-sans-serif: 'Roboto', sans-serif !default;
+$small-font-size: 0.8rem;
+
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';

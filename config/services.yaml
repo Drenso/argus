@@ -43,3 +43,7 @@ services:
   App\Provider\Gitlab\Controller\:
     resource: '../src/Provider/Gitlab/Controller'
     tags: [ 'controller.service_arguments' ]
+
+  App\Security\ArgusJwtAuthenticator:
+    arguments:
+      $jwtSecret: "%env(string:key:jwt_secret:json:file:resolve:SECRETS_FILE)%"

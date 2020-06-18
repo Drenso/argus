@@ -1,3 +1,17 @@
+auth:
+  button:
+    login: 'Login'
+  field:
+    email: 'E-mail'
+    password: 'Password'
+    username: 'E-mail'
+  flash:
+    auth-failed: 'Your credentials were not accepted. Please try again.'
+
 brand:
   argus: 'Argus'
   loading: 'Loading Argus'
+
+title:
+  dashboard: 'Dashboard'
+  login: 'Login'

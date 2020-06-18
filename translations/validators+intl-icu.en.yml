@@ -1,0 +1,12 @@
+common:
+  email: 'This value should be a valid e-mail address'
+  greater-than-or-equal: 'This value should be greater than or equal than the supplied value in the field "{field}"'
+  less-than-or-equal: 'This value should be less than or equal than the supplied value in the field "{field}"'
+  max: 'The maximum length of this field is {max} characters'
+  max-value: 'The maximum value of this field is {max}'
+  min: 'The minimum length of this field in {min} characters'
+  min-value: 'The minimum value of this field is {min}'
+  password-equal: 'Both passwords must be equal'
+  required: 'This field is required'
+  string-array-length: 'Each item must have at least {min} character(s) and at most {max} characters'
+  unique: 'All items must be unique'

@@ -6,7 +6,6 @@ namespace App\Provider\Gitlab\Controller;
 
 use App\Provider\Gitlab\Events\IncomingGitlabEvent;
 use JMS\Serializer\SerializerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +24,6 @@ class GitlabWebhookController extends AbstractController
    * Handles the gitlab webhook
    *
    * @Route("", methods={"POST"})
-   * @IsGranted("IS_AUTHENTICATED_ANONYMOUSLY")
    *
    * @param Request                  $request
    * @param SerializerInterface      $serializer
