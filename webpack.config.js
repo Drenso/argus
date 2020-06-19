@@ -35,15 +35,12 @@ Encore
     .enableVueLoader(() => {
     }, {runtimeCompilerBuild: false})
 
-    // Copy and version all image assets
-    .copyFiles({
-      from: './assets/img',
-      to: 'img/[path][name].[hash:8].[ext]',
-
-      // only copy files matching this pattern
-      pattern: /\.(png|jpg|jpeg|svg)$/
+    // Do not load images as ES module
+    .configureUrlLoader({
+      images: {
+        esModule: false
+      }
     })
-
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 

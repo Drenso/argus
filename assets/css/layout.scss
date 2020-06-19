@@ -11,4 +11,14 @@ body {
   background-color: $dark;
 }
 
+.container {
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+}
+
+.content {
+  padding: .5rem;
+  background-color: $white;
+}
+
 @import './interaction/transitions';

@@ -57,6 +57,20 @@ class AuthenticationController extends AbstractApiController
   }
 
   /**
+   * Clear the set cookie in the browser
+   *
+   * @Route("", methods={"DELETE"}, name="auth_clear")
+   */
+  public function clear()
+  {
+    $response = new Response();
+    $response->setPrivate();
+    $response->headers->clearCookie(ArgusJwtAuthenticator::COOKIE_NAME);
+
+    return $response;
+  }
+
+  /**
    * Endpoint to verify authentication is still valid
    *
    * @Route("/test", methods={"GET"}, name="auth_test")

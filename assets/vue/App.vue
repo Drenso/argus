@@ -1,26 +1,51 @@
 <template>
   <div>
-    <transition name="fade-fast">
+    <transition name="fade">
       <div class="init-loader" v-if="loading">
         <font-awesome-icon icon="circle-notch" spin size="6x"/>
         <div class="loader-text">{{ 'brand.loading'|trans }}</div>
       </div>
     </transition>
 
-    <transition name="fade">
-      <div class="container" v-show="!loading">
-        <transition name="router">
-          <RouterView/>
-        </transition>
-      </div>
-    </transition>
+    <b-overlay :show="$store.direct.state.isWorking" variant="dark" class="app-overlay">
+      <template #overlay>
+        <div class="text-center text-white">
+          <font-awesome-icon icon="circle-notch" spin size="4x"/>
+        </div>
+      </template>
+
+      <transition name="router-fade">
+        <div v-if="!loading">
+          <transition name="router-fade">
+            <LoginPage key="login" v-if="!$store.direct.state.isAuthenticated"/>
+
+            <div key="content" v-else>
+              <Menu/>
+
+              <div class="container">
+
+                <div class="content">
+                  <transition name="router-fade">
+                    <RouterView/>
+                  </transition>
+                </div>
+              </div>
+            </div>
+          </transition>
+        </div>
+      </transition>
+    </b-overlay>
   </div>
 </template>
 
 <script lang="ts">
   import {Component, Vue} from 'vue-property-decorator';
+  import Menu from './components/layout/Menu.vue';
+  import LoginPage from './pages/LoginPage.vue';
 
-  @Component
+  @Component({
+    components: {LoginPage, Menu},
+  })
   export default class App extends Vue {
     public loading: boolean = true;
 
@@ -31,16 +56,23 @@
     private async testAuthentication() {
       try {
         await this.$httpInstance.get(this.$sfRouter.generate('auth_test'));
-        if (this.$route.name === 'login') {
-          await this.$router.push({name: 'dashboard'});
-        }
+        this.$store.direct.commit.loggedIn();
       } catch (e) {
-        if (this.$route.name !== 'login') {
-          await this.$router.push({name: 'login'});
-        }
+        // Ignore errors
       } finally {
         this.loading = false;
       }
     }
   }
 </script>
+
+<style scoped lang="scss">
+  .app-overlay {
+    /deep/ {
+      > .b-overlay {
+        min-height: 100vh;
+        z-index: 1050 !important;
+      }
+    }
+  }
+</style>

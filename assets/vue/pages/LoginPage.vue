@@ -74,24 +74,20 @@
 
       this.loggingIn = true;
 
-      setTimeout(async () => {
-        try {
-          await this.$http.post(this.$sfRouter.generate('auth'), {
-            username: this.username,
-            password: this.password,
-          });
-          await this.$router.push({name: 'dashboard'});
-        } catch (e) {
-          this.password = '';
-          this.showLoginAlert = true;
-          this.loggingIn = false;
-          await this.$nextTick();
-          this.usernameField.focus();
-          this.validationObserver.reset();
-        }
-      }, 1000);
-
-
+      try {
+        await this.$http.post(this.$sfRouter.generate('auth'), {
+          username: this.username,
+          password: this.password,
+        });
+        this.$store.direct.commit.loggedIn();
+      } catch (e) {
+        this.password = '';
+        this.showLoginAlert = true;
+        this.loggingIn = false;
+        await this.$nextTick();
+        this.usernameField.focus();
+        this.validationObserver.reset();
+      }
     }
   }
 </script>

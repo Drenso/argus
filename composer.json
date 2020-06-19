@@ -11,6 +11,7 @@
         "ext-iconv": "*",
         "ext-json": "*",
         "ext-sockets": "*",
+        "antishov/doctrine-extensions-bundle": "^1.4",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "drenso/symfony-shared": "^1.7",
         "friendsofsymfony/jsrouting-bundle": "^2.6",

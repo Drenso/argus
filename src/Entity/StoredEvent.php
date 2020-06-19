@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\StoredEventRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Drenso\Shared\Database\Traits\IdTrait;
+use Gedmo\Mapping\Annotation as Gedmo;
 use RuntimeException;
 
 /**
@@ -20,6 +22,14 @@ class StoredEvent
   ];
 
   use IdTrait;
+
+  /**
+   * @var DateTimeImmutable $created
+   *
+   * @Gedmo\Timestampable(on="create")
+   * @ORM\Column(name="created_at", type="datetime_immutable", nullable=false)
+   */
+  private $timestamp;
 
   /**
    * @var string|null

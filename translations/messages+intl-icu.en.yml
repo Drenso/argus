@@ -1,6 +1,7 @@
 auth:
   button:
     login: 'Login'
+    logout: 'Logout'
   field:
     email: 'E-mail'
     password: 'Password'
@@ -11,6 +12,21 @@ auth:
 brand:
   argus: 'Argus'
   loading: 'Loading Argus'
+
+event:
+  info:
+    fully-handled: 'Fully handled'
+    partially-handled: 'Partially handled'
+    unhandled: 'Unhandled'
+  title:
+    last-day: 'Last day'
+    last-hour: 'Last hour'
+    last-month: 'Last month'
+    last-year: 'Last year'
+    stats: 'Event stats'
+
+general:
+  legend: 'Legend'
 
 title:
   dashboard: 'Dashboard'

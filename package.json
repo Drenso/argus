@@ -22,6 +22,7 @@
         "ts-loader": "^5.3.0",
         "tslint": "^6.1.2",
         "typescript": "^3.9.5",
+        "url-loader": "^4.1.0",
         "vue-loader": "^15.9.2",
         "vue-property-decorator": "^8.5.0",
         "vue-template-compiler": "^2.6.11",
@@ -53,6 +54,7 @@
         "axios": "^0.19.2",
         "big.js": "^5.2.2",
         "bootstrap-vue": "^2.15.0",
+        "direct-vuex": "^0.11.1",
         "jquery": "^3.5.1",
         "messageformat": "^2.3.0",
         "moment": "^2.26.0",
@@ -63,7 +65,8 @@
         "vue": "^2.6.11",
         "vue-class-component": "^7.2.3",
         "vue-moment": "^4.1.0",
-        "vue-router": "^3.3.4"
+        "vue-router": "^3.3.4",
+        "vuex": "^3.4.0"
     },
     "resolutions": {
         "moment": "2.24.0"

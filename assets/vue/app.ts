@@ -99,13 +99,14 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
+// Prepare VueX store
+import store from './store';
+
 import App from './App.vue';
 
 // Create Vue instance
-Vue.config.productionTip = false;
-const root = new Vue({
+new Vue({
   render: (h) => h(App),
   router,
-});
-
-root.$mount('#app');
+  store: store.original,
+}).$mount('#app');
