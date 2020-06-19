@@ -3,7 +3,6 @@
 namespace App\Controller\Api;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use JMS\Serializer\ContextFactory\SerializationContextFactoryInterface;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Throwable;
 
 abstract class AbstractApiController extends AbstractController
 {
@@ -99,7 +99,7 @@ abstract class AbstractApiController extends AbstractController
   {
     try {
       return $this->serializer->deserialize($request->getContent(), $type, 'json');
-    } catch (Exception $e) {
+    } catch (Throwable $e) {
       throw new BadRequestHttpException('Invalid JSON data');
     }
   }

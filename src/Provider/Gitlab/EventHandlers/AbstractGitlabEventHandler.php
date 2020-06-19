@@ -2,14 +2,13 @@
 
 namespace App\Provider\Gitlab\EventHandlers;
 
+use App\Events\Project\ProjectEvent;
 use App\Provider\Gitlab\Events\IncomingGitlabEvent;
 use App\Provider\Gitlab\PropertyAccessor;
-use App\Provider\Irker\Events\OutgoingIrcMessageEvent;
-use App\Provider\Irker\IrkerUtils;
-use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\PropertyAccess\PropertyPathInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Throwable;
 
 abstract class AbstractGitlabEventHandler
 {
@@ -20,15 +19,11 @@ abstract class AbstractGitlabEventHandler
   /**
    * @var PropertyAccessor
    */
-  protected $propertyAccessor;
+  private $propertyAccessor;
   /**
    * @var EventDispatcherInterface
    */
   private $eventDispatcher;
-  /**
-   * @var IrkerUtils|null
-   */
-  private $irkerUtils;
 
   public static function getSubscribedEvents()
   {
@@ -40,13 +35,11 @@ abstract class AbstractGitlabEventHandler
   }
 
   public function __construct(
-      LoggerInterface $logger, PropertyAccessor $propertyAccessor, EventDispatcherInterface $eventDispatcher,
-      ?IrkerUtils $irkerUtils = NULL)
+      LoggerInterface $logger, PropertyAccessor $propertyAccessor, EventDispatcherInterface $eventDispatcher)
   {
     $this->logger           = $logger;
     $this->propertyAccessor = $propertyAccessor;
     $this->eventDispatcher  = $eventDispatcher;
-    $this->irkerUtils       = $irkerUtils;
   }
 
   public function onEvent(IncomingGitlabEvent $event)
@@ -60,16 +53,10 @@ abstract class AbstractGitlabEventHandler
 
     $this->logger->info(sprintf('Event "%s" handling started by "%s"', $event->getEventType(), get_class($this)));
     try {
-      $messages = $this->handleEvent($event);
-      if ($messages !== NULL) {
-        foreach ($messages as $message) {
-          // todo: add setting to disable irker message
-          $this->eventDispatcher->dispatch(new OutgoingIrcMessageEvent($message));
-        }
-      }
+      $this->handleEvent($event);
       $this->logger->info(sprintf('Event "%s" handling finished by "%s"', $event->getEventType(), get_class($this)));
       $event->markAsHandled($this->realClass(), true, NULL);
-    } catch (Exception $e) {
+    } catch (Throwable $e) {
       $event->markAsHandled($this->realClass(), false, $e->getMessage());
       $this->logger->error(sprintf('Event "%s" handling failed by "%s"', $event->getEventType(), get_class($this)), [
           'error' => $e->getMessage(),
@@ -89,10 +76,8 @@ abstract class AbstractGitlabEventHandler
    * Handle the event
    *
    * @param IncomingGitlabEvent $event
-   *
-   * @return string[]|null
    */
-  protected abstract function handleEvent(IncomingGitlabEvent $event): ?array;
+  protected abstract function handleEvent(IncomingGitlabEvent $event): void;
 
   /**
    * @param object|array                 $object
@@ -105,14 +90,14 @@ abstract class AbstractGitlabEventHandler
     return $this->propertyAccessor->getProperty($object, $prop);
   }
 
-  protected function colorize(string $message, int $number): string
+  /**
+   * Dispatch a project event
+   *
+   * @param ProjectEvent $event
+   */
+  protected function projectEvent(ProjectEvent $event)
   {
-    // todo: Add setting to disable irker message
-    if (!$this->irkerUtils) {
-      return $message;
-    }
-
-    return $this->irkerUtils->colorize($message, $number);
+    $this->eventDispatcher->dispatch($event);
   }
 
   private function realClass(): string

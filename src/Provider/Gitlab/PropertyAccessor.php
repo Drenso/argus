@@ -4,6 +4,7 @@ namespace App\Provider\Gitlab;
 
 use App\Provider\Gitlab\Exception\MissingPropertyException;
 use Symfony\Component\PropertyAccess\Exception\AccessException;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\PropertyAccess\PropertyPathInterface;
 
@@ -13,11 +14,6 @@ class PropertyAccessor
    * @var PropertyAccessorInterface
    */
   private $propertyAccessor;
-
-  public function __construct(PropertyAccessorInterface $propertyAccessor)
-  {
-    $this->propertyAccessor = $propertyAccessor;
-  }
 
   /**
    * Check whether the property exists in the given object
@@ -29,6 +25,12 @@ class PropertyAccessor
    */
   public function getProperty($object, string $property)
   {
+    if (!$this->propertyAccessor){
+      $this->propertyAccessor = PropertyAccess::createPropertyAccessorBuilder()
+          ->enableExceptionOnInvalidIndex()
+          ->getPropertyAccessor();
+    }
+
     try {
       return $this->propertyAccessor->getValue($object, $property);
     } catch (AccessException $e) {

@@ -39,13 +39,7 @@ class IrkerUtils
   const COLOR_GREY = 14;
   const COLOR_LIGHT_GREY = 15;
 
-  /**
-   * @param string $message
-   * @param int    $color From https://www.mirc.com/colors.html
-   *
-   * @return string
-   */
-  function colorize(string $message, int $color): string
+  static function colorize(string $message, int $color): string
   {
     if ($color < 10) {
       return sprintf('%s0%s%s%s', chr(03), $color, $message, chr(03));
