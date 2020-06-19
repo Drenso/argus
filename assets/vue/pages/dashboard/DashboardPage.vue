@@ -17,17 +17,20 @@
       <div class="text-center" v-if="stats === null">
         <font-awesome-icon icon="circle-notch" fixed-width spin/>
       </div>
-      <div v-else class="mb-n2">
-        <b-progress max="3" show-value class="mb-2">
+      <div v-else>
+        <b-tabs content-class="my-2" justified>
+          <EventStats :stats="stats.last_hour" :title="'event.title.last-hour'|trans"/>
+          <EventStats :stats="stats.last_day" :title="'event.title.last-day'|trans"/>
+          <EventStats :stats="stats.last_week" :title="'event.title.last-week'|trans"/>
+          <EventStats :stats="stats.last_month" :title="'event.title.last-month'|trans"/>
+          <EventStats :stats="stats.last_year" :title="'event.title.last-year'|trans"/>
+        </b-tabs>
+
+        <b-progress max="3" show-value>
           <b-progress-bar value="1" variant="success" :label="'event.info.fully-handled'|trans"/>
           <b-progress-bar value="1" variant="warning" :label="'event.info.partially-handled'|trans"/>
           <b-progress-bar value="1" variant="danger" :label="'event.info.unhandled'|trans"/>
         </b-progress>
-
-        <EventStats :stats="stats.last_hour" :title="'event.title.last-hour'|trans"/>
-        <EventStats :stats="stats.last_day" :title="'event.title.last-day'|trans"/>
-        <EventStats :stats="stats.last_month" :title="'event.title.last-month'|trans"/>
-        <EventStats :stats="stats.last_year" :title="'event.title.last-year'|trans"/>
       </div>
     </b-card>
   </div>

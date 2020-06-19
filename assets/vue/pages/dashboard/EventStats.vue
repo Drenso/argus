@@ -1,12 +1,11 @@
 <template>
-  <div class="mb-2">
-    <div class="font-weight-bold">{{ title }}</div>
+  <b-tab :title="title">
     <b-progress :max="stats.all" show-value height="2rem">
       <b-progress-bar :value="stats.fully_handled" variant="success"/>
       <b-progress-bar :value="stats.partially_handled" variant="warning"/>
       <b-progress-bar :value="stats.unhandled" variant="danger"/>
     </b-progress>
-  </div>
+  </b-tab>
 </template>
 
 <script lang="ts">

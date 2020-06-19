@@ -21,6 +21,7 @@ event:
   title:
     last-day: 'Last day'
     last-hour: 'Last hour'
+    last-week: 'Last week'
     last-month: 'Last month'
     last-year: 'Last year'
     stats: 'Event stats'

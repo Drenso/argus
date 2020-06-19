@@ -30,7 +30,8 @@ class EventController extends AbstractApiController
     return $this->createResponse([
         'last_hour'  => $repository->getStatsSince($dateTimeProvider->utcNow()->modify('-1 hour')),
         'last_day'   => $repository->getStatsSince($dateTimeProvider->utcNow()->modify('-1 day')),
-        'last_month' => $repository->getStatsSince($dateTimeProvider->utcNow()->modify('-1 week')),
+        'last_week'  => $repository->getStatsSince($dateTimeProvider->utcNow()->modify('-1 week')),
+        'last_month' => $repository->getStatsSince($dateTimeProvider->utcNow()->modify('-1 month')),
         'last_year'  => $repository->getStatsSince($dateTimeProvider->utcNow()->modify('-1 year')),
     ]);
   }
