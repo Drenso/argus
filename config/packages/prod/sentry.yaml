@@ -1,2 +1,2 @@
 sentry:
-  dsn: '%env(SENTRY_DSN)%' # This explicitly enables Sentry for the production environment
+  dsn: '%env(string:key:sentry_dsn:json:file:resolve:SECRETS_FILE)%' # This explicitly enables Sentry for the production environment

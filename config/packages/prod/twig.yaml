@@ -1,3 +1,3 @@
 twig:
   globals:
-    sentry_dsn: '%env(SENTRY_JS_DSN)%' # This explicitly enables Sentry for the production environment
+    sentry_dsn: '%env(string:key:sentry_js_dsn:json:file:resolve:SECRETS_FILE)%' # This explicitly enables Sentry for the production environment
