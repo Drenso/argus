@@ -28,6 +28,9 @@ class ProjectPipelineEventHandler extends AbstractProjectEventHandler implements
         case 'pending':
           $fill = '[%s] Pipeline #%s for #%s with %s job%s, submitted by %s, is now ' . IrkerUtils::colorize('pending', IrkerUtils::COLOR_GREY) . ' [ %s ]';
           break;
+        case 'waiting_for_resource':
+          $fill = '[%s] Pipeline #%s for #%s with %s job%s, submitted by %s, is now ' . IrkerUtils::colorize('waiting for resources', IrkerUtils::COLOR_GREY) . ' [ %s ]';
+          break;
         case 'running':
           $fill = '[%s] Pipeline #%s for #%s with %s job%s, submitted by %s, is now ' . IrkerUtils::colorize('running', IrkerUtils::COLOR_PURPLE) . ' [ %s ]';
           break;
