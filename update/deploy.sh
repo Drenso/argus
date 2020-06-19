@@ -80,7 +80,7 @@ sudo -u www-data php bin/console cache:clear
 composer install -o --apcu-autoloader --no-dev
 
 # Execute migrations
-sudo -u www-data php bin/console doctrine:migrations:migrate -n --allow-no-migration
+sudo -u www-data php bin/console doctrine:migrations:migrate -n -vv --query-time --allow-no-migration
 
 # Restore frontend controller
 cp update/controllers/index.php public/index.php
