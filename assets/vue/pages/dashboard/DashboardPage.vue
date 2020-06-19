@@ -55,8 +55,11 @@
       }
 
       this.refreshStats = true;
-      await this.loadLatestEvents();
-      this.refreshStats = false;
+      try {
+        await this.loadLatestEvents();
+      } finally {
+        this.refreshStats = false;
+      }
     }
 
     private async loadLatestEvents() {

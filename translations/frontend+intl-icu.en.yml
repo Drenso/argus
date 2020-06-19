@@ -1,0 +1,6 @@
+api:
+  message:
+    400: 'The submitted data is not considered to be valid. Update the data and try again.'
+    403: 'You''re not allowed to access the requested resource.'
+    403-session-expired: 'You''re no longer authenticated, resulting your request to fail. Would you like to be redirected to the login page?'
+    500: 'An error occurred during your request. Please try again later.'

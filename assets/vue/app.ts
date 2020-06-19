@@ -41,10 +41,13 @@ import {Plugins} from '@drenso/vue-frontend-shared';
 // @ts-ignore Cannot be found, but it is there and working
 import I18n from '@trans/messages+intl-icu.en.yml';
 // @ts-ignore Cannot be found, but it is there and working
+import I18nFrontend from '@trans/frontend+intl-icu.en.yml';
+// @ts-ignore Cannot be found, but it is there and working
 import I18nValidators from '@trans/validators+intl-icu.en.yml';
 // @ts-ignore Cannot be found, but it is there and working
 import I18nDrenso from '@drensoTrans/drenso_shared+intl-icu.en.yml';
 
+I18n.frontend = I18nFrontend;
 I18n._validation = I18nValidators;
 I18n._drenso = I18nDrenso;
 
