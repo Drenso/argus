@@ -16,14 +16,14 @@ class GitlabTagPushHandler extends AbstractGitlabEventHandler implements EventSu
 
   protected function handleEvent(IncomingGitlabEvent $event): void
   {
-    $data   = $event->getPayload();
-    $before = substr($this->getProp($data, '[before]'), 0, 8);
-    $after  = substr($this->getProp($data, '[after]'), 0, 8);
+    $data        = $event->getPayload();
+    $before      = substr($this->getProp($data, '[before]'), 0, 8);
+    $checkoutSha = substr($this->getProp($data, '[checkout_sha]'), 0, 8);
 
     if ($before == "00000000") {
       // Tag created
       $action = 'created';
-      $url    = sprintf('%s/commit/%s', $this->getProp($data, '[repository][homepage]'), $after);
+      $url    = sprintf('%s/commit/%s', $this->getProp($data, '[repository][homepage]'), $checkoutSha);
     } else {
       $action = 'removed';
       $url    = $this->getProp($data, '[repository][homepage]');
@@ -36,7 +36,7 @@ class GitlabTagPushHandler extends AbstractGitlabEventHandler implements EventSu
         $url,
         $action,
         $before,
-        $after
+        $checkoutSha
     ));
   }
 }

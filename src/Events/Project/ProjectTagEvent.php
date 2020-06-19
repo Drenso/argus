@@ -7,27 +7,27 @@ class ProjectTagEvent extends AbstractProjectEvent implements ProjectEvent
   /**
    * @var string
    */
-  private $after;
+  private $checkoutSha;
   /**
    * @var string
    */
   private $before;
 
   public function __construct(
-      string $projectName, string $user, string $tag, string $url, string $action, string $before, string $after)
+      string $projectName, string $user, string $tag, string $url, string $action, string $before, string $checkoutSha)
   {
     parent::__construct($projectName, $user, $tag, $url, $action);
 
-    $this->before = $before;
-    $this->after  = $after;
+    $this->before      = $before;
+    $this->checkoutSha = $checkoutSha;
   }
 
   /**
    * @return string
    */
-  public function getAfter(): string
+  public function getCheckoutSha(): string
   {
-    return $this->after;
+    return $this->checkoutSha;
   }
 
   /**

@@ -24,7 +24,7 @@ class ProjectTagPushEventHandler extends AbstractProjectEventHandler implements 
           $this->message(sprintf('[%s] Tag %s (%s) created by %s [ %s ]',
               IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
               IrkerUtils::colorize($event->getTag(), IrkerUtils::COLOR_GREEN),
-              IrkerUtils::colorize($event->getAfter(), IrkerUtils::COLOR_GREY),
+              IrkerUtils::colorize($event->getCheckoutSha(), IrkerUtils::COLOR_GREY),
               $event->getUser(),
               IrkerUtils::colorize($event->getUrl(), IrkerUtils::COLOR_BLUE)
           ));
