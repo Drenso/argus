@@ -17,8 +17,12 @@ body {
 }
 
 .content {
-  padding: .5rem;
-  background-color: $white;
+  padding: 0;
 }
 
+.card ~ .card {
+  margin-top: map_get($spacers, 3);
+}
+
+@import './interaction/mouse';
 @import './interaction/transitions';

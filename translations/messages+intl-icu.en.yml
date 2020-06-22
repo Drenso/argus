@@ -28,7 +28,16 @@ event:
     stats: 'Incoming event stats'
 
 general:
+  filter: 'Filter'
   legend: 'Legend'
+  refresh: 'Refresh'
+
+project:
+  field:
+    last-event: 'Last recorded event'
+    name: 'Project name'
+  title:
+    list: 'Projects'
 
 title:
   dashboard: 'Dashboard'

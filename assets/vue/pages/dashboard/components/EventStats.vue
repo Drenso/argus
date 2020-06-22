@@ -15,7 +15,7 @@
 
 <script lang="ts">
   import {Component, Prop, Vue} from 'vue-property-decorator';
-  import {EventStats as EventStatsObj} from '../../api/EventTypes';
+  import {EventStats as EventStatsObj} from '../../../api/EventTypes';
 
   @Component
   export default class EventStats extends Vue {
