@@ -5,12 +5,33 @@ namespace App\Provider\Irker\EventHandlers;
 use App\Provider\Irker\Events\OutgoingIrcMessageEvent;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class OutgoingIrcMessageEventHandler extends AbstractEventHandler implements EventSubscriberInterface
 {
-  // todo: make configurable
-  private $irkerServer = 'kic-mon.snt.utwente.nl';
-  private $irkerPort = 6659;
+  /**
+   * @var array
+   */
+  private $ircChannels;
+  /**
+   * @var string
+   */
+  private $irkerServer;
+  /**
+   * @var int
+   */
+  private $irkerPort;
+
+  public function __construct(
+      EventDispatcherInterface $dispatcher, LoggerInterface $logger,
+      string $irkerServer, int $irkerPort, array $ircChannels)
+  {
+    parent::__construct($dispatcher, $logger);
+
+    $this->ircChannels = $ircChannels;
+    $this->irkerServer = $irkerServer;
+    $this->irkerPort   = $irkerPort;
+  }
 
   public static function getSubscribedEvents()
   {
@@ -21,9 +42,18 @@ class OutgoingIrcMessageEventHandler extends AbstractEventHandler implements Eve
 
   public function onEvent(OutgoingIrcMessageEvent $event)
   {
+    if (!$this->irkerServer) {
+      // This handler is disabled
+      return;
+    }
+
     $this->wrapHandler($event, function () use ($event) {
-      // todo: Make configurable
-      $to = 'irc://irc.snt.utwente.nl:6667/#drenso-gitlab';
+
+      if (!$event->getChannel() || !array_key_exists($event->getChannel(), $this->ircChannels)) {
+        $to = $this->ircChannels['_default'];
+      } else {
+        $to = $this->ircChannels[$event->getChannel()];
+      }
 
       $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
       socket_connect($socket, $this->irkerServer, $this->irkerPort);

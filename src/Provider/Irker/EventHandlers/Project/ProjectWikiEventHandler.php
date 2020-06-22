@@ -3,11 +3,10 @@
 namespace App\Provider\Irker\EventHandlers\Project;
 
 use App\Events\Project\ProjectWikiEvent;
-use App\Provider\Irker\EventHandlers\AbstractEventHandler;
 use App\Provider\Irker\IrkerUtils;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class ProjectWikiEventHandler extends AbstractEventHandler implements EventSubscriberInterface
+class ProjectWikiEventHandler extends AbstractProjectEventHandler implements EventSubscriberInterface
 {
 
   public static function getSubscribedEvents()

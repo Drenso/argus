@@ -3,11 +3,10 @@
 namespace App\Provider\Irker\EventHandlers\Usage;
 
 use App\Events\Usage\UsageIssueEvent;
-use App\Provider\Irker\EventHandlers\AbstractEventHandler;
 use App\Provider\Irker\IrkerUtils;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class UsageIssueEventHandler extends AbstractEventHandler implements EventSubscriberInterface
+class UsageIssueEventHandler extends AbstractUsageEventHandler implements EventSubscriberInterface
 {
 
   public static function getSubscribedEvents()

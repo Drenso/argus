@@ -47,6 +47,15 @@ services:
     resource: '../src/Provider/Gitlab/Controller'
     tags: [ 'controller.service_arguments' ]
 
+  App\Provider\Irker\EventHandlers\OutgoingIrcMessageEventHandler:
+    arguments:
+      $irkerServer: '%env(IRKER_SERVER)%'
+      $irkerPort: '%env(int:IRKER_PORT)%'
+      $ircChannels:
+        _default: '%env(IRKER_CHANNEL_DEFAULT)%'
+        project: '%env(IRKER_CHANNEL_PROJECT)%'
+        usage: '%env(IRKER_CHANNEL_USAGE)%'
+
   App\Provider\Sentry\Controller\:
     resource: '../src/Provider/Sentry/Controller'
     tags: [ 'controller.service_arguments' ]

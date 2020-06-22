@@ -27,11 +27,12 @@ abstract class AbstractEventHandler
   /**
    * Create an IRC message event
    *
-   * @param string $message
+   * @param string      $message
+   * @param string|null $channel
    */
-  protected function message(string $message)
+  protected function message(string $message, ?string $channel = null)
   {
-    $this->dispatcher->dispatch(new OutgoingIrcMessageEvent($message));
+    $this->dispatcher->dispatch(new OutgoingIrcMessageEvent($message, $channel));
   }
 
   /**
