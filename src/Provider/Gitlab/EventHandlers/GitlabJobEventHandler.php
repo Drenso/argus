@@ -11,7 +11,7 @@ class GitlabJobEventHandler extends AbstractGitlabEventHandler implements EventS
   // todo: make configurable
   public $disabled = true;
 
-  protected function getEventType(): string
+  protected function getDiscriminator(): string
   {
     return 'Job Hook';
   }

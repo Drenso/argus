@@ -24,8 +24,13 @@ class IncomingGitlabEvent extends Event implements IncomingEvent
 
   public function __construct(string $eventType, array $payload)
   {
-    $this->payload   = $payload;
     $this->eventType = $eventType;
+    $this->payload   = $payload;
+  }
+
+  function getDiscriminator(): string
+  {
+    return $this->eventType;
   }
 
   /**

@@ -9,7 +9,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class GitlabNoteHandler extends AbstractGitlabEventHandler implements EventSubscriberInterface
 {
 
-  protected function getEventType(): string
+  protected function getDiscriminator(): string
   {
     return 'Note Hook';
   }

@@ -3,10 +3,11 @@
 namespace App\Provider\Irker\EventHandlers\Project;
 
 use App\Events\Project\ProjectJobEvent;
+use App\Provider\Irker\EventHandlers\AbstractEventHandler;
 use App\Provider\Irker\IrkerUtils;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class ProjectJobEventHandler extends AbstractProjectEventHandler implements EventSubscriberInterface
+class ProjectJobEventHandler extends AbstractEventHandler implements EventSubscriberInterface
 {
 
   public static function getSubscribedEvents()

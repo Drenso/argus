@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Provider\Gitlab;
+namespace App\Utils;
 
 use App\Provider\Gitlab\Exception\MissingPropertyException;
 use Symfony\Component\PropertyAccess\Exception\AccessException;

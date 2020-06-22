@@ -12,10 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @Route("/_webhook/gitlab")
- */
-class GitlabWebhookController extends AbstractController
+class GitlabController extends AbstractController
 {
   private const EventHeader = 'X-Gitlab-Event';
   private const AuthHeader = 'X-Gitlab-Token';
@@ -23,7 +20,7 @@ class GitlabWebhookController extends AbstractController
   /**
    * Handles the gitlab webhook
    *
-   * @Route("", methods={"POST"})
+   * @Route("/_webhook/gitlab", methods={"POST"})
    *
    * @param Request                  $request
    * @param SerializerInterface      $serializer
@@ -38,9 +35,9 @@ class GitlabWebhookController extends AbstractController
       throw $this->createNotFoundException();
     }
 
-    if ($this->getParameter('gitlab.auth.enabled')) {
+    if ($this->getParameter('gitlab.webhook.secret-enabled')) {
       if (!$request->headers->has(self::AuthHeader)
-          || $request->headers->get(self::AuthHeader) !== $this->getParameter('gitlab.auth.token')) {
+          || $request->headers->get(self::AuthHeader) !== $this->getParameter('gitlab.webhook.secret')) {
         throw $this->createAccessDeniedException();
       }
     }

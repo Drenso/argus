@@ -17,6 +17,7 @@ event:
   info:
     fully-handled: 'Fully handled'
     partially-handled: 'Partially handled'
+    none-recorded: 'No events recorded in the selected interval.'
     unhandled: 'Unhandled'
   title:
     last-day: 'Last day'

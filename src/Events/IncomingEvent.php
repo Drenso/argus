@@ -11,6 +11,13 @@ interface IncomingEvent
 {
 
   /**
+   * The discriminator for the event, used to determine te action to execute
+   *
+   * @return string
+   */
+  function getDiscriminator(): string;
+
+  /**
    * Whether the event has been handled successfully by at least one handler
    *
    * @return bool

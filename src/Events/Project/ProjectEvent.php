@@ -10,5 +10,4 @@ namespace App\Events\Project;
  */
 interface ProjectEvent
 {
-
 }

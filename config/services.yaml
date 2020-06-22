@@ -16,8 +16,11 @@ parameters:
   router.request_context.host: '%env(HTTP_HOST)%'
   router.request_context.scheme: '%env(HTTP_SCHEMA)%'
 
-  gitlab.auth.enabled: '%env(bool:GITLAB_AUTH_ENABLED)%'
-  gitlab.auth.token: '%env(string:key:gitlab_auth_token:json:file:resolve:SECRETS_FILE)%'
+  gitlab.webhook.secret-enabled: '%env(bool:GITLAB_WEBHOOK_SECRET_ENABLED)%'
+  gitlab.webhook.secret: '%env(string:key:gitlab_webhook_secret:json:file:resolve:SECRETS_FILE)%'
+
+  sentry.webhook.secret: '%env(string:key:sentry_webhook_secret:json:file:resolve:SECRETS_FILE)%'
+  sentry.secret: '%env(string:key:sentry_secret:json:file:resolve:SECRETS_FILE)%'
 
 services:
   # default configuration for services in *this* file
@@ -43,6 +46,14 @@ services:
   App\Provider\Gitlab\Controller\:
     resource: '../src/Provider/Gitlab/Controller'
     tags: [ 'controller.service_arguments' ]
+
+  App\Provider\Sentry\Controller\:
+    resource: '../src/Provider/Sentry/Controller'
+    tags: [ 'controller.service_arguments' ]
+
+  App\Provider\Sentry\EventHandlers\SentryEventAlertEventHandler:
+    arguments:
+      $sentrySecret: '%sentry.secret%'
 
   App\Security\ArgusJwtAuthenticator:
     arguments:

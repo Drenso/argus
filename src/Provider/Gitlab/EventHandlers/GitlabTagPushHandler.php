@@ -9,7 +9,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class GitlabTagPushHandler extends AbstractGitlabEventHandler implements EventSubscriberInterface
 {
 
-  protected function getEventType(): string
+  protected function getDiscriminator(): string
   {
     return 'Tag Push Hook';
   }

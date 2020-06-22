@@ -3,10 +3,11 @@
 namespace App\Provider\Irker\EventHandlers\Project;
 
 use App\Events\Project\ProjectMergeRequestEvent;
+use App\Provider\Irker\EventHandlers\AbstractEventHandler;
 use App\Provider\Irker\IrkerUtils;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class ProjectMergeRequestEventHandler extends AbstractProjectEventHandler implements EventSubscriberInterface
+class ProjectMergeRequestEventHandler extends AbstractEventHandler implements EventSubscriberInterface
 {
 
   public static function getSubscribedEvents()

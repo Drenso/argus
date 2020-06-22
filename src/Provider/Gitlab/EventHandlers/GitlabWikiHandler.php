@@ -9,7 +9,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GitlabWikiHandler extends AbstractGitlabEventHandler implements EventSubscriberInterface
 {
-  protected function getEventType(): string
+  protected function getDiscriminator(): string
   {
     return 'Wiki Page Hook';
   }

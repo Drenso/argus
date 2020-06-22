@@ -6,6 +6,10 @@ gitlab_provider:
   resource: ../../src/Provider/Gitlab/Controller
   type: annotation
 
+sentry_provider:
+  resource: ../../src/Provider/Sentry/Controller
+  type: annotation
+
 kernel:
   resource: ../../src/Kernel.php
   type: annotation

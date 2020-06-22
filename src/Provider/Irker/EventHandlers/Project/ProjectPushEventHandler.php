@@ -3,14 +3,15 @@
 namespace App\Provider\Irker\EventHandlers\Project;
 
 use App\Events\Project\ProjectPushEvent;
-use App\Provider\Gitlab\PropertyAccessor;
+use App\Provider\Irker\EventHandlers\AbstractEventHandler;
 use App\Provider\Irker\IrkerUtils;
+use App\Utils\PropertyAccessor;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\PropertyAccess\PropertyPathInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-class ProjectPushEventHandler extends AbstractProjectEventHandler implements EventSubscriberInterface
+class ProjectPushEventHandler extends AbstractEventHandler implements EventSubscriberInterface
 {
 
   /**

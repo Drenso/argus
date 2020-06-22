@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Provider\Irker\EventHandlers\Project;
+namespace App\Provider\Irker\EventHandlers;
 
-use App\Events\Project\ProjectEvent;
 use App\Provider\Irker\Events\OutgoingIrcMessageEvent;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Throwable;
 
-abstract class AbstractProjectEventHandler
+abstract class AbstractEventHandler
 {
   /**
    * @var EventDispatcherInterface
@@ -38,12 +37,12 @@ abstract class AbstractProjectEventHandler
   /**
    * Wraps the handler in order to add some logging
    *
-   * @param ProjectEvent $event
-   * @param callable     $callable
+   * @param object   $event
+   * @param callable $callable
    *
    * @throws Throwable
    */
-  protected function wrapHandler(ProjectEvent $event, callable $callable)
+  protected function wrapHandler(object $event, callable $callable)
   {
     $this->logger->info(sprintf('Event "%s" handling started by "%s"', get_class($event), get_class($this)));
     try {
