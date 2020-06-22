@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializerInterface;
 use ReflectionClass;
 use ReflectionException;
+use RuntimeException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class StoreIncomingEventHandler implements EventSubscriberInterface
@@ -56,5 +57,12 @@ class StoreIncomingEventHandler implements EventSubscriberInterface
         ->setPayload($this->serializer->serialize($event, 'json'));
     $this->em->persist($dbEvent);
     $this->em->flush();
+
+    // Throw runtime exception if the event was not handled at all
+    // This allows external providers to resubmit the webhook data if they desire
+    // We cannot do this on partially handled events, as some of their data has been processed already
+    if (!$dbEvent->isHandled()) {
+      throw new RuntimeException(sprintf('Failed to handle incoming event "%s"', get_class($event)));
+    }
   }
 }

@@ -10,4 +10,8 @@ namespace App\Events\Project;
  */
 interface ProjectEvent
 {
+  /**
+   * @return string
+   */
+  public function getProjectName(): string;
 }

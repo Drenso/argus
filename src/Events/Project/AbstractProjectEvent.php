@@ -33,9 +33,6 @@ abstract class AbstractProjectEvent
     $this->action      = $action;
   }
 
-  /**
-   * @return string
-   */
   public function getProjectName(): string
   {
     return $this->projectName;

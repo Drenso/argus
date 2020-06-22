@@ -25,7 +25,7 @@ event:
     last-week: 'Last week'
     last-month: 'Last month'
     last-year: 'Last year'
-    stats: 'Event stats'
+    stats: 'Incoming event stats'
 
 general:
   legend: 'Legend'
