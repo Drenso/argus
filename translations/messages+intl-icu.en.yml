@@ -37,6 +37,7 @@ general:
 
 project:
   button:
+    delete: 'Delete project'
     resync: 'Resync configuration'
   exception:
     duplicate: 'This project is already added'
@@ -49,6 +50,9 @@ project:
   title:
     add: 'Add project'
     list: 'Projects'
+  text:
+    delete-confirm: 'Are you sure you want to delete the project "{project}"?'
+    resync-confirm: 'Are you sure you want to resynchronise the external configuration of the project "{project}"?'
 
 title:
   dashboard: 'Dashboard'

@@ -20,10 +20,10 @@
       <LoadingOverlayIcon/>
     </div>
     <div v-else>
-      <LoadingOverlay :show="refreshing || isResyncing">
+      <LoadingOverlay :show="isBusy">
         <div class="d-flex flex-wrap m-n1">
           <div class="flex-fill m-1 filter">
-            <b-input autofocus v-model="filter" :placeholder="'general.filter'|trans"/>
+            <b-input autofocus v-model="filter" :placeholder="'general.filter'|trans" @keydown.esc="filter = ''"/>
           </div>
           <div class="flex-shrink-0 flex-grow-1 m-1" v-show="rows > perPage">
             <b-pagination
@@ -42,11 +42,20 @@
             :fields="fields" :items="projects" :per-page="perPage" :current-page="currentPage"
             @filtered="onFiltered">
           <template #cell(_actions)="row">
-            <a class="pointer"
+            <a class="pointer text-primary"
                v-b-tooltip.hover.topleft
                :title="'project.button.resync'|trans"
-               @click="resync(row.item)">
-              <font-awesome-icon icon="redo" fixed-width :spin="resyncing[row.item.id]"/>
+               @click="resyncProject(row.item)">
+              <font-awesome-icon :icon="resyncing[row.item.id] ? 'circle-notch' : 'redo'"
+                                 fixed-width :spin="resyncing[row.item.id]"/>
+            </a>
+
+            <a class="pointer text-danger"
+               v-b-tooltip.hover.topleft
+               :title="'project.button.delete'|trans"
+               @click="deleteProject(row.item)">
+              <font-awesome-icon :icon="deleting[row.item.id] ? 'circle-notch' : 'trash'"
+                                 fixed-width :spin="deleting[row.item.id]"/>
             </a>
           </template>
         </b-table>
@@ -117,6 +126,7 @@
     public adding: boolean = false;
     public refreshing: boolean = false;
     public resyncing: { [projectId: number]: boolean } = {};
+    public deleting: { [projectId: number]: boolean } = {};
     public projects: Project[] | null = null;
 
     public filter: string = '';
@@ -164,6 +174,7 @@
 
           this.projects!.push(response.data);
           this.addProjectModal.hide();
+          await this.reloadFilter();
         } catch (e) {
           if (e.response && e.response.status === 400) {
             this.errorMessage = e.response.data.reason;
@@ -182,7 +193,7 @@
     }
 
     protected async refresh() {
-      if (this.refreshing || this.isResyncing) {
+      if (this.isBusy) {
         return;
       }
 
@@ -194,8 +205,43 @@
       }
     }
 
-    protected async resync(project: Project) {
-      if (this.isResyncing) {
+    protected async deleteProject(project: Project) {
+      if (this.isBusy) {
+        return;
+      }
+
+      const ok = await this.$bvModal.msgBoxConfirm(this.$translator.trans('project.text.delete-confirm', {
+        project: project.name,
+      }));
+
+      if (!ok) {
+        return;
+      }
+
+      this.deleting[project.id] = true;
+      try {
+        await this.$http.delete(this.$sfRouter.generate('app_api_project_delete', {project: project.id}));
+
+        const toRemoveIndex = this.projects!.findIndex((p) => p.id === project.id);
+        if (toRemoveIndex !== -1) {
+          this.projects!.splice(toRemoveIndex, 1);
+        }
+        await this.reloadFilter();
+      } finally {
+        this.deleting[project.id] = false;
+      }
+    }
+
+    protected async resyncProject(project: Project) {
+      if (this.isBusy) {
+        return;
+      }
+
+      const ok = await this.$bvModal.msgBoxConfirm(this.$translator.trans('project.text.resync-confirm', {
+        project: project.name,
+      }));
+
+      if (!ok) {
         return;
       }
 
@@ -212,8 +258,22 @@
       this.projects = response.data;
       this.projects!.forEach((p) => {
         Vue.set(this.resyncing, p.id, false);
+        Vue.set(this.deleting, p.id, false);
       });
       this.rows = this.projects!.length;
+    }
+
+    private async reloadFilter() {
+      const filter = this.filter;
+      if (!filter) {
+        this.rows = this.projects!.length;
+        return;
+      }
+
+      this.filter = '';
+      await this.$nextTick();
+      this.filter = filter;
+      await this.$nextTick();
     }
 
     protected get fields(): BvTableFieldArray {
@@ -241,6 +301,14 @@
       ];
     }
 
+    protected get isBusy(): boolean {
+      return this.refreshing || this.isResyncing || this.isDeleting;
+    }
+
+    protected get isDeleting(): boolean {
+      return Object.values(this.deleting).some((v) => v);
+    }
+
     protected get isResyncing(): boolean {
       return Object.values(this.resyncing).some((v) => v);
     }
@@ -259,6 +327,14 @@
 
   table {
     /deep/ {
+
+      .project-action {
+        margin: -1 * map_get($spacers, 2);
+
+        a {
+          margin: map_get($spacers, 1);
+        }
+      }
 
       @include media-breakpoint-up(md) {
         .project-last-event {

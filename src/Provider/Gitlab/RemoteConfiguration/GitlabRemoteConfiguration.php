@@ -40,9 +40,7 @@ class GitlabRemoteConfiguration implements RemoteConfigurationInterface
   }
 
   /**
-   * Sync the remote gitlab configuration
-   *
-   * @param Project $project
+   * @inheritDoc
    *
    * @throws GitlabRemoteCallFailedException
    */
@@ -50,6 +48,28 @@ class GitlabRemoteConfiguration implements RemoteConfigurationInterface
   {
     $this->syncProjectSettings($project);
     $this->syncWebhook($project);
+  }
+
+  /**
+   * @inheritDoc
+   *
+   * @throws GitlabRemoteCallFailedException
+   */
+  public function deleteRemoteConfiguration(Project $project): void
+  {
+    // Test whether the project actually exists
+    try {
+      $this->apiConnector->projectApi($project, 'GET', '');
+    } catch (GitlabRemoteCallFailedException $e) {
+      if ($e->getResponse() && $e->getResponse()->getStatusCode() === 404) {
+        // Project does not exist, ignore
+        return;
+      }
+
+      throw $e;
+    }
+
+    $this->removeWebhook($project);
   }
 
   /**
@@ -81,21 +101,39 @@ class GitlabRemoteConfiguration implements RemoteConfigurationInterface
    */
   private function syncWebhook(Project $project)
   {
-    $webhookUrl = $this->router->generate('app_provider_gitlab_gitlab_webhook', [], UrlGeneratorInterface::ABSOLUTE_URL);
+    $webhookUrl   = $this->webhookUrl();
+    $existingHook = $this->getExistingHook($project, $webhookUrl);
 
-    // Retrieve the currently installed project hooks
-    $currentHooks = $this->apiConnector->projectApi($project, 'GET', 'hooks');
-    $foundHook    = array_search($webhookUrl, array_column($currentHooks, 'url'));
-
-    if (false === $foundHook) {
-      // No valid hook found, so create it
-      $this->createHook($project, $webhookUrl);
+    if ($existingHook) {
+      $this->updateHook($project, $webhookUrl, $existingHook);
     } else {
-      $this->updateHook($project, $webhookUrl, $currentHooks[$foundHook]);
+      $this->createHook($project, $webhookUrl);
     }
   }
 
   /**
+   * Remove the webhook for the project
+   *
+   * @param Project $project
+   *
+   * @throws GitlabRemoteCallFailedException
+   */
+  private function removeWebhook(Project $project)
+  {
+    $webhookUrl   = $this->webhookUrl();
+    $existingHook = $this->getExistingHook($project, $webhookUrl);
+
+    if (!$existingHook) {
+      return;
+    }
+
+    $hookId = $this->propertyAccessor->getProperty($existingHook, '[id]');
+    $this->apiConnector->projectApi($project, 'DELETE', sprintf('hooks/%d', $hookId));
+  }
+
+  /**
+   * Create a new hook for the project
+   *
    * @param Project $project
    * @param string  $url
    *
@@ -144,4 +182,29 @@ class GitlabRemoteConfiguration implements RemoteConfigurationInterface
     ]);
   }
 
+  private function webhookUrl(): string
+  {
+    return $this->router->generate('app_provider_gitlab_gitlab_webhook', [], UrlGeneratorInterface::ABSOLUTE_URL);
+  }
+
+  /**
+   * Retrieve the existing hook
+   *
+   * @param Project $project
+   * @param string  $webhookUrl
+   *
+   * @return array|null
+   * @throws GitlabRemoteCallFailedException
+   */
+  private function getExistingHook(Project $project, string $webhookUrl): ?array
+  {
+    $currentHooks = $this->apiConnector->projectApi($project, 'GET', 'hooks');
+    $foundHook    = array_search($webhookUrl, array_column($currentHooks, 'url'));
+
+    if (false !== $foundHook) {
+      return $currentHooks[$foundHook];
+    }
+
+    return NULL;
+  }
 }

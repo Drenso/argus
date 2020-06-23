@@ -98,6 +98,33 @@ class ProjectService
   }
 
   /**
+   * Delete the project. Removes remote configuration if possible
+   *
+   * @param Project $project
+   *
+   * @throws Throwable
+   */
+  public function delete(Project $project)
+  {
+    $this->entityManager->beginTransaction();
+
+    try {
+      $this->entityManager->remove($project);
+
+      foreach ($this->configurationServices() as $service) {
+        $service->deleteRemoteConfiguration($project);
+      }
+
+      $this->entityManager->flush();
+      $this->entityManager->commit();
+    } catch (Throwable $e) {
+      $this->entityManager->rollback();
+
+      throw $e;
+    }
+  }
+
+  /**
    * Syncs the remote project configuration
    *
    * @param Project $project
@@ -105,13 +132,23 @@ class ProjectService
   public function sync(Project $project)
   {
     // Create the remote configuration related to the new project
+    foreach ($this->configurationServices() as $service) {
+      $service->syncRemoteConfiguration($project);
+    }
+  }
+
+  /**
+   * @return RemoteConfigurationInterface[]
+   */
+  private function configurationServices(): iterable
+  {
     foreach ($this->remoteConfigurationServices->getProvidedServices() as $serviceId) {
       $remoteConfigurationService = $this->remoteConfigurationServices->get($serviceId);
       if (!$remoteConfigurationService instanceof RemoteConfigurationInterface) {
         continue;
       }
 
-      $remoteConfigurationService->syncRemoteConfiguration($project);
+      yield $remoteConfigurationService;
     }
   }
 }

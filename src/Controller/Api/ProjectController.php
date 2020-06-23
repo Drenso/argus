@@ -63,19 +63,39 @@ class ProjectController extends AbstractApiController
     }
   }
 
+
+  /**
+   * Delete the given project (including remote configuration, if supported)
+   *
+   * @Route("/{project<\d+>}", methods={"DELETE"})
+   * @IsGranted("ROLE_USER")
+   *
+   * @param Project        $project
+   * @param ProjectService $projectService
+   *
+   * @return Response
+   *
+   * @throws Throwable
+   */
+  public function delete(Project $project, ProjectService $projectService): Response
+  {
+    $projectService->delete($project);
+
+    return new Response();
+  }
+
   /**
    * Sync the remote configuration for the given project
    *
    * @Route("/{project<\d+>}/sync", methods={"POST"})
    * @IsGranted("ROLE_USER")
    *
-   * @param Project             $project
-   * @param ProjectService      $projectService
-   * @param TranslatorInterface $translator
+   * @param Project        $project
+   * @param ProjectService $projectService
    *
    * @return Response
    */
-  public function sync(Project $project, ProjectService $projectService, TranslatorInterface $translator): Response
+  public function sync(Project $project, ProjectService $projectService): Response
   {
     $projectService->sync($project);
 
