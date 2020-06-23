@@ -4,6 +4,7 @@ namespace App\Provider\Irker\EventHandlers;
 
 use App\Provider\Irker\Events\OutgoingIrcMessageEvent;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -48,8 +49,13 @@ class OutgoingIrcMessageEventHandler extends AbstractEventHandler implements Eve
     }
 
     $this->wrapHandler($event, function () use ($event) {
+      if (!$event->getChannel()
+          || !array_key_exists($event->getChannel(), $this->ircChannels)
+          || empty($this->ircChannels[$event->getChannel()])) {
+        if (empty($this->ircChannels['_default'])){
+          throw new RuntimeException('The default channel is required for the Irker integration to work');
+        }
 
-      if (!$event->getChannel() || !array_key_exists($event->getChannel(), $this->ircChannels)) {
         $to = $this->ircChannels['_default'];
       } else {
         $to = $this->ircChannels[$event->getChannel()];
