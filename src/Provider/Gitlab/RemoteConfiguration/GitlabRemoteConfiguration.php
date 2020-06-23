@@ -44,21 +44,38 @@ class GitlabRemoteConfiguration implements RemoteConfigurationInterface
    *
    * @param Project $project
    *
-   * @return void
+   * @throws GitlabRemoteCallFailedException
+   */
+  public function syncRemoteConfiguration(Project $project): void
+  {
+    $this->syncProjectSettings($project);
+    $this->syncWebhook($project);
+  }
+
+  /**
+   * Sync the default project settings that are applicable to all projects
+   *
+   * @param Project $project
    *
    * @throws GitlabRemoteCallFailedException
    */
-  public function syncRemoteConfiguration(Project $project)
+  private function syncProjectSettings(Project $project)
   {
-    $this->syncWebhook($project);
+    $this->apiConnector->projectApi($project, 'PUT', '', [
+        'json' => [
+            'merge_method'                                     => 'ff',
+            'remove_source_branch_after_merge'                 => true,
+            'only_allow_merge_if_pipeline_succeeds'            => true,
+            'allow_merge_on_skipped_pipeline'                  => false,
+            'only_allow_merge_if_all_discussions_are_resolved' => true,
+        ],
+    ]);
   }
 
   /**
    * Sync the remote gitlab webhook with this application
    *
    * @param Project $project
-   *
-   * @return void
    *
    * @throws GitlabRemoteCallFailedException
    */

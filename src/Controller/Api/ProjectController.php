@@ -10,6 +10,7 @@ use App\Service\ProjectService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Throwable;
@@ -40,8 +41,9 @@ class ProjectController extends AbstractApiController
    * @Route("", methods={"POST"})
    * @IsGranted("ROLE_USER")
    *
-   * @param Request        $request
-   * @param ProjectService $projectService
+   * @param Request             $request
+   * @param ProjectService      $projectService
+   * @param TranslatorInterface $translator
    *
    * @return JsonResponse
    *
@@ -59,5 +61,24 @@ class ProjectController extends AbstractApiController
     } catch (ProjectNotFoundException $e) {
       return $this->createBadRequestResponse($translator->trans('project.exception.not-found'), $newProject);
     }
+  }
+
+  /**
+   * Sync the remote configuration for the given project
+   *
+   * @Route("/{project<\d+>}/sync", methods={"POST"})
+   * @IsGranted("ROLE_USER")
+   *
+   * @param Project             $project
+   * @param ProjectService      $projectService
+   * @param TranslatorInterface $translator
+   *
+   * @return Response
+   */
+  public function sync(Project $project, ProjectService $projectService, TranslatorInterface $translator): Response
+  {
+    $projectService->sync($project);
+
+    return new Response();
   }
 }

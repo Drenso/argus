@@ -50,7 +50,7 @@ class ProjectService
   }
 
   /**
-   * Add a new project. Directly synchronised the correct settings with the remote services.
+   * Add a new project. Directly synchronises the correct settings with the remote services.
    *
    * @param Project $source The source project used to create a new project
    *
@@ -83,17 +83,10 @@ class ProjectService
       $this->entityManager->persist($project);
       $this->entityManager->flush();
 
-      // Create the remote configuration related to the new project
-      foreach ($this->remoteConfigurationServices->getProvidedServices() as $serviceId) {
-        $remoteConfigurationService = $this->remoteConfigurationServices->get($serviceId);
-        if (!$remoteConfigurationService instanceof RemoteConfigurationInterface) {
-          continue;
-        }
+      // Sync the remote project configuration
+      $this->sync($project);
 
-        $remoteConfigurationService->syncRemoteConfiguration($project);
-      }
-
-      $this->entityManager->flush();
+      // Commit the transaction
       $this->entityManager->commit();
 
       return $project;
@@ -101,6 +94,24 @@ class ProjectService
       $this->entityManager->rollback();
 
       throw $e;
+    }
+  }
+
+  /**
+   * Syncs the remote project configuration
+   *
+   * @param Project $project
+   */
+  public function sync(Project $project)
+  {
+    // Create the remote configuration related to the new project
+    foreach ($this->remoteConfigurationServices->getProvidedServices() as $serviceId) {
+      $remoteConfigurationService = $this->remoteConfigurationServices->get($serviceId);
+      if (!$remoteConfigurationService instanceof RemoteConfigurationInterface) {
+        continue;
+      }
+
+      $remoteConfigurationService->syncRemoteConfiguration($project);
     }
   }
 }

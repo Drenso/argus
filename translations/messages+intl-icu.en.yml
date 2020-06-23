@@ -28,6 +28,7 @@ event:
     stats: 'Incoming event stats'
 
 general:
+  actions: 'Actions'
   add: 'Add'
   cancel: 'Cancel'
   filter: 'Filter'
@@ -35,6 +36,8 @@ general:
   refresh: 'Refresh'
 
 project:
+  button:
+    resync: 'Resync configuration'
   exception:
     duplicate: 'This project is already added'
     not-found: 'This project is not found on Gitlab'

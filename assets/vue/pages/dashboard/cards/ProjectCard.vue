@@ -6,8 +6,10 @@
           {{ 'project.title.list'|trans }}
         </div>
         <div class="ml-2">
-          <a @click="refresh" class="pointer" v-if="projects !== null"
-             v-b-tooltip.hover.left :title="'general.refresh'|trans">
+          <a class="pointer" v-if="projects !== null"
+             v-b-tooltip.hover.left
+             :title="'general.refresh'|trans"
+             @click="refresh">
             <font-awesome-icon icon="sync-alt" fixed-width :spin="refreshing"/>
           </a>
         </div>
@@ -18,7 +20,7 @@
       <LoadingOverlayIcon/>
     </div>
     <div v-else>
-      <LoadingOverlay :show="refreshing">
+      <LoadingOverlay :show="refreshing || isResyncing">
         <div class="d-flex flex-wrap m-n1">
           <div class="flex-fill m-1 filter">
             <b-input autofocus v-model="filter" :placeholder="'general.filter'|trans"/>
@@ -33,11 +35,21 @@
         </div>
 
         <b-table
-            small class="mt-2 mb-0" fixed show-empty
+            small class="mt-2 mb-0" show-empty
             sort-by="last_event" sort-desc
+            stacked="md"
             :filter="filter"
             :fields="fields" :items="projects" :per-page="perPage" :current-page="currentPage"
-            @filtered="onFiltered"/>
+            @filtered="onFiltered">
+          <template #cell(_actions)="row">
+            <a class="pointer"
+               v-b-tooltip.hover.topleft
+               :title="'project.button.resync'|trans"
+               @click="resync(row.item)">
+              <font-awesome-icon icon="redo" fixed-width :spin="resyncing[row.item.id]"/>
+            </a>
+          </template>
+        </b-table>
 
         <div class="text-right">
           <b-button variant="success" @click="addProject">
@@ -102,13 +114,14 @@
     components: {ErrorAlert, ValidatedField, LoadingOverlayIcon, LoadingOverlay},
   })
   export default class ProjectCard extends Vue {
-    public refreshing: boolean = false;
     public adding: boolean = false;
+    public refreshing: boolean = false;
+    public resyncing: { [projectId: number]: boolean } = {};
     public projects: Project[] | null = null;
 
     public filter: string = '';
     public rows: number = 0;
-    public perPage: number = 10;
+    public perPage: number = 5;
     public currentPage: number = 1;
 
     public projectName: string = '';
@@ -169,7 +182,7 @@
     }
 
     protected async refresh() {
-      if (this.refreshing) {
+      if (this.refreshing || this.isResyncing) {
         return;
       }
 
@@ -181,9 +194,25 @@
       }
     }
 
+    protected async resync(project: Project) {
+      if (this.isResyncing) {
+        return;
+      }
+
+      this.resyncing[project.id] = true;
+      try {
+        await this.$http.post(this.$sfRouter.generate('app_api_project_sync', {project: project.id}));
+      } finally {
+        this.resyncing[project.id] = false;
+      }
+    }
+
     private async loadProjects() {
       const response = await this.$http.get(this.$sfRouter.generate('app_api_project_list'));
       this.projects = response.data;
+      this.projects!.forEach((p) => {
+        Vue.set(this.resyncing, p.id, false);
+      });
       this.rows = this.projects!.length;
     }
 
@@ -193,6 +222,7 @@
           key: 'name',
           label: this.$translator.trans('project.field.name'),
           sortable: true,
+          class: 'project-name',
         }, {
           key: 'last_event',
           label: this.$translator.trans('project.field.last-event'),
@@ -202,8 +232,17 @@
                 ? this.$moment(value).format('YYYY-MM-DD HH:mm:ss')
                 : '-';
           },
+          class: 'project-last-event',
+        }, {
+          key: '_actions',
+          label: this.$translator.trans('general.actions'),
+          class: 'project-action',
         },
       ];
+    }
+
+    protected get isResyncing(): boolean {
+      return Object.values(this.resyncing).some((v) => v);
     }
   }
 </script>
@@ -215,6 +254,33 @@
     min-width: calc(100% - #{2 * map_get($spacers, 1)});
     @include media-breakpoint-up(md) {
       min-width: 20rem;
+    }
+  }
+
+  table {
+    /deep/ {
+
+      @include media-breakpoint-up(md) {
+        .project-last-event {
+          white-space: nowrap;
+          width: 1px;
+          padding-left: map_get($spacers, 3);
+          padding-right: map_get($spacers, 5);
+        }
+
+        .project-action {
+          white-space: nowrap;
+          width: 1px;
+        }
+
+        th {
+          &.project-action {
+            > * {
+              display: none;
+            }
+          }
+        }
+      }
     }
   }
 </style>
