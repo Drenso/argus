@@ -16,8 +16,16 @@ parameters:
   router.request_context.host: '%env(HTTP_HOST)%'
   router.request_context.scheme: '%env(HTTP_SCHEMA)%'
 
+  gitlab.url: '%env(GITLAB_URL)%'
+  gitlab.token: '%env(string:key:gitlab_token:json:file:resolve:SECRETS_FILE)%'
   gitlab.webhook.secret-enabled: '%env(bool:GITLAB_WEBHOOK_SECRET_ENABLED)%'
   gitlab.webhook.secret: '%env(string:key:gitlab_webhook_secret:json:file:resolve:SECRETS_FILE)%'
+
+  irker.server: '%env(IRKER_SERVER)%'
+  irker.port: '%env(int:IRKER_PORT)%'
+  irc.channel._default: '%env(IRKER_CHANNEL_DEFAULT)%'
+  irc.channel.project: '%env(IRKER_CHANNEL_PROJECT)%'
+  irc.channel.usage: '%env(IRKER_CHANNEL_USAGE)%'
 
   sentry.webhook.secret: '%env(string:key:sentry_webhook_secret:json:file:resolve:SECRETS_FILE)%'
   sentry.secret: '%env(string:key:sentry_secret:json:file:resolve:SECRETS_FILE)%'
@@ -27,6 +35,11 @@ services:
   _defaults:
     autowire: true      # Automatically injects dependencies in your services.
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+  _instanceof:
+    App\RemoteConfiguration\RemoteConfigurationInterface:
+      tags: [ 'remote_configuration_service' ]
+      lazy: true
 
   # makes classes in src/ available to be used as services
   # this creates a service per class whose id is the fully-qualified class name
@@ -47,14 +60,24 @@ services:
     resource: '../src/Provider/Gitlab/Controller'
     tags: [ 'controller.service_arguments' ]
 
+  App\Provider\Gitlab\RemoteConfiguration\GitlabRemoteConfiguration:
+    arguments:
+      $gitlabWebhookSecretEnabled: '%gitlab.webhook.secret-enabled%'
+      $gitlabWebhookSecret: '%gitlab.webhook.secret%'
+
+  App\Provider\Gitlab\GitlabApiConnector:
+    arguments:
+      $gitlabUrl: '%gitlab.url%'
+      $gitlabToken: '%gitlab.token%'
+
   App\Provider\Irker\EventHandlers\OutgoingIrcMessageEventHandler:
     arguments:
-      $irkerServer: '%env(IRKER_SERVER)%'
-      $irkerPort: '%env(int:IRKER_PORT)%'
+      $irkerServer: '%irker.server%'
+      $irkerPort: '%irker.port%'
       $ircChannels:
-        _default: '%env(IRKER_CHANNEL_DEFAULT)%'
-        project: '%env(IRKER_CHANNEL_PROJECT)%'
-        usage: '%env(IRKER_CHANNEL_USAGE)%'
+        _default: '%irc.channel._default%'
+        project: '%irc.channel.project%'
+        usage: '%irc.channel.usage%'
 
   App\Provider\Sentry\Controller\:
     resource: '../src/Provider/Sentry/Controller'
@@ -67,3 +90,7 @@ services:
   App\Security\ArgusJwtAuthenticator:
     arguments:
       $jwtSecret: "%env(string:key:jwt_secret:json:file:resolve:SECRETS_FILE)%"
+
+  App\Service\ProjectService:
+    arguments:
+      $remoteConfigurationServices: !tagged_locator { tag: 'remote_configuration_service' }

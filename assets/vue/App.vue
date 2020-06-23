@@ -9,9 +9,7 @@
 
     <b-overlay :show="$store.direct.state.isWorking" variant="dark" class="app-overlay">
       <template #overlay>
-        <div class="text-center text-white">
-          <font-awesome-icon icon="circle-notch" spin size="4x"/>
-        </div>
+        <LoadingOverlayIcon class="text-white"/>
       </template>
 
       <transition name="router-fade">
@@ -40,11 +38,12 @@
 
 <script lang="ts">
   import {Component, Vue} from 'vue-property-decorator';
+  import LoadingOverlayIcon from './components/layout/LoadingOverlayIcon.vue';
   import Menu from './components/layout/Menu.vue';
   import LoginPage from './pages/LoginPage.vue';
 
   @Component({
-    components: {LoginPage, Menu},
+    components: {LoadingOverlayIcon, LoginPage, Menu},
   })
   export default class App extends Vue {
     public loading: boolean = true;

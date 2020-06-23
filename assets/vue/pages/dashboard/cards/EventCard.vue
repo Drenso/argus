@@ -15,22 +15,24 @@
     </template>
 
     <div class="text-center" v-if="stats === null">
-      <font-awesome-icon icon="circle-notch" fixed-width spin/>
+      <LoadingOverlayIcon/>
     </div>
     <div v-else>
-      <b-tabs content-class="my-2" justified>
-        <EventStats :stats="stats.last_hour" :title="'event.title.last-hour'|trans"/>
-        <EventStats :stats="stats.last_day" :title="'event.title.last-day'|trans"/>
-        <EventStats :stats="stats.last_week" :title="'event.title.last-week'|trans"/>
-        <EventStats :stats="stats.last_month" :title="'event.title.last-month'|trans"/>
-        <EventStats :stats="stats.last_year" :title="'event.title.last-year'|trans"/>
-      </b-tabs>
+      <LoadingOverlay :show="refreshing">
+        <b-tabs content-class="my-2" justified>
+          <EventStats :stats="stats.last_hour" :title="'event.title.last-hour'|trans"/>
+          <EventStats :stats="stats.last_day" :title="'event.title.last-day'|trans"/>
+          <EventStats :stats="stats.last_week" :title="'event.title.last-week'|trans"/>
+          <EventStats :stats="stats.last_month" :title="'event.title.last-month'|trans"/>
+          <EventStats :stats="stats.last_year" :title="'event.title.last-year'|trans"/>
+        </b-tabs>
 
-      <b-progress max="3" show-value>
-        <b-progress-bar value="1" variant="success" :label="'event.info.fully-handled'|trans"/>
-        <b-progress-bar value="1" variant="warning" :label="'event.info.partially-handled'|trans"/>
-        <b-progress-bar value="1" variant="danger" :label="'event.info.unhandled'|trans"/>
-      </b-progress>
+        <b-progress max="3" show-value>
+          <b-progress-bar value="1" variant="success" :label="'event.info.fully-handled'|trans"/>
+          <b-progress-bar value="1" variant="warning" :label="'event.info.partially-handled'|trans"/>
+          <b-progress-bar value="1" variant="danger" :label="'event.info.unhandled'|trans"/>
+        </b-progress>
+      </LoadingOverlay>
     </div>
   </b-card>
 </template>
@@ -38,10 +40,12 @@
 <script lang="ts">
   import {Component, Vue} from 'vue-property-decorator';
   import {TimedEventStats} from '../../../api/EventTypes';
+  import LoadingOverlay from '../../../components/layout/LoadingOverlay.vue';
+  import LoadingOverlayIcon from '../../../components/layout/LoadingOverlayIcon.vue';
   import EventStats from '../components/EventStats.vue';
 
   @Component({
-    components: {EventStats},
+    components: {LoadingOverlay, LoadingOverlayIcon, EventStats},
   })
   export default class EventCard extends Vue {
     public refreshing: boolean = false;

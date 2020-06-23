@@ -28,15 +28,23 @@ event:
     stats: 'Incoming event stats'
 
 general:
+  add: 'Add'
+  cancel: 'Cancel'
   filter: 'Filter'
   legend: 'Legend'
   refresh: 'Refresh'
 
 project:
+  exception:
+    duplicate: 'This project is already added'
+    not-found: 'This project is not found on Gitlab'
   field:
     last-event: 'Last recorded event'
     name: 'Project name'
+  help:
+    name: 'Enter the full project name including namespace. For example "drenso/argus".'
   title:
+    add: 'Add project'
     list: 'Projects'
 
 title:

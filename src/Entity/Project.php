@@ -36,6 +36,13 @@ class Project
    */
   private $lastEvent;
 
+  public function fromOther(Project $other)
+  {
+    return $this
+        ->setName($other->getName())
+        ->setLastEvent($other->getLastEvent());
+  }
+
   /**
    * @return string
    */
@@ -65,11 +72,11 @@ class Project
   }
 
   /**
-   * @param DateTimeImmutable $lastEvent
+   * @param DateTimeImmutable|null $lastEvent
    *
    * @return Project
    */
-  public function setLastEvent(DateTimeImmutable $lastEvent): self
+  public function setLastEvent(?DateTimeImmutable $lastEvent): self
   {
     $this->lastEvent = $lastEvent;
 

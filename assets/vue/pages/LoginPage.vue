@@ -6,20 +6,14 @@
     <div class="login-card">
       <ValidationObserver slim ref="validationObserver" v-slot="observer">
         <form @submit.prevent="observer.handleSubmit(doLogin)">
-          <b-overlay :show="loggingIn" rounded="sm">
-            <template #overlay>
-              <div class="text-center">
-                <font-awesome-icon icon="circle-notch" spin size="4x"/>
-              </div>
-            </template>
-
+          <LoadingOverlay :show="loggingIn">
             <b-card>
               <template #header>
                 <font-awesome-icon icon="sign-in-alt" fixed-width/>
                 {{ 'title.login'|trans }}
               </template>
 
-              <ErrorAlert :show="showLoginAlert" variant="danger" :text="'auth.flash.auth-failed'|trans"/>
+              <ErrorAlert :show="showLoginAlert" :text="'auth.flash.auth-failed'|trans"/>
 
               <ValidatedField rules="required|email" :label="'auth.field.username'|trans">
                 <b-input ref="usernameField" type="email" v-model="username" autofocus autocomplete="username" trim/>
@@ -36,7 +30,7 @@
                 </b-button>
               </div>
             </b-card>
-          </b-overlay>
+          </LoadingOverlay>
         </form>
       </ValidationObserver>
     </div>
@@ -44,15 +38,16 @@
 </template>
 
 <script lang="ts">
+  import {BFormInput} from 'bootstrap-vue';
+  import {ValidationObserver} from 'vee-validate';
   import {Component, Ref, Vue} from 'vue-property-decorator';
   import ArgusAlert from '../components/alerts/ArgusAlert.vue';
   import ErrorAlert from '../components/alerts/ErrorAlert.vue';
-  import {BFormInput} from 'bootstrap-vue';
   import ValidatedField from '../components/form/ValidatedField.vue';
-  import {ValidationObserver} from 'vee-validate';
+  import LoadingOverlay from '../components/layout/LoadingOverlay.vue';
 
   @Component({
-    components: {ValidatedField, ErrorAlert, ArgusAlert},
+    components: {LoadingOverlay, ValidatedField, ErrorAlert, ArgusAlert},
   })
   export default class LoginPage extends Vue {
     protected loggingIn: boolean = false;

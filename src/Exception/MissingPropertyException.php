@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Provider\Gitlab\Exception;
+namespace App\Exception;
 
 use RuntimeException;
 use Throwable;

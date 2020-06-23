@@ -3,7 +3,7 @@
 namespace App\Provider\Sentry\EventHandlers;
 
 use App\Events\Usage\UsageErrorEvent;
-use App\Provider\Gitlab\Exception\MissingPropertyException;
+use App\Exception\MissingPropertyException;
 use App\Provider\Sentry\Events\IncomingSentryEvent;
 use App\Utils\PropertyAccessor;
 use JMS\Serializer\SerializerInterface;

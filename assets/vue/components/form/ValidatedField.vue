@@ -1,6 +1,6 @@
 <template>
-  <ValidationProvider tag="div" :debounce="100" :rules="rules" v-slot="{ errors }">
-    <b-form-group :label="label" :id="id" :state="errors.length > 0 ? false : null">
+  <ValidationProvider tag="div" class="validated-field" :debounce="100" :rules="rules" v-slot="{ errors }">
+    <b-form-group class="mb-0" :label="label" :id="id" :state="errors.length > 0 ? false : null">
 
       <template #invalid-feedback>
         <slot name="messages" :errors="errors" :icon="icon" :help="help">
@@ -43,3 +43,11 @@
     protected readonly id: string = this.$random();
   }
 </script>
+
+<style scoped lang="scss">
+  @import 'assets/css/variables';
+
+  .validated-field {
+    margin-bottom:  map_get($spacers, 3);
+  }
+</style>

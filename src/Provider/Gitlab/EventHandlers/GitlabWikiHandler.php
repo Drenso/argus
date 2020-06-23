@@ -4,7 +4,7 @@ namespace App\Provider\Gitlab\EventHandlers;
 
 use App\Events\Project\ProjectWikiEvent;
 use App\Provider\Gitlab\Events\IncomingGitlabEvent;
-use App\Provider\Gitlab\Exception\MissingPropertyException;
+use App\Exception\MissingPropertyException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GitlabWikiHandler extends AbstractGitlabEventHandler implements EventSubscriberInterface

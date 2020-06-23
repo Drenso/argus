@@ -2,7 +2,7 @@
 
 namespace App\Utils;
 
-use App\Provider\Gitlab\Exception\MissingPropertyException;
+use App\Exception\MissingPropertyException;
 use Symfony\Component\PropertyAccess\Exception\AccessException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
