@@ -84,3 +84,36 @@ deploy-production:
     - master
   except:
     - schedules
+
+deploy-docker:
+  stage: deploy
+  image: docker:latest
+  interruptible: true
+  needs:
+    - job: install-dependencies
+      artifacts: true
+    - job: build-assets
+      artifacts: true
+  cache:
+    key:
+      files:
+        - composer.lock
+      prefix: ${CI_PROJECT_PATH_SLUG}_composer
+    paths:
+      - vendor/
+    policy: pull
+  before_script:
+    - docker pull docker:latest
+  script:
+    - export VERSION=${CI_COMMIT_TAG:-latest}
+    - echo "Building drenso/argus:$VERSION"
+    - docker build -t drenso/argus -f docker/argus/Dockerfile .
+    - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+    - docker push drenso/argus:latest
+  tags:
+    - docker-build
+  only:
+    - master
+    - tags
+  except:
+    - schedules

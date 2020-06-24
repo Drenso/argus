@@ -1,0 +1,45 @@
+version: '3.4'
+
+services:
+  db:
+    image: 'mariadb:10.3'
+    restart: on-failure
+    volumes:
+      - argus-database:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_DATABASE: argus
+      MYSQL_USER:
+      MYSQL_PASSWORD:
+
+  web:
+    image: 'library/nginx:1.19.0-alpine'
+    restart: on-failure
+    ports:
+      - '8080:80'
+    depends_on:
+      - argus
+    volumes:
+      - 'argus-public:/usr/src/app'
+      - './nginx/default.conf:/etc/nginx/conf.d/default.conf:ro'
+
+  argus:
+    image: 'drenso/argus:latest'
+    restart: on-failure
+    depends_on:
+      - db
+    volumes:
+      - 'argus-public:/usr/src/app/public'
+      - './.secrets.json:/usr/src/app/.secrets.json'
+    environment:
+      DATABASE_CHECK: 'db:3306'
+      DATABASE_URL: 'mysql://argus:%database_password%@db:3306/argus'
+      PRODUCTION_SERVER: 'true'
+      HTTP_HOST:
+      GITLAB_URL:
+      IRKER_SERVER:
+      IRKER_CHANNEL_DEFAULT:
+
+volumes:
+  argus-database:
+  argus-public:
