@@ -107,9 +107,9 @@ deploy-docker:
   script:
     - export VERSION=${CI_COMMIT_TAG:-latest}
     - echo "Building drenso/argus:$VERSION"
-    - docker build -t drenso/argus -f docker/argus/Dockerfile .
+    - docker build -t drenso/argus:$VERSION -f docker/argus/Dockerfile .
     - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-    - docker push drenso/argus:latest
+    - docker push drenso/argus:$VERSION
   tags:
     - docker-build
   only:
