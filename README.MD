@@ -34,6 +34,9 @@ environment variables & secrets and run `docker-compose up -d`.
 
 Add a user with: `docker exec -itu www-data docker_argus_1 bin/console argus:add-user` 
 
+When using an external HTTPS termination, make sure the set the trusted proxies variable for the Argus container.
+The example does this by default.
+
 # Do you have questions?
 
 Do you think the documentation is a bit simple, or are you missing features? Open a ticket or just contribute! 

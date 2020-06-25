@@ -4,6 +4,8 @@ services:
   db:
     image: 'mariadb:10.3'
     restart: on-failure
+    networks:
+      - argus-network
     volumes:
       - argus-database:/var/lib/mysql
     environment:
@@ -15,6 +17,8 @@ services:
   web:
     image: 'library/nginx:1.19.0-alpine'
     restart: on-failure
+    networks:
+      - argus-network
     ports:
       - '8080:80'
     depends_on:
@@ -26,6 +30,8 @@ services:
   argus:
     image: 'drenso/argus:latest'
     restart: on-failure
+    networks:
+      - argus-network
     depends_on:
       - db
     volumes:
@@ -39,7 +45,15 @@ services:
       GITLAB_URL:
       IRKER_SERVER:
       IRKER_CHANNEL_DEFAULT:
+      TRUSTED_PROXIES: 10.9.8.1
 
 volumes:
   argus-database:
   argus-public:
+
+networks:
+  argus-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.9.8.0/24
