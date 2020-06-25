@@ -88,6 +88,7 @@ deploy-production:
 deploy-docker:
   stage: deploy
   image: docker:latest
+  resource_group: deploy-docker
   interruptible: true
   needs:
     - job: install-dependencies
