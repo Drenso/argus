@@ -91,6 +91,10 @@ services:
     arguments:
       $jwtSecret: "%env(string:key:jwt_secret:json:file:resolve:SECRETS_FILE)%"
 
+  App\Serializer\Entity\ProjectSerializer:
+    arguments:
+      $gitlabUrl: '%gitlab.url%'
+
   App\Service\ProjectService:
     arguments:
       $remoteConfigurationServices: !tagged_locator { tag: 'remote_configuration_service' }

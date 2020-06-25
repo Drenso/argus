@@ -42,7 +42,14 @@
             :fields="fields" :items="projects" :per-page="perPage" :current-page="currentPage"
             @filtered="onFiltered">
           <template #cell(_actions)="row">
-            <a class="pointer text-primary"
+            <a class="pointer text-primary" target="_blank"
+               v-b-tooltip.hover.topleft
+               :title="'project.button.gitlab'|trans"
+               :href="row.item._gitlab_url">
+              <font-awesome-icon :icon="['fab', 'gitlab']" fixed-width/>
+            </a>
+
+            <a class="pointer text-secondary"
                v-b-tooltip.hover.topleft
                :title="'project.button.resync'|trans"
                @click="resyncProject(row.item)">

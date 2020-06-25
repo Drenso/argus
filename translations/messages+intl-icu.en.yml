@@ -38,6 +38,7 @@ general:
 project:
   button:
     delete: 'Delete project'
+    gitlab: 'Open Gitlab project'
     resync: 'Resync configuration'
   exception:
     duplicate: 'This project is already added'

@@ -6,6 +6,7 @@ use App\Entity\Project;
 use App\Exception\DuplicateProjectException;
 use App\Exception\ProjectNotFoundException;
 use App\Repository\ProjectRepository;
+use App\Serializer\Entity\ProjectSerializer;
 use App\Service\ProjectService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -32,7 +33,7 @@ class ProjectController extends AbstractApiController
    */
   public function list(ProjectRepository $projectRepository): JsonResponse
   {
-    return $this->createResponse($projectRepository->findAll());
+    return $this->createResponse($projectRepository->findAll(), ['Default', ProjectSerializer::GITLAB_URL]);
   }
 
   /**
