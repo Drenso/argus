@@ -4,6 +4,7 @@ namespace App\Provider\Gitlab\EventHandlers;
 
 use App\Events\Project\ProjectNoteEvent;
 use App\Provider\Gitlab\Events\IncomingGitlabEvent;
+use App\Utils\GitShaUtils;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GitlabNoteHandler extends AbstractGitlabEventHandler implements EventSubscriberInterface
@@ -22,7 +23,7 @@ class GitlabNoteHandler extends AbstractGitlabEventHandler implements EventSubsc
       // It is a commit note
       $action = 'commit';
       $iid    = $this->getProp($data, '[commit][message]');
-      $title  = substr($this->getProp($data, '[commit][id]'), 0, 8);
+      $title  = GitShaUtils::getShortSha($this->getProp($data, '[commit][id]'));
     } else if (array_key_exists('merge_request', $data)) {
       // It is a merge request note
       $action = 'merge_request';

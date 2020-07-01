@@ -4,6 +4,7 @@ namespace App\Provider\Gitlab\EventHandlers;
 
 use App\Events\Project\ProjectTagEvent;
 use App\Provider\Gitlab\Events\IncomingGitlabEvent;
+use App\Utils\GitShaUtils;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GitlabTagPushHandler extends AbstractGitlabEventHandler implements EventSubscriberInterface
@@ -17,13 +18,13 @@ class GitlabTagPushHandler extends AbstractGitlabEventHandler implements EventSu
   protected function handleEvent(IncomingGitlabEvent $event): void
   {
     $data        = $event->getPayload();
-    $before      = substr($this->getProp($data, '[before]'), 0, 8);
-    $checkoutSha = substr($this->getProp($data, '[checkout_sha]'), 0, 8);
+    $before      = $this->getProp($data, '[before]');
+    $checkoutSha = $this->getProp($data, '[checkout_sha]');
 
-    if ($before == "00000000") {
+    if ($before === GitShaUtils::allZeroSha()) {
       // Tag created
       $action = 'created';
-      $url    = sprintf('%s/commit/%s', $this->getProp($data, '[repository][homepage]'), $checkoutSha);
+      $url    = sprintf('%s/commit/%s', $this->getProp($data, '[repository][homepage]'), GitShaUtils::getShortSha($checkoutSha));
     } else {
       $action = 'removed';
       $url    = $this->getProp($data, '[repository][homepage]');

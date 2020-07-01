@@ -28,6 +28,9 @@ class GitlabPushHandler extends AbstractGitlabEventHandler implements EventSubsc
         preg_replace('/refs\/[^\/]*\//', '', $this->getProp($data, '[ref]')),
         $this->getProp($data, '[repository][homepage]'),
         'push',
+        $this->getProp($data, '[before]'),
+        $this->getProp($data, '[after]'),
+        $this->getProp($data, '[checkout_sha]'),
         $commits,
         $this->getProp($data, '[total_commits_count]')
     ));

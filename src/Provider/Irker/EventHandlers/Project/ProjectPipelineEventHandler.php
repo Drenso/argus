@@ -4,6 +4,7 @@ namespace App\Provider\Irker\EventHandlers\Project;
 
 use App\Events\Project\ProjectPipelineEvent;
 use App\Provider\Irker\IrkerUtils;
+use App\Utils\GitShaUtils;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProjectPipelineEventHandler extends AbstractProjectEventHandler implements EventSubscriberInterface
@@ -18,7 +19,7 @@ class ProjectPipelineEventHandler extends AbstractProjectEventHandler implements
   public function onEvent(ProjectPipelineEvent $event)
   {
     $this->wrapHandler($event, function () use ($event) {
-      $sha      = substr($event->getSha(), 0, 8);
+      $shortSha = GitShaUtils::getShortSha($event->getSha());
       $skipJobs = false;
 
       switch ($event->getAction()) {
@@ -57,7 +58,7 @@ class ProjectPipelineEventHandler extends AbstractProjectEventHandler implements
         $this->message(sprintf($fill,
             IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
             $event->getIid(),
-            $sha,
+            $shortSha,
             $event->getUser(),
             IrkerUtils::colorize($event->getUrl(), IrkerUtils::COLOR_BLUE)
         ));
@@ -65,7 +66,7 @@ class ProjectPipelineEventHandler extends AbstractProjectEventHandler implements
         $this->message(sprintf($fill,
             IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
             $event->getIid(),
-            $sha,
+            $shortSha,
             $event->getNumJobs(),
             $event->getNumJobs() > 1 ? 's' : '',
             $event->getUser(),
