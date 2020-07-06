@@ -5,7 +5,7 @@ namespace App\Events\Project;
 class ProjectTagEvent extends AbstractProjectEvent implements ProjectEvent
 {
   /**
-   * @var string
+   * @var string|null
    */
   private $checkoutSha;
   /**
@@ -14,7 +14,7 @@ class ProjectTagEvent extends AbstractProjectEvent implements ProjectEvent
   private $before;
 
   public function __construct(
-      string $projectName, string $user, string $tag, string $url, string $action, string $before, string $checkoutSha)
+      string $projectName, string $user, string $tag, string $url, string $action, string $before, ?string $checkoutSha)
   {
     parent::__construct($projectName, $user, $tag, $url, $action);
 
@@ -23,9 +23,9 @@ class ProjectTagEvent extends AbstractProjectEvent implements ProjectEvent
   }
 
   /**
-   * @return string
+   * @return string|null
    */
-  public function getCheckoutSha(): string
+  public function getCheckoutSha(): ?string
   {
     return $this->checkoutSha;
   }
