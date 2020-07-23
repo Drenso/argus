@@ -44,7 +44,7 @@ class ProjectPushEventHandler extends AbstractProjectEventHandler implements Eve
         // New branch
         $this->message(sprintf('[%s/%s] %s pushed a %s branch with %d commit%s [ %s ]',
             IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
-            IrkerUtils::colorize($event->getBranch(), IrkerUtils::COLOR_BROWN),
+            IrkerUtils::colorize($event->getBranch(), IrkerUtils::COLOR_DARK_RED),
             $event->getUser(),
             IrkerUtils::colorize('new', IrkerUtils::COLOR_GREEN),
             $event->getTotalCommitCount(),
@@ -56,14 +56,14 @@ class ProjectPushEventHandler extends AbstractProjectEventHandler implements Eve
         $this->message(sprintf('[%s] %s %s branch %s',
             IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
             $event->getUser(),
-            IrkerUtils::colorize('deleted', IrkerUtils::COLOR_BROWN),
+            IrkerUtils::colorize('deleted', IrkerUtils::COLOR_DARK_RED),
             $event->getBranch(),
         ));
       } else {
         // Normal push
         $this->message(sprintf('[%s/%s] %s pushed %d commit%s [ %s ]',
             IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
-            IrkerUtils::colorize($event->getBranch(), IrkerUtils::COLOR_BROWN),
+            IrkerUtils::colorize($event->getBranch(), IrkerUtils::COLOR_DARK_RED),
             $event->getUser(),
             $event->getTotalCommitCount(),
             $event->getTotalCommitCount() > 1 ? 's' : '',
@@ -89,7 +89,7 @@ class ProjectPushEventHandler extends AbstractProjectEventHandler implements Eve
           // Create the message
           $this->message(sprintf('[%s/%s] %s: %s (by %s) [ %s ]',
               IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
-              IrkerUtils::colorize($event->getBranch(), IrkerUtils::COLOR_BROWN),
+              IrkerUtils::colorize($event->getBranch(), IrkerUtils::COLOR_DARK_RED),
               IrkerUtils::colorize($shortSha, IrkerUtils::COLOR_GREY),
               $commitMessage,
               $author,
@@ -115,7 +115,7 @@ class ProjectPushEventHandler extends AbstractProjectEventHandler implements Eve
         foreach ($commitMap as $author => $count) {
           $this->message(sprintf('[%s/%s] %d commit%s from %s',
               IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
-              IrkerUtils::colorize($event->getBranch(), IrkerUtils::COLOR_BROWN),
+              IrkerUtils::colorize($event->getBranch(), IrkerUtils::COLOR_DARK_RED),
               $count,
               $count > 1 ? 's' : '',
               $author));

@@ -32,7 +32,7 @@ class ProjectIssueEventHandler extends AbstractProjectEventHandler implements Ev
           $fill = '[%s] Issue #%s ' . IrkerUtils::colorize('closed', IrkerUtils::COLOR_GREEN) . ' by %s: %s [ %s ]';
           break;
         case 'test':
-          $fill = '[%s] Issue #%s ' . IrkerUtils::colorize('test hook', IrkerUtils::COLOR_BROWN) . ' by %s: %s [ %s ]';
+          $fill = '[%s] Issue #%s ' . IrkerUtils::colorize('test hook', IrkerUtils::COLOR_DARK_RED) . ' by %s: %s [ %s ]';
           break;
         default:
           $fill = '[%s] Unknown action on issue #%s by %s [ %s ]';

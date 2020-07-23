@@ -27,7 +27,7 @@ class IrkerUtils
   const COLOR_BLUE = 2;
   const COLOR_GREEN = 3;
   const COLOR_LIGHT_RED = 4;
-  const COLOR_BROWN = 5;
+  const COLOR_DARK_RED = 5;
   const COLOR_PURPLE = 6;
   const COLOR_ORANGE = 7;
   const COLOR_YELLOW = 8;
