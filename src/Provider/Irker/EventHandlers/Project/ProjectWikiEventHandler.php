@@ -33,7 +33,7 @@ class ProjectWikiEventHandler extends AbstractProjectEventHandler implements Eve
             $fill = '[%s] Wiki page %s ' . IrkerUtils::colorize('updated', IrkerUtils::COLOR_PURPLE) . ' by %s: %s [ %s ]';
             break;
           case 'delete':
-            $fill = '[%s] Wiki page %s ' . IrkerUtils::colorize('deleted', IrkerUtils::COLOR_LIGHT_RED) . ' by %s: %s';
+            $fill = '[%s] Wiki page %s ' . IrkerUtils::colorize('deleted', IrkerUtils::COLOR_DARK_RED) . ' by %s: %s';
 
             $this->message(sprintf($fill,
                 IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
@@ -73,7 +73,7 @@ class ProjectWikiEventHandler extends AbstractProjectEventHandler implements Eve
             $fill = '[%s] Wiki page %s ' . IrkerUtils::colorize('updated', IrkerUtils::COLOR_PURPLE) . ' by %s [ %s ]';
             break;
           case 'delete':
-            $fill = '[%s] Wiki page %s ' . IrkerUtils::colorize('deleted', IrkerUtils::COLOR_LIGHT_RED) . ' by %s';
+            $fill = '[%s] Wiki page %s ' . IrkerUtils::colorize('deleted', IrkerUtils::COLOR_DARK_RED) . ' by %s';
 
             $this->message(sprintf($fill,
                 IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),

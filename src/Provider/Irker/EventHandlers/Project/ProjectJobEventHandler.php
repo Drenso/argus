@@ -30,7 +30,7 @@ class ProjectJobEventHandler extends AbstractProjectEventHandler implements Even
           $fill = '[%s] Build #%s, submitted by %s, has been ' . IrkerUtils::colorize('cancelled', IrkerUtils::COLOR_LIGHT_RED) . ' [ %s ]';
           break;
         case 'failed':
-          $fill = '[%s] Build #%s, submitted by %s, has ' . IrkerUtils::colorize('failed', IrkerUtils::COLOR_LIGHT_RED) . ' [ %s ]';
+          $fill = '[%s] Build #%s, submitted by %s, has ' . IrkerUtils::colorize('failed', IrkerUtils::COLOR_DARK_RED) . ' [ %s ]';
           break;
         case 'success':
           $fill = '[%s] Build #%s, submitted by %s, has ' . IrkerUtils::colorize('succeeded', IrkerUtils::COLOR_GREEN) . ' [ %s ]';

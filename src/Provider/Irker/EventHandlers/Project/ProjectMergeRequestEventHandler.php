@@ -30,7 +30,7 @@ class ProjectMergeRequestEventHandler extends AbstractProjectEventHandler implem
           $fill = '[%s] Merge request !%s ' . IrkerUtils::colorize('updated', IrkerUtils::COLOR_PURPLE) . ' by %s: %s [ %s ]';
           break;
         case 'close':
-          $fill = '[%s] Merge request !%s ' . IrkerUtils::colorize('closed', IrkerUtils::COLOR_GREEN) . ' by %s: %s [ %s ]';
+          $fill = '[%s] Merge request !%s ' . IrkerUtils::colorize('closed', IrkerUtils::COLOR_DARK_RED) . ' by %s: %s [ %s ]';
           break;
         case 'merge':
           $fill = '[%s] Merge request !%s ' . IrkerUtils::colorize('merged', IrkerUtils::COLOR_GREEN) . ' by %s: %s [ %s ]';
