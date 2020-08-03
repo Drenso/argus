@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
@@ -20,6 +21,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
+use function Symfony\Component\String\u;
 
 class ArgusJwtAuthenticator extends AbstractAuthenticator
 {
@@ -28,6 +30,10 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
 
   // todo: make configurable
   private const TOKEN_VALIDITY = '+1 week';
+  /**
+   * @var string
+   */
+  private $apiControllerPrefix;
 
   /**
    * @var DateTimeProvider
@@ -38,16 +44,23 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
    */
   private $jwtSecret;
   /**
+   * @var RouterInterface
+   */
+  private $router;
+  /**
    * @var UserProviderInterface
    */
   private $userProvider;
 
   public function __construct(
-      DateTimeProvider $dateTimeProvider, UserProviderInterface $userProvider, string $jwtSecret)
+      DateTimeProvider $dateTimeProvider, UserProviderInterface $userProvider, RouterInterface $router,
+      string $apiControllerPrefix, string $jwtSecret)
   {
-    $this->dateTimeProvider = $dateTimeProvider;
-    $this->jwtSecret        = $jwtSecret;
-    $this->userProvider     = $userProvider;
+    $this->dateTimeProvider    = $dateTimeProvider;
+    $this->jwtSecret           = $jwtSecret;
+    $this->userProvider        = $userProvider;
+    $this->apiControllerPrefix = $apiControllerPrefix;
+    $this->router              = $router;
   }
 
   public function createCookieForUser(UserInterface $user)
@@ -65,7 +78,7 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
 
   public function supports(Request $request): ?bool
   {
-    return $request->cookies->has(self::COOKIE_NAME);
+    return $this->isApiController($request) && $request->cookies->has(self::COOKIE_NAME);
   }
 
   public function authenticate(Request $request): PassportInterface
@@ -103,5 +116,10 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
     $response->headers->clearCookie(self::COOKIE_NAME);
 
     return $response;
+  }
+
+  private function isApiController(Request $request)
+  {
+    return u($request->get('_controller'))->startsWith($this->apiControllerPrefix);
   }
 }

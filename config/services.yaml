@@ -16,6 +16,8 @@ parameters:
   router.request_context.host: '%env(HTTP_HOST)%'
   router.request_context.scheme: '%env(HTTP_SCHEMA)%'
 
+  api_controller_prefix: 'App\Controller\Api\'
+
   gitlab.url: '%env(GITLAB_URL)%'
   gitlab.token: '%env(string:key:gitlab_token:json:file:resolve:SECRETS_FILE)%'
   gitlab.webhook.secret-enabled: '%env(bool:GITLAB_WEBHOOK_SECRET_ENABLED)%'
@@ -89,6 +91,7 @@ services:
 
   App\Security\ArgusJwtAuthenticator:
     arguments:
+      $apiControllerPrefix: '%api_controller_prefix%'
       $jwtSecret: "%env(string:key:jwt_secret:json:file:resolve:SECRETS_FILE)%"
 
   App\Serializer\Entity\ProjectSerializer:

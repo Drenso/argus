@@ -45,7 +45,7 @@
         "build:email": "/bin/true"
     },
     "dependencies": {
-        "@drenso/vue-frontend-shared": "^0.4.5",
+        "@drenso/vue-frontend-shared": "^0.5.2",
         "@fortawesome/fontawesome-free": "^5.13.0",
         "@fortawesome/fontawesome-svg-core": "^1.2.28",
         "@fortawesome/vue-fontawesome": "^0.1.10",
