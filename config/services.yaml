@@ -16,6 +16,8 @@ parameters:
   router.request_context.host: '%env(HTTP_HOST)%'
   router.request_context.scheme: '%env(HTTP_SCHEMA)%'
 
+  env(TOKEN_VALIDITY): '1 week'
+
   api_controller_prefix: 'App\Controller\Api\'
 
   gitlab.url: '%env(GITLAB_URL)%'
@@ -93,6 +95,7 @@ services:
     arguments:
       $apiControllerPrefix: '%api_controller_prefix%'
       $jwtSecret: "%env(string:key:jwt_secret:json:file:resolve:SECRETS_FILE)%"
+      $tokenValidity: '%env(TOKEN_VALIDITY)%'
 
   App\Serializer\Entity\ProjectSerializer:
     arguments:

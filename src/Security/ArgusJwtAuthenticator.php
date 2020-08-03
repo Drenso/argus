@@ -28,8 +28,6 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
   public const COOKIE_NAME = 'argusAuthentication';
   private const CLAIM_USERNAME = 'username';
 
-  // todo: make configurable
-  private const TOKEN_VALIDITY = '+1 week';
   /**
    * @var string
    */
@@ -48,19 +46,24 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
    */
   private $router;
   /**
+   * @var string
+   */
+  private $tokenValidity;
+  /**
    * @var UserProviderInterface
    */
   private $userProvider;
 
   public function __construct(
       DateTimeProvider $dateTimeProvider, UserProviderInterface $userProvider, RouterInterface $router,
-      string $apiControllerPrefix, string $jwtSecret)
+      string $apiControllerPrefix, string $jwtSecret, string $tokenValidity)
   {
     $this->dateTimeProvider    = $dateTimeProvider;
     $this->jwtSecret           = $jwtSecret;
     $this->userProvider        = $userProvider;
     $this->apiControllerPrefix = $apiControllerPrefix;
     $this->router              = $router;
+    $this->tokenValidity       = $tokenValidity;
   }
 
   public function createCookieForUser(UserInterface $user)
@@ -68,7 +71,7 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
     $jwt = (new Builder())
         ->identifiedBy(bin2hex(random_bytes(20)))
         ->withClaim(self::CLAIM_USERNAME, $user->getUsername())
-        ->expiresAt($this->dateTimeProvider->utcNow()->modify(self::TOKEN_VALIDITY)->getTimestamp())
+        ->expiresAt($this->dateTimeProvider->utcNow()->modify('+' . $this->tokenValidity)->getTimestamp())
         ->getToken(new Sha512(), new Key($this->jwtSecret));
 
     return Cookie::create(
