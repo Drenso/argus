@@ -37,6 +37,15 @@ Add a user with: `docker exec -itu www-data docker_argus_1 bin/console argus:add
 When using an external HTTPS termination, make sure the set the trusted proxies variable for the Argus container.
 The example does this by default.
 
+### Updating
+
+When you update the application, make sure to remove the public assets volume created for nginx! 
+When installed in the `argus` directory, run the following to update (after changing the version in `docker-compose.yml`): 
+
+```
+docker-compose down && docker volume rm argus_argus-public && docker-compose up -d 
+```
+
 # Do you have questions?
 
 Do you think the documentation is a bit simple, or are you missing features? Open a ticket or just contribute! 
