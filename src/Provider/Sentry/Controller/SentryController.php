@@ -37,7 +37,7 @@ class SentryController extends AbstractController
     $content          = $request->getContent();
     $requestSignature = $request->headers->get(self::SignatureHeader);
     if ($requestSignature !== hash_hmac('SHA256', $content, $this->getParameter('sentry.webhook.secret'))) {
-      //throw $this->createAccessDeniedException();
+      throw $this->createAccessDeniedException();
     }
 
     $payload = $serializer->deserialize($content, 'array', 'json');
