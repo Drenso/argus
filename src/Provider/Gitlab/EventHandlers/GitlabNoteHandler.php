@@ -15,6 +15,11 @@ class GitlabNoteHandler extends AbstractGitlabEventHandler implements EventSubsc
     return 'Note Hook';
   }
 
+  protected function isConfidential(): bool
+  {
+    return false;
+  }
+
   protected function handleEvent(IncomingGitlabEvent $event): void
   {
     $data = $event->getPayload();
@@ -53,7 +58,8 @@ class GitlabNoteHandler extends AbstractGitlabEventHandler implements EventSubsc
         $this->getProp($data, '[object_attributes][url]'),
         $action,
         $title,
-        $this->getProp($data, '[object_attributes][note]')
+        $this->getProp($data, '[object_attributes][note]'),
+        $this->isConfidential()
     ));
   }
 }

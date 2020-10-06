@@ -27,13 +27,13 @@ class ProjectNoteEventHandler extends AbstractProjectEventHandler implements Eve
 
       switch ($event->getAction()) {
         case 'commit':
-          $fill = '[%s] Note to commit %s ("%s") added by %s: %s [ %s ]';
+          $fill = '[%s] Note to%s commit %s ("%s") added by %s: %s [ %s ]';
           break;
         case 'merge_request':
-          $fill = '[%s] Note to merge request "%s" (#%s) added by %s: %s [ %s ]';
+          $fill = '[%s] Note to%s merge request "%s" (#%s) added by %s: %s [ %s ]';
           break;
         case 'issue':
-          $fill = '[%s] Note to issue "%s" (#%s) added by %s: %s [ %s ]';
+          $fill = '[%s] Note to%s issue "%s" (#%s) added by %s: %s [ %s ]';
           break;
         case 'snippet':
           // Ignore snippets
@@ -51,6 +51,7 @@ class ProjectNoteEventHandler extends AbstractProjectEventHandler implements Eve
 
       $this->message(sprintf($fill,
           IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
+          $event->isConfidential() ? (' ' . IrkerUtils::colorize('confidential', IrkerUtils::COLOR_ORANGE)) : '',
           $event->getTitle(),
           $event->getIid(),
           $event->getUser(),

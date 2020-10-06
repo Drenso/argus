@@ -14,6 +14,11 @@ class GitlabIssueEventHandler extends AbstractGitlabEventHandler implements Even
     return 'Issue Hook';
   }
 
+  protected function isConfidential(): bool
+  {
+    return false;
+  }
+
   protected function handleEvent(IncomingGitlabEvent $event): void
   {
     $data = $event->getPayload();
@@ -31,7 +36,8 @@ class GitlabIssueEventHandler extends AbstractGitlabEventHandler implements Even
         $this->getProp($data, '[object_attributes][iid]'),
         $this->getProp($data, '[object_attributes][url]'),
         $action,
-        $this->getProp($data, '[object_attributes][title]')
+        $this->getProp($data, '[object_attributes][title]'),
+        $this->isConfidential()
     ));
   }
 }

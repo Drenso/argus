@@ -10,4 +10,9 @@ class GitlabConfidentialIssueEventHandler extends GitlabIssueEventHandler implem
   {
     return 'Confidential Issue Hook';
   }
+
+  protected function isConfidential(): bool
+  {
+    return true;
+  }
 }

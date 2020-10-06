@@ -10,4 +10,9 @@ class GitlabConfidentialNoteHandler extends GitlabNoteHandler implements EventSu
   {
     return 'Confidential Note Hook';
   }
+
+  protected function isConfidential(): bool
+  {
+    return true;
+  }
 }
