@@ -34,6 +34,9 @@ parameters:
   sentry.webhook.secret: '%env(string:key:sentry_webhook_secret:json:file:resolve:SECRETS_FILE)%'
   sentry.secret: '%env(string:key:sentry_secret:json:file:resolve:SECRETS_FILE)%'
 
+  webhook.endpoint: '%env(WEBHOOK_ENDPOINT)%'
+  webhook.endpoint.secret: '%env(string:key:webhook_secret:json:file:resolve:SECRETS_FILE)%'
+
 services:
   # default configuration for services in *this* file
   _defaults:
@@ -90,6 +93,11 @@ services:
   App\Provider\Sentry\EventHandlers\SentryEventAlertEventHandler:
     arguments:
       $sentrySecret: '%sentry.secret%'
+
+  App\Provider\Webhook\EventHandlers\WebhookNotifierEventHandler:
+    arguments:
+      $endpoint: '%webhook.endpoint%'
+      $endpointSecret: '%webhook.endpoint.secret%'
 
   App\Security\ArgusJwtAuthenticator:
     arguments:
