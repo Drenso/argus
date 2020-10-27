@@ -55,7 +55,7 @@ class GitlabNoteHandler extends AbstractGitlabEventHandler implements EventSubsc
         $this->getProp($data, '[project][path_with_namespace]'),
         $this->getProp($data, '[user][name]'),
         $iid,
-        $this->getProp($data, '[object_attributes][url]'),
+        $this->getProp($data, '[object_attributes][url]') ?? '',
         $action,
         $title,
         $this->getProp($data, '[object_attributes][note]'),
