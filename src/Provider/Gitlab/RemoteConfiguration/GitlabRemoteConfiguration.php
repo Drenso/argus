@@ -202,6 +202,7 @@ class GitlabRemoteConfiguration implements RemoteConfigurationInterface
     $foundHook    = array_search($webhookUrl, array_column($currentHooks, 'url'));
 
     if (false !== $foundHook) {
+      /** @phan-suppress-next-line PhanTypeArraySuspiciousNullable */
       return $currentHooks[$foundHook];
     }
 

@@ -44,11 +44,11 @@ class GitlabApiConnector
    * @param string  $endpoint
    * @param array   $requestOptions
    *
-   * @return array
+   * @return array|null
    *
    * @throws GitlabRemoteCallFailedException
    */
-  public function projectApi(Project $project, string $method, string $endpoint, array $requestOptions = []): array
+  public function projectApi(Project $project, string $method, string $endpoint, array $requestOptions = []): ?array
   {
     $url = sprintf('%s/%s/projects/%s%s%s',
         $this->gitlabUrl, self::API_BASE, urlencode($project->getName()), strlen($endpoint) > 0 ? '/' : '', $endpoint);
@@ -60,7 +60,11 @@ class GitlabApiConnector
     try {
       $response = $this->httpClient->request($method, $url, $requestOptions);
 
-      return $this->serializer->deserialize($response->getContent(), 'array', 'json');
+      if ((($response->getHeaders()['content-type'] ?? [])[0] ?? null) === 'application/json') {
+        return $this->serializer->deserialize($response->getContent(), 'array', 'json');
+      }
+
+      return NULL;
     } catch (ExceptionInterface $e) {
       if (isset($response)) {
         throw new GitlabRemoteCallFailedException($response, NULL);
