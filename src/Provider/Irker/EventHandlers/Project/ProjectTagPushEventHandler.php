@@ -22,18 +22,18 @@ class ProjectTagPushEventHandler extends AbstractProjectEventHandler implements 
     $this->wrapHandler($event, function () use ($event) {
       switch ($event->getAction()) {
         case 'created':
-          $this->message(sprintf('[%s] Tag %s (%s) created by %s [ %s ]',
+          $this->message(sprintf('[%s] Tag %s (%s) ' . IrkerUtils::colorize('created', IrkerUtils::COLOR_GREEN) . ' by %s [ %s ]',
               IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
-              IrkerUtils::colorize($event->getTag(), IrkerUtils::COLOR_GREEN),
+              $event->getTag(),
               IrkerUtils::colorize(GitShaUtils::getShortSha($event->getCheckoutSha()), IrkerUtils::COLOR_GREY),
               $event->getUser(),
               IrkerUtils::colorize($event->getUrl(), IrkerUtils::COLOR_BLUE)
           ));
           break;
         case 'removed':
-          $this->message(sprintf('[%s] Tag %s (%s) removed by %s',
+          $this->message(sprintf('[%s] Tag %s (%s) ' . IrkerUtils::colorize('removed', IrkerUtils::COLOR_DARK_RED) . ' by %s',
               IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
-              IrkerUtils::colorize($event->getTag(), IrkerUtils::COLOR_GREEN),
+              $event->getTag(),
               IrkerUtils::colorize(GitShaUtils::getShortSha($event->getBefore()), IrkerUtils::COLOR_GREY),
               $event->getUser()
           ));
