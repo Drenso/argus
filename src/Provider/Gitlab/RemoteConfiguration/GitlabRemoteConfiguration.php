@@ -156,6 +156,8 @@ class GitlabRemoteConfiguration implements RemoteConfigurationInterface
             'job_events'                 => true,
             'pipeline_events'            => true,
             'wiki_page_events'           => true,
+            'deployment_events'          => true,
+            'releases_events'            => true,
             'enable_ssl_verification'    => true,
             'token'                      => $this->gitlabWebhookSecret,
         ],
