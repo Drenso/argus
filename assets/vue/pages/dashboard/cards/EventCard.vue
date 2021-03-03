@@ -6,7 +6,7 @@
           {{ 'event.title.stats'|trans }}
         </div>
         <div class="ml-2">
-          <a @click="refresh" class="pointer" v-if="stats !== null"
+          <a @click="refresh" class="pointer text-white" v-if="stats !== null"
              v-b-tooltip.hover.left :title="'general.refresh'|trans">
             <font-awesome-icon icon="sync-alt" fixed-width :spin="refreshing"/>
           </a>

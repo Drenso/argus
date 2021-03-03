@@ -6,7 +6,7 @@
           {{ 'project.title.list'|trans }}
         </div>
         <div class="ml-2">
-          <a class="pointer" v-if="projects !== null"
+          <a class="pointer text-white" v-if="projects !== null"
              v-b-tooltip.hover.left
              :title="'general.refresh'|trans"
              @click="refresh">
