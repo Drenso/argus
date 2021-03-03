@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
@@ -42,10 +41,6 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
    */
   private $jwtSecret;
   /**
-   * @var RouterInterface
-   */
-  private $router;
-  /**
    * @var string
    */
   private $tokenValidity;
@@ -55,14 +50,13 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
   private $userProvider;
 
   public function __construct(
-      DateTimeProvider $dateTimeProvider, UserProviderInterface $userProvider, RouterInterface $router,
+      DateTimeProvider $dateTimeProvider, UserProviderInterface $userProvider,
       string $apiControllerPrefix, string $jwtSecret, string $tokenValidity)
   {
     $this->dateTimeProvider    = $dateTimeProvider;
     $this->jwtSecret           = $jwtSecret;
     $this->userProvider        = $userProvider;
     $this->apiControllerPrefix = $apiControllerPrefix;
-    $this->router              = $router;
     $this->tokenValidity       = $tokenValidity;
   }
 
@@ -93,6 +87,7 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
 
     $token = (new Parser())
         ->parse($jwt);
+    /** @phan-suppress-next-line PhanDeprecatedFunction */
     if (!$token->verify(new Sha512(), new Key($this->jwtSecret))) {
       throw new CustomUserMessageAuthenticationException('Auth token invalid');
     }
@@ -101,6 +96,7 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
       throw new CustomUserMessageAccountStatusException('Token expired');
     }
 
+    /** @phan-suppress-next-line PhanDeprecatedFunction */
     if (!$user = $this->userProvider->loadUserByUsername($token->getClaim(self::CLAIM_USERNAME))) {
       throw new CustomUserMessageAccountStatusException('Account expired');
     }
