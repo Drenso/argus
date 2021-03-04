@@ -17,7 +17,7 @@
         "friendsofsymfony/jsrouting-bundle": "^2.7.0",
         "jms/serializer-bundle": "^3.8.0",
         "lcobucci/jwt": "^3.4.5",
-        "sensio/framework-extra-bundle": "^v5.6.1",
+        "sensio/framework-extra-bundle": "^v6.1.1",
         "sentry/sentry-symfony": "^3.5.3",
         "symfony/console": "^5.1.11",
         "symfony/dotenv": "^5.1.11",
