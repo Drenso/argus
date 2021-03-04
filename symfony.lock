@@ -446,6 +446,18 @@
     "symfony/property-info": {
         "version": "v5.1.2"
     },
+    "symfony/psr-http-message-bridge": {
+        "version": "2.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.1",
+            "ref": "df8ec1e90aec60d301ec59a22093fc3febedb795"
+        },
+        "files": [
+            "config/packages/psr_http_message_bridge.yaml"
+        ]
+    },
     "symfony/routing": {
         "version": "4.2",
         "recipe": {
