@@ -446,6 +446,9 @@
     "symfony/property-info": {
         "version": "v5.1.2"
     },
+    "symfony/proxy-manager-bridge": {
+        "version": "v5.2.4"
+    },
     "symfony/psr-http-message-bridge": {
         "version": "2.1",
         "recipe": {
