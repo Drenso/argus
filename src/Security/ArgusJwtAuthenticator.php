@@ -16,8 +16,8 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 use function Symfony\Component\String\u;
@@ -44,18 +44,12 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
    * @var string
    */
   private $tokenValidity;
-  /**
-   * @var UserProviderInterface
-   */
-  private $userProvider;
 
   public function __construct(
-      DateTimeProvider $dateTimeProvider, UserProviderInterface $userProvider,
-      string $apiControllerPrefix, string $jwtSecret, string $tokenValidity)
+      DateTimeProvider $dateTimeProvider, string $apiControllerPrefix, string $jwtSecret, string $tokenValidity)
   {
     $this->dateTimeProvider    = $dateTimeProvider;
     $this->jwtSecret           = $jwtSecret;
-    $this->userProvider        = $userProvider;
     $this->apiControllerPrefix = $apiControllerPrefix;
     $this->tokenValidity       = $tokenValidity;
   }
@@ -97,11 +91,7 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
     }
 
     /** @phan-suppress-next-line PhanDeprecatedFunction */
-    if (!$user = $this->userProvider->loadUserByUsername($token->getClaim(self::CLAIM_USERNAME))) {
-      throw new CustomUserMessageAccountStatusException('Account expired');
-    }
-
-    return new SelfValidatingPassport($user);
+    return new SelfValidatingPassport(new UserBadge($token->getClaim(self::CLAIM_USERNAME)));
   }
 
   public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
