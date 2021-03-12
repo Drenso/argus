@@ -15,7 +15,7 @@ services:
       MYSQL_PASSWORD:
 
   web:
-    image: 'library/nginx:1.19.7-alpine'
+    image: 'library/nginx:1.19.8-alpine'
     restart: on-failure
     networks:
       - argus-network
