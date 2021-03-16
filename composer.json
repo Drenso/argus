@@ -12,7 +12,7 @@
         "ext-json": "*",
         "ext-sockets": "*",
         "antishov/doctrine-extensions-bundle": "^v1.4.3",
-        "doctrine/doctrine-bundle": "^2.2.3",
+        "doctrine/doctrine-bundle": "^2.2.4",
         "doctrine/doctrine-migrations-bundle": "^3.0.2",
         "doctrine/orm": "^2.8.2",
         "doctrine/persistence": "^2.1.0",
