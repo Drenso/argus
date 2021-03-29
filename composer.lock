@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4fb1b469e9e3a2cac21123c6e384d420",
+    "content-hash": "454cd9ea2238628857fb754e9e8d9a06",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
@@ -8995,16 +8995,16 @@
     "packages-dev": [
         {
             "name": "drenso/phan-extensions",
-            "version": "v3.2.1",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Drenso/PhanExtensions.git",
-                "reference": "ac15701a0d8cb283f6e542a25e7175f2ca3a717f"
+                "reference": "bd479813f4d9275262a04b655f966a6503cafa3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Drenso/PhanExtensions/zipball/ac15701a0d8cb283f6e542a25e7175f2ca3a717f",
-                "reference": "ac15701a0d8cb283f6e542a25e7175f2ca3a717f",
+                "url": "https://api.github.com/repos/Drenso/PhanExtensions/zipball/bd479813f4d9275262a04b655f966a6503cafa3b",
+                "reference": "bd479813f4d9275262a04b655f966a6503cafa3b",
                 "shasum": ""
             },
             "require-dev": {
@@ -9037,9 +9037,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Drenso/PhanExtensions/issues",
-                "source": "https://github.com/Drenso/PhanExtensions/tree/master"
+                "source": "https://github.com/Drenso/PhanExtensions/tree/v3.3.0"
             },
-            "time": "2020-07-03T11:47:46+00:00"
+            "time": "2021-03-28T13:04:31+00:00"
         },
         {
             "name": "nikic/php-parser",
