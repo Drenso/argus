@@ -824,10 +824,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@drenso/vue-frontend-shared@^0.8.3":
-  version "0.8.3"
-  resolved "https://npm.drenso.dev/@drenso%2fvue-frontend-shared/-/vue-frontend-shared-0.8.3.tgz#330e0dd4e14b71521eeac7913cf4603c6b6ca3e3"
-  integrity sha512-US+p5wenaLVZdHKFnmpA/nTDMZvr+Q30+88y7GoWGJkMaw4cKNN8Cm7hzquHekV+TlwZ3giJFMl5s2TYf70pNw==
+"@drenso/vue-frontend-shared@^0.8.4":
+  version "0.8.4"
+  resolved "https://npm.drenso.dev/@drenso%2fvue-frontend-shared/-/vue-frontend-shared-0.8.4.tgz#ca8da3b70d09315514ca5cb62259de41b63e4f81"
+  integrity sha512-jJ9Wkn7feDZNa8HgMHc3d9K9zzPIus1DZVB2iegR6vtPijwwbhWD/sZ2VT90YH5EG89x5CZBOyNxBLu9t7tPgg==
 
 "@fortawesome/fontawesome-common-types@^0.2.35":
   version "0.2.35"
