@@ -13,7 +13,7 @@
         "ext-sockets": "*",
         "antishov/doctrine-extensions-bundle": "^1.4.3",
         "doctrine/doctrine-bundle": "^2.3.1",
-        "doctrine/doctrine-migrations-bundle": "^3.0.2",
+        "doctrine/doctrine-migrations-bundle": "^3.1.1",
         "doctrine/orm": "^2.8.4",
         "doctrine/persistence": "^2.1.0",
         "drenso/symfony-shared": "^1.22.6",
