@@ -67,7 +67,7 @@ class SentryEventAlertEventHandler extends AbstractSentryEventHandler implements
     }
 
     try {
-      $release = $this->getProp($data, '[release]');
+      $release = $this->getProp($data, '[release]') ?? 'unknown';
     } catch (MissingPropertyException $e) {
       $release = 'unknown';
     }
