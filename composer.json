@@ -18,7 +18,7 @@
         "doctrine/persistence": "^2.1.0",
         "drenso/symfony-shared": "^1.22.6",
         "friendsofsymfony/jsrouting-bundle": "^2.7.0",
-        "jms/serializer": "^3.12.2",
+        "jms/serializer": "^3.12.3",
         "jms/serializer-bundle": "^3.9.1",
         "lcobucci/jwt": "^3.4.5",
         "psr/log": "^1.1.3",
