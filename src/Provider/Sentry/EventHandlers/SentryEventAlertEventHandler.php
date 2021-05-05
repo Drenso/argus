@@ -66,14 +66,38 @@ class SentryEventAlertEventHandler extends AbstractSentryEventHandler implements
       return;
     }
 
+    $release = NULL;
     try {
-      $release = $this->getProp($data, '[release]') ?? 'unknown';
+      $release = $this->getProp($data, '[release]');
     } catch (MissingPropertyException $e) {
-      $release = 'unknown';
+    }
+
+    if (!$release) {
+      try {
+        $tags    = $this->getProp($data, '[tags]');
+        $release = '';
+        foreach ($tags as $tag) {
+          switch ($tag[0] ?? '') {
+            case 'appId':
+              $appId = $tag[1];
+              break;
+            case 'appVersion':
+              $appVersion = $tag[1];
+              break;
+          }
+        }
+
+        if (isset($appId) && isset($appVersion)) {
+          $release = sprintf('%s@%s', $appId, $appVersion);
+        } else {
+          $release = NULL;
+        }
+      } catch (MissingPropertyException $e) {
+      }
     }
 
     $this->usageEvent(new UsageErrorEvent(
-        $release,
+        $release ?? 'unknown@unknown',
         $this->getProp($data, '[title]'),
         $this->getProp($data, '[web_url]')
     ));

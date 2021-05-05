@@ -22,7 +22,7 @@ class UsageErrorEventHandler extends AbstractUsageEventHandler implements EventS
 
       $this->message(sprintf('[%s@%s] Error ' . IrkerUtils::colorize('triggered', IrkerUtils::COLOR_LIGHT_RED) . ': %s [ %s ]',
           IrkerUtils::colorize($explodedRelease[0], IrkerUtils::COLOR_LIGHT_RED),
-          IrkerUtils::colorize($explodedRelease[1] ?: 'unknown', IrkerUtils::COLOR_DARK_RED),
+          IrkerUtils::colorize($explodedRelease[1] ?? 'unknown', IrkerUtils::COLOR_DARK_RED),
           $event->getTitle(),
           IrkerUtils::colorize($event->getUrl(), IrkerUtils::COLOR_BLUE)
       ));
