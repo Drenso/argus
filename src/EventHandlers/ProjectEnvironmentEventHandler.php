@@ -4,13 +4,12 @@ namespace App\EventHandlers;
 
 use App\Entity\ProjectEnvironment;
 use App\Events\Project\ProjectDeploymentEvent;
-use App\Events\ProjectEnvironment\ProjectEnvironmentUpdatedEvent;
 use App\Repository\ProjectEnvironmentRepository;
 use App\Repository\ProjectRepository;
+use App\Service\ProjectService;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class ProjectEnvironmentEventHandler implements EventSubscriberInterface
 {
@@ -23,22 +22,22 @@ class ProjectEnvironmentEventHandler implements EventSubscriberInterface
    */
   private $environmentRepository;
   /**
-   * @var EventDispatcherInterface
-   */
-  private $eventDispatcher;
-  /**
    * @var ProjectRepository
    */
   private $projectRepository;
+  /**
+   * @var ProjectService
+   */
+  private $projectService;
 
   public function __construct(
       ProjectRepository $projectRepository, ProjectEnvironmentRepository $environmentRepository,
-      EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher)
+      ProjectService $projectService, EntityManagerInterface $entityManager)
   {
     $this->projectRepository     = $projectRepository;
     $this->environmentRepository = $environmentRepository;
     $this->entityManager         = $entityManager;
-    $this->eventDispatcher       = $eventDispatcher;
+    $this->projectService        = $projectService;
   }
 
   public static function getSubscribedEvents()
@@ -71,15 +70,7 @@ class ProjectEnvironmentEventHandler implements EventSubscriberInterface
     $this->entityManager->flush();
 
     if ($oldState !== $environment->getCurrentState()) {
-      // We need to recalculate the current state
-      $activeStates = $this->environmentRepository->getActiveStates();
-      foreach (array_reverse(ProjectEnvironment::STATES) as $state) {
-        if (in_array($state, $activeStates)) {
-          $this->eventDispatcher->dispatch(new ProjectEnvironmentUpdatedEvent($state));
-
-          break;
-        }
-      }
+      $this->projectService->environmentUpdated();
     }
   }
 }

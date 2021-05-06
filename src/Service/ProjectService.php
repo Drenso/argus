@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Project;
 use App\Entity\ProjectEnvironment;
+use App\Events\ProjectEnvironment\ProjectEnvironmentUpdatedEvent;
 use App\Exception\DuplicateProjectException;
 use App\Exception\ProjectNotFoundException;
 use App\Provider\Gitlab\GitlabApiConnector;
@@ -13,6 +14,7 @@ use App\Repository\ProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Throwable;
 
 class ProjectService
@@ -21,6 +23,10 @@ class ProjectService
    * @var EntityManagerInterface
    */
   private $entityManager;
+  /**
+   * @var EventDispatcherInterface
+   */
+  private $eventDispatcher;
   /**
    * @var GitlabApiConnector
    */
@@ -51,11 +57,13 @@ class ProjectService
    * @param PropertyAccessorInterface    $propertyAccessor
    * @param EntityManagerInterface       $entityManager
    * @param GitlabApiConnector           $gitlabApiConnector
+   * @param EventDispatcherInterface     $eventDispatcher
    */
   public function __construct(
       ServiceLocator $remoteConfigurationServices, ProjectRepository $projectRepository,
       ProjectEnvironmentRepository $projectEnvironmentRepository, PropertyAccessorInterface $propertyAccessor,
-      EntityManagerInterface $entityManager, GitlabApiConnector $gitlabApiConnector)
+      EntityManagerInterface $entityManager, GitlabApiConnector $gitlabApiConnector,
+      EventDispatcherInterface $eventDispatcher)
   {
     $this->remoteConfigurationServices  = $remoteConfigurationServices;
     $this->projectRepository            = $projectRepository;
@@ -63,6 +71,7 @@ class ProjectService
     $this->propertyAccessor             = $propertyAccessor;
     $this->entityManager                = $entityManager;
     $this->gitlabApiConnector           = $gitlabApiConnector;
+    $this->eventDispatcher              = $eventDispatcher;
   }
 
   /**
@@ -141,6 +150,22 @@ class ProjectService
   }
 
   /**
+   * Call this to broadcast the new environment state
+   */
+  public function environmentUpdated()
+  {
+    // We need to recalculate the current state
+    $activeStates = $this->projectEnvironmentRepository->getActiveStates();
+    foreach (array_reverse(ProjectEnvironment::STATES) as $state) {
+      if (in_array($state, $activeStates)) {
+        $this->eventDispatcher->dispatch(new ProjectEnvironmentUpdatedEvent($state));
+
+        break;
+      }
+    }
+  }
+
+  /**
    * Refreshes the environment information.
    *
    * @param Project $project
@@ -173,6 +198,8 @@ class ProjectService
 
       $this->entityManager->flush();
       $this->entityManager->commit();
+
+      $this->environmentUpdated();
     } catch (Throwable $e) {
       $this->entityManager->rollback();
 
