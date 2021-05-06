@@ -54,7 +54,7 @@
     },
     "require-dev": {
         "drenso/phan-extensions": "^3.4.0",
-        "symfony/maker-bundle": "^1.30.2",
+        "symfony/maker-bundle": "^1.31.0",
         "symfony/profiler-pack": "^1.0.5",
         "symfony/test-pack": "^1.0.7"
     },
