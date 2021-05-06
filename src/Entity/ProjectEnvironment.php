@@ -123,6 +123,23 @@ class ProjectEnvironment
     return $this;
   }
 
+  public function setCurrentStateFromGitlab(string $state): self
+  {
+    switch ($state) {
+      case 'created':
+      case 'running':
+        return $this->setCurrentState(self::STATE_RUNNING);
+      case 'success':
+        return $this->setCurrentState(self::STATE_OK);
+      case 'failed':
+      case 'canceled':
+      case 'cancelled':
+        return $this->setCurrentState(self::STATE_FAILED);
+      default:
+        return $this->setCurrentState(self::STATE_UNKNOWN);
+    }
+  }
+
   public function getLastEvent(): ?DateTimeImmutable
   {
     return $this->lastEvent;

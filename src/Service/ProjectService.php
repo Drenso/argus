@@ -3,13 +3,16 @@
 namespace App\Service;
 
 use App\Entity\Project;
+use App\Entity\ProjectEnvironment;
 use App\Exception\DuplicateProjectException;
 use App\Exception\ProjectNotFoundException;
 use App\Provider\Gitlab\GitlabApiConnector;
 use App\RemoteConfiguration\RemoteConfigurationInterface;
+use App\Repository\ProjectEnvironmentRepository;
 use App\Repository\ProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ServiceLocator;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Throwable;
 
 class ProjectService
@@ -27,6 +30,14 @@ class ProjectService
    */
   private $projectRepository;
   /**
+   * @var ProjectEnvironmentRepository
+   */
+  private $projectEnvironmentRepository;
+  /**
+   * @var PropertyAccessorInterface
+   */
+  private $propertyAccessor;
+  /**
    * @var ServiceLocator
    */
   private $remoteConfigurationServices;
@@ -34,19 +45,24 @@ class ProjectService
   /**
    * ProjectService constructor.
    *
-   * @param ServiceLocator         $remoteConfigurationServices
-   * @param ProjectRepository      $projectRepository
-   * @param EntityManagerInterface $entityManager
-   * @param GitlabApiConnector     $gitlabApiConnector
+   * @param ServiceLocator               $remoteConfigurationServices
+   * @param ProjectRepository            $projectRepository
+   * @param ProjectEnvironmentRepository $projectEnvironmentRepository
+   * @param PropertyAccessorInterface    $propertyAccessor
+   * @param EntityManagerInterface       $entityManager
+   * @param GitlabApiConnector           $gitlabApiConnector
    */
   public function __construct(
       ServiceLocator $remoteConfigurationServices, ProjectRepository $projectRepository,
+      ProjectEnvironmentRepository $projectEnvironmentRepository, PropertyAccessorInterface $propertyAccessor,
       EntityManagerInterface $entityManager, GitlabApiConnector $gitlabApiConnector)
   {
-    $this->remoteConfigurationServices = $remoteConfigurationServices;
-    $this->projectRepository           = $projectRepository;
-    $this->entityManager               = $entityManager;
-    $this->gitlabApiConnector          = $gitlabApiConnector;
+    $this->remoteConfigurationServices  = $remoteConfigurationServices;
+    $this->projectRepository            = $projectRepository;
+    $this->projectEnvironmentRepository = $projectEnvironmentRepository;
+    $this->propertyAccessor             = $propertyAccessor;
+    $this->entityManager                = $entityManager;
+    $this->gitlabApiConnector           = $gitlabApiConnector;
   }
 
   /**
@@ -113,6 +129,47 @@ class ProjectService
 
       foreach ($this->configurationServices() as $service) {
         $service->deleteRemoteConfiguration($project);
+      }
+
+      $this->entityManager->flush();
+      $this->entityManager->commit();
+    } catch (Throwable $e) {
+      $this->entityManager->rollback();
+
+      throw $e;
+    }
+  }
+
+  /**
+   * Refreshes the environment information.
+   *
+   * @param Project $project
+   *
+   * @throws Throwable
+   */
+  public function refreshEnvironments(Project $project): void
+  {
+    // Retrieve environments from Gitlab
+    $environments = $this->gitlabApiConnector->projectApi($project, 'GET', 'environments?states=available');
+
+    $this->entityManager->beginTransaction();
+    try {
+      // Remove current environments
+      $this->projectEnvironmentRepository->clearForProject($project);
+
+      // Build new environments
+      foreach ($environments as $environment) {
+        $environmentId = $this->propertyAccessor->getValue($environment, '[id]');
+
+        // Retrieve detailed deployment information
+        $details = $this->gitlabApiConnector
+            ->projectApi($project, 'GET', sprintf('environments/%d', $environmentId));
+
+        $this->entityManager->persist(
+            (new ProjectEnvironment($project, $environmentId))
+                ->setName($this->propertyAccessor->getValue($environment, '[name]'))
+                ->setCurrentStateFromGitlab($this->propertyAccessor->getValue($details, '[last_deployment][status]'))
+        );
       }
 
       $this->entityManager->flush();

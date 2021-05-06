@@ -102,4 +102,25 @@ class ProjectController extends AbstractApiController
 
     return new Response();
   }
+
+  /**
+   * Refreshes the environments information for the given project
+   *
+   * @Route("/{project<\d+>}/environment/refresh", methods={"POST"})
+   * @IsGranted("ROLE_USER")
+   *
+   * @param Project        $project
+   * @param ProjectService $projectService
+   *
+   * @return JsonResponse
+   *
+   * @throws Throwable
+   */
+  public function refreshEnvironments(Project $project, ProjectService $projectService): JsonResponse
+  {
+    $projectService->refreshEnvironments($project);
+    $this->em->refresh($project);
+
+    return $this->createResponse($project);
+  }
 }
