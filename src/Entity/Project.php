@@ -4,8 +4,11 @@ namespace App\Entity;
 
 use App\Repository\ProjectRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Drenso\Shared\Database\Traits\IdTrait;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -35,6 +38,21 @@ class Project
    * @ORM\Column(type="datetime_immutable", nullable=true)
    */
   private $lastEvent;
+
+  /**
+   * @var ProjectEnvironment[]|ArrayCollection|PersistentCollection
+   *
+   * @ORM\OneToMany(targetEntity="App\Entity\ProjectEnvironment", mappedBy="project", fetch="EAGER")
+   * @ORM\OrderBy({"name" = "ASC"})
+   *
+   * @Assert\Valid()
+   */
+  private $environments; // Default in constructor
+
+  public function __construct()
+  {
+    $this->environments = new ArrayCollection();
+  }
 
   public function fromOther(Project $other)
   {
@@ -81,5 +99,37 @@ class Project
     $this->lastEvent = $lastEvent;
 
     return $this;
+  }
+
+  /**
+   * @return ProjectEnvironment[]|ArrayCollection|PersistentCollection
+   */
+  public function getEnvironments()
+  {
+    return $this->environments;
+  }
+
+  /**
+   * @return string
+   *
+   * @Serializer\VirtualProperty()
+   */
+  public function getCurrentState(): string
+  {
+    if ($this->environments->isEmpty()) {
+      return ProjectEnvironment::STATE_UNKNOWN;
+    }
+
+    $states = array_unique($this->environments->map(function (ProjectEnvironment $environment) {
+      return $environment->getCurrentState();
+    })->toArray());
+
+    foreach (array_reverse(ProjectEnvironment::STATES) as $state) {
+      if (in_array($state, $states)) {
+        return $state;
+      }
+    }
+
+    return ProjectEnvironment::STATE_UNKNOWN;
   }
 }
