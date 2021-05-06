@@ -2,6 +2,8 @@
 
 namespace App\Provider\Webhook\EventHandlers;
 
+use App\Entity\ProjectEnvironment;
+use App\Events\ProjectEnvironment\ProjectEnvironmentUpdatedEvent;
 use App\Events\Usage\UsageErrorEvent;
 use App\Provider\Webhook\WebhookPayload;
 use Psr\Log\LoggerInterface;
@@ -41,8 +43,33 @@ class WebhookNotifierEventHandler implements EventSubscriberInterface
   public static function getSubscribedEvents()
   {
     return [
-        UsageErrorEvent::class => ['onUsageErrorEvent', -100],
+        ProjectEnvironmentUpdatedEvent::class => ['onProjectEnvironmentUpdatedEvent', -100],
+        UsageErrorEvent::class                => ['onUsageErrorEvent', -100],
     ];
+  }
+
+  /**
+   * @param ProjectEnvironmentUpdatedEvent $projectEvent
+   *
+   * @throws Throwable
+   */
+  public function onProjectEnvironmentUpdatedEvent(ProjectEnvironmentUpdatedEvent $projectEvent)
+  {
+    switch ($projectEvent->getState()) {
+      case ProjectEnvironment::STATE_FAILED:
+        $state = WebhookPayload::STATUS_FAILED;
+        break;
+      case ProjectEnvironment::STATE_RUNNING:
+        $state = WebhookPayload::STATUS_RUNNING;
+        break;
+      case ProjectEnvironment::STATE_OK:
+        $state = WebhookPayload::STATUS_OK;
+        break;
+      default:
+        return;
+    }
+
+    $this->onEvent($projectEvent, WebhookPayload::projectPayload($state));
   }
 
   /**

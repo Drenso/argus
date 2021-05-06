@@ -71,7 +71,15 @@ class ProjectEnvironmentEventHandler implements EventSubscriberInterface
     $this->entityManager->flush();
 
     if ($oldState !== $environment->getCurrentState()) {
-      $this->eventDispatcher->dispatch(new ProjectEnvironmentUpdatedEvent());
+      // We need to recalculate the current state
+      $activeStates = $this->environmentRepository->getActiveStates();
+      foreach (array_reverse(ProjectEnvironment::STATES) as $state) {
+        if (in_array($state, $activeStates)) {
+          $this->eventDispatcher->dispatch(new ProjectEnvironmentUpdatedEvent($state));
+
+          break;
+        }
+      }
     }
   }
 }

@@ -21,6 +21,9 @@ class ProjectEnvironment
   const STATE_RUNNING = 'running';
   const STATE_FAILED = 'failed';
 
+  /**
+   * Order is important!
+   */
   const STATES = [
       self::STATE_OK,
       self::STATE_RUNNING,
