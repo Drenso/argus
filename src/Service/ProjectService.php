@@ -166,8 +166,7 @@ class ProjectService
             ->projectApi($project, 'GET', sprintf('environments/%d', $environmentId));
 
         $this->entityManager->persist(
-            (new ProjectEnvironment($project, $environmentId))
-                ->setName($this->propertyAccessor->getValue($environment, '[name]'))
+            (new ProjectEnvironment($project, $this->propertyAccessor->getValue($environment, '[name]')))
                 ->setCurrentStateFromGitlab($this->propertyAccessor->getValue($details, '[last_deployment][status]'))
         );
       }

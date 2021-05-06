@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ProjectEnvironmentRepository::class)
- * @ORM\Table()
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(columns={"project_id", "name"})})
  */
 class ProjectEnvironment
 {
@@ -38,15 +38,6 @@ class ProjectEnvironment
    * @Serializer\Exclude()
    */
   private $project;
-
-  /**
-   * @var int
-   *
-   * @ORM\Column(type="integer")
-   *
-   * @Assert\NotNull()
-   */
-  private $gitlabId;
 
   /**
    * Environment name
@@ -79,10 +70,10 @@ class ProjectEnvironment
    */
   private $lastEvent;
 
-  public function __construct(Project $project, int $gitlabId)
+  public function __construct(Project $project, string $name)
   {
-    $this->project  = $project;
-    $this->gitlabId = $gitlabId;
+    $this->project = $project;
+    $this->name    = $name;
   }
 
   public function getProject(): Project
@@ -90,21 +81,9 @@ class ProjectEnvironment
     return $this->project;
   }
 
-  public function getGitlabId(): int
-  {
-    return $this->gitlabId;
-  }
-
   public function getName(): string
   {
     return $this->name;
-  }
-
-  public function setName(string $name): self
-  {
-    $this->name = $name;
-
-    return $this;
   }
 
   public function getCurrentState(): string
