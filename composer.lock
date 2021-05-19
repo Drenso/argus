@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e632b95f808ee64ced95045fb6c09d4b",
+    "content-hash": "ea053ab885485c1762cc69d52d125449",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
@@ -3888,16 +3888,16 @@
         },
         {
             "name": "sentry/sentry-symfony",
-            "version": "4.1.1",
+            "version": "4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-symfony.git",
-                "reference": "1a4080a3153a20dc9217571104951647d822f92d"
+                "reference": "93a357af39994b846aa9c6280c8e44a1e2739e27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/1a4080a3153a20dc9217571104951647d822f92d",
-                "reference": "1a4080a3153a20dc9217571104951647d822f92d",
+                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/93a357af39994b846aa9c6280c8e44a1e2739e27",
+                "reference": "93a357af39994b846aa9c6280c8e44a1e2739e27",
                 "shasum": ""
             },
             "require": {
@@ -3985,7 +3985,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-symfony/issues",
-                "source": "https://github.com/getsentry/sentry-symfony/tree/4.1.1"
+                "source": "https://github.com/getsentry/sentry-symfony/tree/4.1.2"
             },
             "funding": [
                 {
@@ -3997,7 +3997,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-05-10T07:39:23+00:00"
+            "time": "2021-05-16T22:44:16+00:00"
         },
         {
             "name": "symfony/asset",
