@@ -190,9 +190,13 @@ class ProjectService
         $details = $this->gitlabApiConnector
             ->projectApi($project, 'GET', sprintf('environments/%d', $environmentId));
 
+        if (!$lastDeployment = $this->propertyAccessor->getValue($details, '[last_deployment]')){
+          continue;
+        }
+
         $this->entityManager->persist(
             (new ProjectEnvironment($project, $this->propertyAccessor->getValue($environment, '[name]')))
-                ->setCurrentStateFromGitlab($this->propertyAccessor->getValue($details, '[last_deployment][status]'))
+                ->setCurrentStateFromGitlab($this->propertyAccessor->getValue($lastDeployment, '[status]'))
         );
       }
 
