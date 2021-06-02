@@ -1,4 +1,4 @@
-FROM php:8.0-fpm
+FROM php:8.0.6-fpm
 MAINTAINER Drienerlo Engineering Solutions <hallo@drenso.nl>
 
 # Update all dependencies
