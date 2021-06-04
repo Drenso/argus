@@ -3,7 +3,7 @@
 namespace App\Provider\Irker\EventHandlers\Project;
 
 use App\Events\Project\ProjectDeploymentEvent;
-use App\Provider\Irker\IrkerUtils;
+use BobV\IrkerUtils\Colorize;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProjectDeploymentEventHandler extends AbstractProjectEventHandler implements EventSubscriberInterface
@@ -20,27 +20,27 @@ class ProjectDeploymentEventHandler extends AbstractProjectEventHandler implemen
     $this->wrapHandler($event, function () use ($event) {
       switch ($event->getAction()) {
         case 'running':
-          $fill = '[%s] Deployment on environment "%s" (%s) ' . IrkerUtils::colorize('running', IrkerUtils::COLOR_PURPLE) . ' by %s: [ %s ]';
+          $fill = '[%s] Deployment on environment "%s" (%s) ' . Colorize::colorize('running', Colorize::COLOR_PURPLE) . ' by %s: [ %s ]';
           break;
         case 'success':
-          $fill = '[%s] Deployment on environment "%s" (%s) ' . IrkerUtils::colorize('succeeded', IrkerUtils::COLOR_GREEN) . ' by %s: [ %s ]';
+          $fill = '[%s] Deployment on environment "%s" (%s) ' . Colorize::colorize('succeeded', Colorize::COLOR_GREEN) . ' by %s: [ %s ]';
           break;
         case 'failed':
-          $fill = '[%s] Deployment on environment "%s" (%s) ' . IrkerUtils::colorize('failed', IrkerUtils::COLOR_DARK_RED) . ' by %s: [ %s ]';
+          $fill = '[%s] Deployment on environment "%s" (%s) ' . Colorize::colorize('failed', Colorize::COLOR_DARK_RED) . ' by %s: [ %s ]';
           break;
         case 'canceled':
-          $fill = '[%s] Deployment on environment "%s" (%s) ' . IrkerUtils::colorize('canceled', IrkerUtils::COLOR_LIGHT_RED) . ' by %s: [ %s ]';
+          $fill = '[%s] Deployment on environment "%s" (%s) ' . Colorize::colorize('canceled', Colorize::COLOR_LIGHT_RED) . ' by %s: [ %s ]';
           break;
         default:
           $fill = '[%s] Unknown action on deployment on environment "%s" (%s) by %s: [ %s ]';
       }
 
       $this->message(sprintf($fill,
-          IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
+          Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
           $event->getEnvironment(),
-          IrkerUtils::colorize($event->getShortSha(), IrkerUtils::COLOR_GREY),
+          Colorize::colorize($event->getShortSha(), Colorize::COLOR_GREY),
           $event->getUser(),
-          IrkerUtils::colorize($event->getUrl(), IrkerUtils::COLOR_BLUE)
+          Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
       ));
     });
   }

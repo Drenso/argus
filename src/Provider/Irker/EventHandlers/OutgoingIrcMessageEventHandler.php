@@ -3,6 +3,7 @@
 namespace App\Provider\Irker\EventHandlers;
 
 use App\Provider\Irker\Events\OutgoingIrcMessageEvent;
+use BobV\IrkerUtils\Connector;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -15,13 +16,9 @@ class OutgoingIrcMessageEventHandler extends AbstractEventHandler implements Eve
    */
   private $ircChannels;
   /**
-   * @var string
+   * @var Connector|null
    */
-  private $irkerServer;
-  /**
-   * @var int
-   */
-  private $irkerPort;
+  private $connector;
 
   public function __construct(
       EventDispatcherInterface $dispatcher, LoggerInterface $logger,
@@ -30,8 +27,11 @@ class OutgoingIrcMessageEventHandler extends AbstractEventHandler implements Eve
     parent::__construct($dispatcher, $logger);
 
     $this->ircChannels = $ircChannels;
-    $this->irkerServer = $irkerServer;
-    $this->irkerPort   = $irkerPort;
+    if (!$irkerServer) {
+      return;
+    }
+
+    $this->connector = new Connector($irkerServer, $irkerPort);
   }
 
   public static function getSubscribedEvents()
@@ -43,7 +43,7 @@ class OutgoingIrcMessageEventHandler extends AbstractEventHandler implements Eve
 
   public function onEvent(OutgoingIrcMessageEvent $event)
   {
-    if (!$this->irkerServer) {
+    if (!$this->connector) {
       // This handler is disabled
       return;
     }
@@ -52,7 +52,7 @@ class OutgoingIrcMessageEventHandler extends AbstractEventHandler implements Eve
       if (!$event->getChannel()
           || !array_key_exists($event->getChannel(), $this->ircChannels)
           || empty($this->ircChannels[$event->getChannel()])) {
-        if (empty($this->ircChannels['_default'])){
+        if (empty($this->ircChannels['_default'])) {
           throw new RuntimeException('The default channel is required for the Irker integration to work');
         }
 
@@ -61,15 +61,7 @@ class OutgoingIrcMessageEventHandler extends AbstractEventHandler implements Eve
         $to = $this->ircChannels[$event->getChannel()];
       }
 
-      $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-      socket_connect($socket, $this->irkerServer, $this->irkerPort);
-      // We cannot use JMS serializer here, as the JSON needs to be as clear as possible
-      $data = json_encode([
-          'to'      => $to,
-          'privmsg' => $event->getMessage(),
-      ]);
-      socket_send($socket, $data, strlen($data), MSG_EOF);
-      socket_close($socket);
+      $this->connector->send($to, $event->getMessage());
     });
   }
 }

@@ -3,7 +3,7 @@
 namespace App\Provider\Irker\EventHandlers\Project;
 
 use App\Events\Project\ProjectPushEvent;
-use App\Provider\Irker\IrkerUtils;
+use BobV\IrkerUtils\Colorize;
 use App\Utils\GitShaUtils;
 use App\Utils\PropertyAccessor;
 use Psr\Log\LoggerInterface;
@@ -43,31 +43,31 @@ class ProjectPushEventHandler extends AbstractProjectEventHandler implements Eve
       if ($event->getBefore() === GitShaUtils::allZeroSha()) {
         // New branch
         $this->message(sprintf('[%s/%s] %s pushed a %s branch with %d commit%s [ %s ]',
-            IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
-            IrkerUtils::colorize($event->getBranch(), IrkerUtils::COLOR_DARK_RED),
+            Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
+            Colorize::colorize($event->getBranch(), Colorize::COLOR_DARK_RED),
             $event->getUser(),
-            IrkerUtils::colorize('new', IrkerUtils::COLOR_GREEN),
+            Colorize::colorize('new', Colorize::COLOR_GREEN),
             $event->getTotalCommitCount(),
             $event->getTotalCommitCount() > 1 ? 's' : '',
-            IrkerUtils::colorize($branchUrl, IrkerUtils::COLOR_BLUE)
+            Colorize::colorize($branchUrl, Colorize::COLOR_BLUE)
         ));
       } elseif ($event->getAfter() === GitShaUtils::allZeroSha()) {
         // Removed branch
         $this->message(sprintf('[%s] %s %s branch %s',
-            IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
+            Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
             $event->getUser(),
-            IrkerUtils::colorize('deleted', IrkerUtils::COLOR_DARK_RED),
+            Colorize::colorize('deleted', Colorize::COLOR_DARK_RED),
             $event->getBranch(),
         ));
       } else {
         // Normal push
         $this->message(sprintf('[%s/%s] %s pushed %d commit%s [ %s ]',
-            IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
-            IrkerUtils::colorize($event->getBranch(), IrkerUtils::COLOR_DARK_RED),
+            Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
+            Colorize::colorize($event->getBranch(), Colorize::COLOR_DARK_RED),
             $event->getUser(),
             $event->getTotalCommitCount(),
             $event->getTotalCommitCount() > 1 ? 's' : '',
-            IrkerUtils::colorize($branchUrl, IrkerUtils::COLOR_BLUE)
+            Colorize::colorize($branchUrl, Colorize::COLOR_BLUE)
         ));
       }
 
@@ -88,12 +88,12 @@ class ProjectPushEventHandler extends AbstractProjectEventHandler implements Eve
 
           // Create the message
           $this->message(sprintf('[%s/%s] %s: %s (by %s) [ %s ]',
-              IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
-              IrkerUtils::colorize($event->getBranch(), IrkerUtils::COLOR_DARK_RED),
-              IrkerUtils::colorize($shortSha, IrkerUtils::COLOR_GREY),
+              Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
+              Colorize::colorize($event->getBranch(), Colorize::COLOR_DARK_RED),
+              Colorize::colorize($shortSha, Colorize::COLOR_GREY),
               $commitMessage,
               $author,
-              IrkerUtils::colorize($url, IrkerUtils::COLOR_BLUE)));
+              Colorize::colorize($url, Colorize::COLOR_BLUE)));
         }
       } else if (count($commits) <= $event->getTotalCommitCount()) {
         // Loop commits to determine push name
@@ -114,8 +114,8 @@ class ProjectPushEventHandler extends AbstractProjectEventHandler implements Eve
         // Create the messages
         foreach ($commitMap as $author => $count) {
           $this->message(sprintf('[%s/%s] %d commit%s from %s',
-              IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
-              IrkerUtils::colorize($event->getBranch(), IrkerUtils::COLOR_DARK_RED),
+              Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
+              Colorize::colorize($event->getBranch(), Colorize::COLOR_DARK_RED),
               $count,
               $count > 1 ? 's' : '',
               $author));

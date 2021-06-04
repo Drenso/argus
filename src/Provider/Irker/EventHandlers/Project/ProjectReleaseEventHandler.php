@@ -3,7 +3,7 @@
 namespace App\Provider\Irker\EventHandlers\Project;
 
 use App\Events\Project\ProjectReleaseEvent;
-use App\Provider\Irker\IrkerUtils;
+use BobV\IrkerUtils\Colorize;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProjectReleaseEventHandler extends AbstractProjectEventHandler implements EventSubscriberInterface
@@ -20,20 +20,20 @@ class ProjectReleaseEventHandler extends AbstractProjectEventHandler implements 
     $this->wrapHandler($event, function () use ($event) {
       switch ($event->getAction()) {
         case 'create':
-          $fill = '[%s] Release %s (%s) ' . IrkerUtils::colorize('created', IrkerUtils::COLOR_GREEN) . ': [ %s ]';
+          $fill = '[%s] Release %s (%s) ' . Colorize::colorize('created', Colorize::COLOR_GREEN) . ': [ %s ]';
           break;
         case 'delete':
-          $fill = '[%s] Release %s (%s) ' . IrkerUtils::colorize('removed', IrkerUtils::COLOR_DARK_RED) . ': [ %s ]';
+          $fill = '[%s] Release %s (%s) ' . Colorize::colorize('removed', Colorize::COLOR_DARK_RED) . ': [ %s ]';
           break;
         default:
           $fill = '[%s] Unknown action on release %s (%s): [ %s ]';
       }
 
       $this->message(sprintf($fill,
-          IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
+          Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
           $event->getName(),
-          IrkerUtils::colorize($event->getIid(), IrkerUtils::COLOR_GREY),
-          IrkerUtils::colorize($event->getUrl(), IrkerUtils::COLOR_BLUE)
+          Colorize::colorize($event->getIid(), Colorize::COLOR_GREY),
+          Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
       ));
     });
   }

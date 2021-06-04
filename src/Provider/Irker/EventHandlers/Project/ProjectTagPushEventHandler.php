@@ -3,7 +3,7 @@
 namespace App\Provider\Irker\EventHandlers\Project;
 
 use App\Events\Project\ProjectTagEvent;
-use App\Provider\Irker\IrkerUtils;
+use BobV\IrkerUtils\Colorize;
 use App\Utils\GitShaUtils;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -22,27 +22,27 @@ class ProjectTagPushEventHandler extends AbstractProjectEventHandler implements 
     $this->wrapHandler($event, function () use ($event) {
       switch ($event->getAction()) {
         case 'created':
-          $this->message(sprintf('[%s] Tag %s (%s) ' . IrkerUtils::colorize('created', IrkerUtils::COLOR_GREEN) . ' by %s [ %s ]',
-              IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
+          $this->message(sprintf('[%s] Tag %s (%s) ' . Colorize::colorize('created', Colorize::COLOR_GREEN) . ' by %s [ %s ]',
+              Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
               $event->getTag(),
-              IrkerUtils::colorize(GitShaUtils::getShortSha($event->getCheckoutSha()), IrkerUtils::COLOR_GREY),
+              Colorize::colorize(GitShaUtils::getShortSha($event->getCheckoutSha()), Colorize::COLOR_GREY),
               $event->getUser(),
-              IrkerUtils::colorize($event->getUrl(), IrkerUtils::COLOR_BLUE)
+              Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
           ));
           break;
         case 'removed':
-          $this->message(sprintf('[%s] Tag %s (%s) ' . IrkerUtils::colorize('removed', IrkerUtils::COLOR_DARK_RED) . ' by %s',
-              IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
+          $this->message(sprintf('[%s] Tag %s (%s) ' . Colorize::colorize('removed', Colorize::COLOR_DARK_RED) . ' by %s',
+              Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
               $event->getTag(),
-              IrkerUtils::colorize(GitShaUtils::getShortSha($event->getBefore()), IrkerUtils::COLOR_GREY),
+              Colorize::colorize(GitShaUtils::getShortSha($event->getBefore()), Colorize::COLOR_GREY),
               $event->getUser()
           ));
           break;
         default:
           $this->message(sprintf('[%s] Unknown tag event %s (%s) by %s',
-              IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
-              IrkerUtils::colorize($event->getTag(), IrkerUtils::COLOR_GREEN),
-              IrkerUtils::colorize(GitShaUtils::getShortSha($event->getBefore()), IrkerUtils::COLOR_GREY),
+              Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
+              Colorize::colorize($event->getTag(), Colorize::COLOR_GREEN),
+              Colorize::colorize(GitShaUtils::getShortSha($event->getBefore()), Colorize::COLOR_GREY),
               $event->getUser()
           ));
           break;

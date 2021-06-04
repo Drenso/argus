@@ -3,7 +3,7 @@
 namespace App\Provider\Irker\EventHandlers\Project;
 
 use App\Events\Project\ProjectNoteEvent;
-use App\Provider\Irker\IrkerUtils;
+use BobV\IrkerUtils\Colorize;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProjectNoteEventHandler extends AbstractProjectEventHandler implements EventSubscriberInterface
@@ -40,23 +40,23 @@ class ProjectNoteEventHandler extends AbstractProjectEventHandler implements Eve
           return;
         default:
           $this->message(sprintf('[%s] Unknown update by %s: %s [%s]',
-              IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
+              Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
               $event->getUser(),
               $note,
-              IrkerUtils::colorize($event->getUrl(), IrkerUtils::COLOR_BLUE)
+              Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
           ));
 
           return;
       }
 
       $this->message(sprintf($fill,
-          IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
-          $event->isConfidential() ? (' ' . IrkerUtils::colorize('confidential', IrkerUtils::COLOR_ORANGE)) : '',
+          Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
+          $event->isConfidential() ? (' ' . Colorize::colorize('confidential', Colorize::COLOR_ORANGE)) : '',
           $event->getTitle(),
           $event->getIid(),
           $event->getUser(),
           $note,
-          IrkerUtils::colorize($event->getUrl(), IrkerUtils::COLOR_BLUE)
+          Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
       ));
     });
   }

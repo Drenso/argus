@@ -3,7 +3,7 @@
 namespace App\Provider\Irker\EventHandlers\Project;
 
 use App\Events\Project\ProjectWikiEvent;
-use App\Provider\Irker\IrkerUtils;
+use BobV\IrkerUtils\Colorize;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProjectWikiEventHandler extends AbstractProjectEventHandler implements EventSubscriberInterface
@@ -27,16 +27,16 @@ class ProjectWikiEventHandler extends AbstractProjectEventHandler implements Eve
 
         switch ($event->getAction()) {
           case 'create':
-            $fill = '[%s] Wiki page %s ' . IrkerUtils::colorize('created', IrkerUtils::COLOR_GREEN) . ' by %s: %s [ %s ]';
+            $fill = '[%s] Wiki page %s ' . Colorize::colorize('created', Colorize::COLOR_GREEN) . ' by %s: %s [ %s ]';
             break;
           case 'update':
-            $fill = '[%s] Wiki page %s ' . IrkerUtils::colorize('updated', IrkerUtils::COLOR_PURPLE) . ' by %s: %s [ %s ]';
+            $fill = '[%s] Wiki page %s ' . Colorize::colorize('updated', Colorize::COLOR_PURPLE) . ' by %s: %s [ %s ]';
             break;
           case 'delete':
-            $fill = '[%s] Wiki page %s ' . IrkerUtils::colorize('deleted', IrkerUtils::COLOR_DARK_RED) . ' by %s: %s';
+            $fill = '[%s] Wiki page %s ' . Colorize::colorize('deleted', Colorize::COLOR_DARK_RED) . ' by %s: %s';
 
             $this->message(sprintf($fill,
-                IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
+                Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
                 $event->getIid(),
                 $event->getUser(),
                 $message
@@ -47,36 +47,36 @@ class ProjectWikiEventHandler extends AbstractProjectEventHandler implements Eve
             $fill = '[%s] Unknown action on wiki page %s by %s [ %s ]';
 
             $this->message(sprintf($fill,
-                IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
+                Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
                 $event->getIid(),
                 $event->getUser(),
-                IrkerUtils::colorize($event->getUrl(), IrkerUtils::COLOR_BLUE)
+                Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
             ));
 
             return;
         }
 
         $this->message(sprintf($fill,
-            IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
+            Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
             $event->getIid(),
             $event->getUser(),
             $message,
-            IrkerUtils::colorize($event->getUrl(), IrkerUtils::COLOR_BLUE)
+            Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
         ));
 
       } else {
         switch ($event->getAction()) {
           case 'create':
-            $fill = '[%s] Wiki page %s ' . IrkerUtils::colorize('created', IrkerUtils::COLOR_GREEN) . ' by %s [ %s ]';
+            $fill = '[%s] Wiki page %s ' . Colorize::colorize('created', Colorize::COLOR_GREEN) . ' by %s [ %s ]';
             break;
           case 'update':
-            $fill = '[%s] Wiki page %s ' . IrkerUtils::colorize('updated', IrkerUtils::COLOR_PURPLE) . ' by %s [ %s ]';
+            $fill = '[%s] Wiki page %s ' . Colorize::colorize('updated', Colorize::COLOR_PURPLE) . ' by %s [ %s ]';
             break;
           case 'delete':
-            $fill = '[%s] Wiki page %s ' . IrkerUtils::colorize('deleted', IrkerUtils::COLOR_DARK_RED) . ' by %s';
+            $fill = '[%s] Wiki page %s ' . Colorize::colorize('deleted', Colorize::COLOR_DARK_RED) . ' by %s';
 
             $this->message(sprintf($fill,
-                IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
+                Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
                 $event->getIid(),
                 $event->getUser(),
             ));
@@ -86,20 +86,20 @@ class ProjectWikiEventHandler extends AbstractProjectEventHandler implements Eve
             $fill = '[%s] Unknown action on wiki page %s by %s [ %s ]';
 
             $this->message(sprintf($fill,
-                IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
+                Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
                 $event->getIid(),
                 $event->getUser(),
-                IrkerUtils::colorize($event->getUrl(), IrkerUtils::COLOR_BLUE)
+                Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
             ));
 
             return;
         }
 
         $this->message(sprintf($fill,
-            IrkerUtils::colorize($event->getProjectName(), IrkerUtils::COLOR_LIGHT_RED),
+            Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
             $event->getIid(),
             $event->getUser(),
-            IrkerUtils::colorize($event->getUrl(), IrkerUtils::COLOR_BLUE)
+            Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
         ));
       }
     });

@@ -14,6 +14,9 @@
     "behat/transliterator": {
         "version": "v1.3.0"
     },
+    "bobv/irker-utils": {
+        "version": "1.0.0"
+    },
     "clue/stream-filter": {
         "version": "v1.4.1"
     },
