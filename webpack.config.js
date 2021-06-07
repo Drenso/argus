@@ -61,11 +61,8 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     // Polyfill and transpilation options
-    .configureBabel(function (babelConfig) {
-    }, {
+    .configureBabel(null, {
       includeNodeModules: ['@drenso/vue-frontend-shared'],
-      useBuiltIns: 'usage',
-      corejs: 3,
     })
 
     // enables Sass/SCSS support
