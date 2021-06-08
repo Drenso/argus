@@ -55,7 +55,7 @@
         "symfony/yaml": "^5.2.9"
     },
     "require-dev": {
-        "drenso/phan-extensions": "^3.4.0",
+        "drenso/phan-extensions": "^3.5.1",
         "symfony/maker-bundle": "^1.31.1",
         "symfony/profiler-pack": "^1.0.5",
         "symfony/test-pack": "^1.0.7"
