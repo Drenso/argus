@@ -1,9 +1,9 @@
 # ARGUS
 
-Argus is a tool used to monitor your projects, based on incoming webhooks from external applications. It soly focusses
+Argus is a tool used to monitor your projects, based on incoming webhooks from external applications. It solely focuses
 on GitLab projects (from a single instance).
 
-Argus internally uses events internally, which means it is fully extendable for your usecase. It would be appreciated
+Argus internally uses events internally, which means it is fully extendable for your use case. It would be appreciated
 to share your extensions with us, so we can share it with everybody!
 
 # Run
