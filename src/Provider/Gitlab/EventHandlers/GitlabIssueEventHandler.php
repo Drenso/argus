@@ -3,8 +3,8 @@
 namespace App\Provider\Gitlab\EventHandlers;
 
 use App\Events\Project\ProjectIssueEvent;
-use App\Provider\Gitlab\Events\IncomingGitlabEvent;
 use App\Exception\MissingPropertyException;
+use App\Provider\Gitlab\Events\IncomingGitlabEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GitlabIssueEventHandler extends AbstractGitlabEventHandler implements EventSubscriberInterface
@@ -28,6 +28,15 @@ class GitlabIssueEventHandler extends AbstractGitlabEventHandler implements Even
       $action = $this->getProp($data, '[object_attributes][action]');
     } catch (MissingPropertyException $e) {
       $action = 'test';
+    }
+
+    // Ignore events that has one of the excluded labels
+    $excludedLabels = explode(',', $_ENV['GITLAB_EXCLUDE_ISSUE_LABELS']);
+    $issueLabels    = $this->getProp($data, '[labels]');
+    foreach ($issueLabels as $issueLabel) {
+      if (in_array($this->getProp($issueLabel, '[title]'), $excludedLabels)) {
+        return;
+      }
     }
 
     $this->projectEvent(new ProjectIssueEvent(
