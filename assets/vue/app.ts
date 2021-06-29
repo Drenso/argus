@@ -96,7 +96,8 @@ import routes from './routes';
 Vue.use(VueRouter);
 const router = new VueRouter({routes});
 router.beforeEach((to, from, next) => {
-  document.title = Vue.prototype.$translator.trans(to.meta.title || 'menu.home')
+  const metaTitle = to.meta ? to.meta.title : undefined;
+  document.title = Vue.prototype.$translator.trans(metaTitle && metaTitle !== '' ? metaTitle : 'menu.home')
       + ' | ' + Vue.prototype.$translator.trans('brand.argus');
 
   next();
