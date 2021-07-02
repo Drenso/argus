@@ -201,9 +201,10 @@ class ProjectService
       }
 
       $this->entityManager->flush();
-      $this->entityManager->commit();
 
       $this->environmentUpdated();
+
+      $this->entityManager->commit();
     } catch (Throwable $e) {
       $this->entityManager->rollback();
 
