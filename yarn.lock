@@ -914,7 +914,7 @@
     consola "^2.15.0"
     node-fetch "^2.6.1"
 
-"@sentry/browser@^6.7.2":
+"@sentry/browser@^6.8.0":
   version "6.8.0"
   resolved "https://npm.drenso.dev/@sentry%2fbrowser/-/browser-6.8.0.tgz#023707cd2302f6818014e9a7e124856b2d064178"
   integrity sha512-nxa71csHlG5sMHUxI4e4xxuCWtbCv/QbBfMsYw7ncJSfCKG3yNlCVh8NJ7NS0rZW/MJUT6S6+r93zw0HetNDOA==
@@ -944,7 +944,7 @@
     "@sentry/utils" "6.8.0"
     tslib "^1.9.3"
 
-"@sentry/integrations@^6.7.2":
+"@sentry/integrations@^6.8.0":
   version "6.8.0"
   resolved "https://npm.drenso.dev/@sentry%2fintegrations/-/integrations-6.8.0.tgz#990d042d683ed4b45fcbe0cbf3e8077587a45f85"
   integrity sha512-K8xmWGQFKxkKj5rMwGENm0SbbUs/SVhHE+V8+KkhXFmHAwfNAYTFaNg0Ryu9DADAJ4QYzZvYeRxl8voFecOqzA==
