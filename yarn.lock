@@ -1165,10 +1165,10 @@
   resolved "https://npm.drenso.dev/@types%2frange-parser/-/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
   integrity sha512-ewFXqrQHlFsgc09MK5jP5iR7vumV/BYayNC6PgJO2LPe8vrnNFyjQjSppfEngITi0qvfKtzFvgKymGheFM9UOA==
 
-"@types/select2@^4.0.53":
-  version "4.0.53"
-  resolved "https://npm.drenso.dev/@types%2fselect2/-/select2-4.0.53.tgz#1eef6cd44179fc2329ced2cc5ab8260ad38ce989"
-  integrity sha512-5+HxxtKgyR954mFL61pNvKenx55gYinkYfSG5tVeItvmHhc2h+yRiGXNTYSwcrAcrUJ2ewLgOxG3STZRsPEnag==
+"@types/select2@^4.0.54":
+  version "4.0.54"
+  resolved "https://npm.drenso.dev/@types%2fselect2/-/select2-4.0.54.tgz#8305e519c16ee01a3e818894bec3eec88966a3c6"
+  integrity sha512-xq8c3zsKktym2b9XbDLUWBDyX0WyWjKzeFsDQHkM9p6NfxJza4g2Ud1bheTKNXpHNyVPUrfGwDEMN7JBe3gQbw==
   dependencies:
     "@types/jquery" "*"
 
