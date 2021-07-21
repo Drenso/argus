@@ -7,11 +7,13 @@ use App\Entity\ProjectEnvironment;
 use App\Events\ProjectEnvironment\ProjectEnvironmentUpdatedEvent;
 use App\Exception\DuplicateProjectException;
 use App\Exception\ProjectNotFoundException;
+use App\Provider\Gitlab\Exception\GitlabRemoteCallFailedException;
 use App\Provider\Gitlab\GitlabApiConnector;
 use App\RemoteConfiguration\RemoteConfigurationInterface;
 use App\Repository\ProjectEnvironmentRepository;
 use App\Repository\ProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -60,10 +62,10 @@ class ProjectService
    * @param EventDispatcherInterface     $eventDispatcher
    */
   public function __construct(
-      ServiceLocator $remoteConfigurationServices, ProjectRepository $projectRepository,
+      ServiceLocator               $remoteConfigurationServices, ProjectRepository $projectRepository,
       ProjectEnvironmentRepository $projectEnvironmentRepository, PropertyAccessorInterface $propertyAccessor,
-      EntityManagerInterface $entityManager, GitlabApiConnector $gitlabApiConnector,
-      EventDispatcherInterface $eventDispatcher)
+      EntityManagerInterface       $entityManager, GitlabApiConnector $gitlabApiConnector,
+      EventDispatcherInterface     $eventDispatcher)
   {
     $this->remoteConfigurationServices  = $remoteConfigurationServices;
     $this->projectRepository            = $projectRepository;
@@ -122,6 +124,37 @@ class ProjectService
     }
   }
 
+  public function createMergeRequest(?Project $project)
+  {
+    if ($project === NULL) {
+      // Build for all outdated
+      foreach ($this->getOutdated() as $project) {
+        $this->createMergeRequest($project['project']);
+      }
+
+      return;
+    }
+
+    // Determine if the MR might already be open
+    $openMrs = $this->gitlabApiConnector
+        ->projectApi($project, 'GET', 'merge_requests?state=opened&source_branch=master&target_branch=production');
+    if (!empty($openMrs)) {
+      // There is already an open MR
+      return;
+    }
+
+    // Build MR according to format
+    $assigneeId = $_ENV['MR_DEFAULT_ASSIGNEE_ID'] ?? NULL;
+    $this->gitlabApiConnector->projectApi($project, 'POST', 'merge_requests', [
+        'json' => [
+            'source_branch' => 'master',
+            'target_branch' => 'production',
+            'title'         => sprintf('[%s] Production update', (new \DateTime())->format('Y-m-d')),
+            'assignee_id'   => $assigneeId ? (int)$assigneeId : NULL,
+        ],
+    ]);
+  }
+
   /**
    * Delete the project. Removes remote configuration if possible
    *
@@ -166,6 +199,52 @@ class ProjectService
   }
 
   /**
+   * Get the outdated projects from Gitlab
+   *
+   * @return array
+   * @throws GitlabRemoteCallFailedException
+   */
+  public function getOutdated(): array
+  {
+    $result = [];
+
+    // Retrieve the projects from gitlab
+    $projects = $this->gitlabApiConnector
+        ->projectApi(NULL, 'GET', '?simple=true&archived=false&per_page=100&order_by=last_activity_at');
+
+    foreach ($projects as $project) {
+      $projectObj = $this->projectRepository->findOneBy([
+          'name' => $this->propertyAccessor->getValue($project, '[path_with_namespace]'),
+      ]);
+      if (!$projectObj) {
+        continue;
+      }
+
+      // For each project, retrieve the production branch
+      if (!$production = $this->getBranchHash($projectObj, 'production')) {
+        continue;
+      }
+
+      if (!$master = $this->getBranchHash($projectObj, 'master')) {
+        throw new RuntimeException(sprintf('Master branch for project %s not found!', $projectObj->getName()));
+      }
+
+      if ($production === $master) {
+        continue;
+      }
+
+      $result[] = [
+          'project'         => $projectObj,
+          'master_sha'      => $master,
+          'production_sha'  => $production,
+          'gitlab_diff_url' => $this->gitlabApiConnector->projectDiffUrl($projectObj, 'master', 'production'),
+      ];
+    }
+
+    return $result;
+  }
+
+  /**
    * Refreshes the environment information.
    *
    * @param Project $project
@@ -190,7 +269,7 @@ class ProjectService
         $details = $this->gitlabApiConnector
             ->projectApi($project, 'GET', sprintf('environments/%d', $environmentId));
 
-        if (!$lastDeployment = $this->propertyAccessor->getValue($details, '[last_deployment]')){
+        if (!$lastDeployment = $this->propertyAccessor->getValue($details, '[last_deployment]')) {
           continue;
         }
 
@@ -237,6 +316,19 @@ class ProjectService
       }
 
       yield $remoteConfigurationService;
+    }
+  }
+
+  private function getBranchHash(Project $project, string $branch): ?string
+  {
+    try {
+      $data = $this->gitlabApiConnector
+          ->projectApi($project, 'GET', sprintf('repository/branches/%s', $branch));
+
+      return $this->propertyAccessor->getValue($data, '[commit][short_id]');
+    } catch (Throwable $e) {
+      // Branch not found
+      return NULL;
     }
   }
 }

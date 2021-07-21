@@ -35,7 +35,7 @@
         </div>
 
         <b-table
-            small class="mt-2 mb-0" show-empty
+            small class="mt-2 mb-2" show-empty
             sort-by="last_event" sort-desc
             stacked="md"
             :filter="filter"

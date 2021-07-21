@@ -39,19 +39,26 @@ class GitlabApiConnector
   /**
    * Retrieve response from the Gitlab API
    *
-   * @param Project $project
-   * @param string  $method
-   * @param string  $endpoint
-   * @param array   $requestOptions
+   * @param Project|null $project
+   * @param string       $method
+   * @param string       $endpoint
+   * @param array        $requestOptions
    *
    * @return array|null
    *
    * @throws GitlabRemoteCallFailedException
    */
-  public function projectApi(Project $project, string $method, string $endpoint, array $requestOptions = []): ?array
+  public function projectApi(?Project $project, string $method, string $endpoint, array $requestOptions = []): ?array
   {
-    $url = sprintf('%s/%s/projects/%s%s%s',
-        $this->gitlabUrl, self::API_BASE, urlencode($project->getName()), strlen($endpoint) > 0 ? '/' : '', $endpoint);
+    $url = sprintf(
+        '%s/%s/projects%s%s%s%s',
+        $this->gitlabUrl,
+        self::API_BASE,
+        $project ? '/' : '',
+        $project ? urlencode($project->getName()) : '',
+        $project && strlen($endpoint) > 0 ? '/' : '',
+        $endpoint
+    );
     if (!array_key_exists('headers', $requestOptions)) {
       $requestOptions['headers'] = [];
     }
@@ -60,7 +67,7 @@ class GitlabApiConnector
     try {
       $response = $this->httpClient->request($method, $url, $requestOptions);
 
-      if ((($response->getHeaders()['content-type'] ?? [])[0] ?? null) === 'application/json') {
+      if ((($response->getHeaders()['content-type'] ?? [])[0] ?? NULL) === 'application/json') {
         return $this->serializer->deserialize($response->getContent(), 'array', 'json');
       }
 
@@ -72,5 +79,10 @@ class GitlabApiConnector
 
       throw new GitlabRemoteCallFailedException(NULL, $e);
     }
+  }
+
+  public function projectDiffUrl(Project $project, string $source, string $target): string
+  {
+    return sprintf('%s/%s/-/compare/%s...%s', $this->gitlabUrl, $project->getName(), $target, $source);
   }
 }

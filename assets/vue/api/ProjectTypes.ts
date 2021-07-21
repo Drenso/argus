@@ -18,4 +18,11 @@ export interface ProjectEnvironment {
   last_event: string;
 }
 
+export interface OutdatedProject {
+  project: Project;
+  master_sha: string;
+  production_sha: string;
+  gitlab_diff_url: string;
+}
+
 export type ProjectEnvironmentState = 'ok' | 'unknown' | 'running' | 'failed';

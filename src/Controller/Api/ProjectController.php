@@ -64,6 +64,27 @@ class ProjectController extends AbstractApiController
     }
   }
 
+  /**
+   * @Route("/{project<\d+>}/mr", methods={"POST"})
+   * @IsGranted("ROLE_USER")
+   */
+  public function createMr(Project $project, ProjectService $projectService): Response
+  {
+    $projectService->createMergeRequest($project);
+
+    return new Response();
+  }
+
+  /**
+   * @Route("/mr", methods={"POST"})
+   * @IsGranted("ROLE_USER")
+   */
+  public function createMrs(ProjectService $projectService): Response
+  {
+    $projectService->createMergeRequest(null);
+
+    return new Response();
+  }
 
   /**
    * Delete the given project (including remote configuration, if supported)
@@ -83,6 +104,17 @@ class ProjectController extends AbstractApiController
     $projectService->delete($project);
 
     return new Response();
+  }
+
+  /**
+   * Retrieve information about outdated projects
+   *
+   * @Route("/outdated", methods={"GET"})
+   * @IsGranted("ROLE_USER")
+   */
+  public function outdated(ProjectService $projectService): JsonResponse
+  {
+    return $this->createResponse($projectService->getOutdated());
   }
 
   /**

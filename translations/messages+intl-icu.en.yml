@@ -35,6 +35,17 @@ general:
   legend: 'Legend'
   refresh: 'Refresh'
 
+outdated-project:
+  button:
+    create-mr: 'Create MR'
+    create-mrs: 'Create MR for all'
+    show-diff: 'Show diff'
+  field:
+    master-sha: 'Master SHA'
+    production-sha: 'Production SHA'
+  title:
+    _: 'Outdated projects'
+
 project:
   button:
     delete: 'Delete project'
