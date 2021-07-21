@@ -207,6 +207,10 @@
         }
       }
 
+      td.project-sha {
+        font-family: monospace;
+      }
+
       @include media-breakpoint-up(md) {
         .project-sha {
           white-space: nowrap;
