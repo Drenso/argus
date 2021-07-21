@@ -48,8 +48,8 @@
     components: {LoadingOverlay, LoadingOverlayIcon, EventStats},
   })
   export default class EventCard extends Vue {
-    public refreshing: boolean = false;
-    public stats: TimedEventStats | null = null;
+    protected refreshing: boolean = false;
+    protected stats: TimedEventStats | null = null;
 
     public mounted() {
       this.loadLatestEvents();

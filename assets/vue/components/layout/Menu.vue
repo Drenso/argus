@@ -20,7 +20,7 @@
 
   @Component
   export default class Menu extends Vue {
-    public logoutPending: boolean = false;
+    protected logoutPending: boolean = false;
 
     public async logout() {
       this.logoutPending = true;

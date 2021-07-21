@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const Encore = require('@symfony/webpack-encore');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -69,7 +70,7 @@ Encore
     .enableSassLoader()
 
     // uncomment if you use TypeScript
-    .enableTypeScriptLoader()
+    .enableBabelTypeScriptPreset({})
 
     // Enable post css processing
     .enablePostCssLoader()
@@ -91,6 +92,14 @@ Encore
       loader: 'messageformat-loader',
       type: 'javascript/auto'
     })
+
+    .addPlugin(new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        extensions: {
+          vue: true,
+        },
+      },
+    }))
 
     .addPlugin(new MomentLocalesPlugin())
 ;

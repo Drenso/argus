@@ -180,21 +180,21 @@
     components: {ErrorAlert, ValidatedField, LoadingOverlayIcon, LoadingOverlay},
   })
   export default class ProjectCard extends Vue {
-    public adding: boolean = false;
-    public refreshing: boolean = false;
-    public refreshEnvironments: { [projectId: number]: boolean } = {};
-    public resyncing: { [projectId: number]: boolean } = {};
-    public deleting: { [projectId: number]: boolean } = {};
-    public projects: Project[] | null = null;
+    protected adding: boolean = false;
+    protected refreshing: boolean = false;
+    protected refreshEnvironments: { [projectId: number]: boolean } = {};
+    protected resyncing: { [projectId: number]: boolean } = {};
+    protected deleting: { [projectId: number]: boolean } = {};
+    protected projects: Project[] | null = null;
 
-    public filter: string = '';
-    public rows: number = 0;
-    public perPage: number = 5;
-    public currentPage: number = 1;
+    protected filter: string = '';
+    protected rows: number = 0;
+    protected perPage: number = 5;
+    protected currentPage: number = 1;
 
-    public projectName: string = '';
+    protected projectName: string = '';
 
-    public errorMessage: string | null = null;
+    protected errorMessage: string | null = null;
 
     @Ref()
     private readonly addObserver!: InstanceType<typeof ValidationObserver>;

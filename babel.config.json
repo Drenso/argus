@@ -3,14 +3,28 @@
     [
       "@babel/env",
       {
-        "useBuiltIns": "usage",
+        "useBuiltIns": "entry",
         "corejs": 3
       }
     ],
+    "babel-preset-typescript-vue"
   ],
   "plugins": [
+    "@babel/plugin-syntax-dynamic-import",
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
     [
       "@babel/proposal-class-properties",
+      {
+        "loose": true
+      }
+    ],
+    [
+      "@babel/plugin-proposal-private-methods",
       {
         "loose": true
       }
