@@ -63,7 +63,7 @@
         "messageformat": "^2.3.0",
         "moment": "^2.29.1",
         "moment-timezone": "^0.5.33",
-        "regenerator-runtime": "^0.13.7",
+        "regenerator-runtime": "^0.13.8",
         "select2": "^4.1.0-rc.0",
         "uuid": "^8.3.2",
         "vee-validate": "^3.4.10",
