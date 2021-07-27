@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
@@ -66,9 +66,9 @@ class AddUserCommand extends Command
       }
 
       try {
-        $this->userProvider->loadUserByUsername($user);
+        $this->userProvider->loadUserByIdentifier($user);
         throw new RuntimeException('The supplied e-mail address is already in use');
-      } catch (UsernameNotFoundException $e) {
+      } catch (UserNotFoundException $e) {
         // This is actually okay
       }
 

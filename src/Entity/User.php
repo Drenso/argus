@@ -8,6 +8,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Drenso\Shared\Database\Traits\IdTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @UniqueEntity(fields={"email"})
  */
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
   use IdTrait;
 
@@ -54,6 +55,11 @@ class User implements UserInterface
    * @see UserInterface
    */
   public function getUsername(): string
+  {
+    return $this->getUserIdentifier();
+  }
+
+  public function getUserIdentifier(): string
   {
     return $this->email;
   }

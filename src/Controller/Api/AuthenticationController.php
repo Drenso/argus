@@ -5,9 +5,11 @@ namespace App\Controller\Api;
 use App\Security\ArgusJwtAuthenticator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
@@ -25,13 +27,13 @@ class AuthenticationController extends AbstractApiController
    *
    * @param Request                      $request
    * @param UserProviderInterface        $userProvider
-   * @param UserPasswordEncoderInterface $passwordEncoder
+   * @param UserPasswordHasherInterface  $passwordEncoder
    * @param ArgusJwtAuthenticator        $authenticator
    *
    * @return Response
    */
   public function authenticate(
-      Request $request, UserProviderInterface $userProvider, UserPasswordEncoderInterface $passwordEncoder,
+      Request $request, UserProviderInterface $userProvider, UserPasswordHasherInterface $passwordEncoder,
       ArgusJwtAuthenticator $authenticator): Response
   {
     $data = $this->getFromBody($request, 'array');
@@ -40,11 +42,13 @@ class AuthenticationController extends AbstractApiController
     }
 
     try {
-      $user = $userProvider->loadUserByUsername($data['username']);
-    } catch (UsernameNotFoundException $e) {
+      $user = $userProvider->loadUserByIdentifier($data['username']);
+    } catch (UserNotFoundException $e) {
       return $this->createUnauthorizedResponse('Invalid credentials');
     }
 
+    assert($user instanceof PasswordAuthenticatedUserInterface && $user instanceof UserInterface);
+    /** @phan-suppress-next-line PhanTypeMismatchArgument */
     if (!$passwordEncoder->isPasswordValid($user, $data['password'])) {
       return $this->createUnauthorizedResponse('Invalid credentials');
     }

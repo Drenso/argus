@@ -58,7 +58,7 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
   {
     $jwt = (new Builder())
         ->identifiedBy(bin2hex(random_bytes(20)))
-        ->withClaim(self::CLAIM_USERNAME, $user->getUsername())
+        ->withClaim(self::CLAIM_USERNAME, $user->getUserIdentifier())
         ->expiresAt($this->dateTimeProvider->utcNow()->modify('+' . $this->tokenValidity))
         ->getToken(new Sha512(), new Key($this->jwtSecret));
 
