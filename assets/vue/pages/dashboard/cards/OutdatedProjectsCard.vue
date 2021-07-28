@@ -58,7 +58,7 @@
           </template>
         </b-table>
 
-        <div class="text-right">
+        <div class="text-right" v-if="outdatedProjects.length > 1">
           <b-button variant="success" @click="createMrs" :disabled="isBusy">
             <font-awesome-icon :icon="creatingAllMrs ? 'circle-notch' : 'play'" :spin="creatingAllMrs" fixed-width/>
             {{ 'outdated-project.button.create-mrs'|trans }}
