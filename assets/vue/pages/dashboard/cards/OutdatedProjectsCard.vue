@@ -34,7 +34,7 @@
 
         <b-table
             small class="mt-2 mb-2" show-empty
-            sort-by="name" sort-desc
+            sort-by="project.name"
             stacked="md"
             :filter="filter"
             :fields="fields" :items="outdatedProjects" :per-page="perPage" :current-page="currentPage"
