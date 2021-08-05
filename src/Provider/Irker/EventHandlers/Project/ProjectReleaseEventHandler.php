@@ -6,7 +6,7 @@ use App\Events\Project\ProjectReleaseEvent;
 use BobV\IrkerUtils\Colorize;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class ProjectReleaseEventHandler extends AbstractProjectEventHandler implements EventSubscriberInterface
+class ProjectReleaseEventHandler extends AbstractProjectPipelineEventHandler implements EventSubscriberInterface
 {
   public static function getSubscribedEvents()
   {

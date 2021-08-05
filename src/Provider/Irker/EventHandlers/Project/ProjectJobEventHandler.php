@@ -6,7 +6,7 @@ use App\Events\Project\ProjectJobEvent;
 use BobV\IrkerUtils\Colorize;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class ProjectJobEventHandler extends AbstractProjectEventHandler implements EventSubscriberInterface
+class ProjectJobEventHandler extends AbstractProjectPipelineEventHandler implements EventSubscriberInterface
 {
 
   public static function getSubscribedEvents()

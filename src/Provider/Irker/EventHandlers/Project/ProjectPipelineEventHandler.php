@@ -7,7 +7,7 @@ use BobV\IrkerUtils\Colorize;
 use App\Utils\GitShaUtils;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class ProjectPipelineEventHandler extends AbstractProjectEventHandler implements EventSubscriberInterface
+class ProjectPipelineEventHandler extends AbstractProjectPipelineEventHandler implements EventSubscriberInterface
 {
   public static function getSubscribedEvents()
   {

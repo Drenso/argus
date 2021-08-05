@@ -29,6 +29,7 @@ parameters:
   irker.port: '%env(int:IRKER_PORT)%'
   irc.channel._default: '%env(IRKER_CHANNEL_DEFAULT)%'
   irc.channel.project: '%env(IRKER_CHANNEL_PROJECT)%'
+  irc.channel.project_pipelines: '%env(IRKER_CHANNEL_PROJECT_PIPELINES)%'
   irc.channel.usage: '%env(IRKER_CHANNEL_USAGE)%'
 
   sentry.webhook.secret: '%env(string:key:sentry_webhook_secret:json:file:resolve:SECRETS_FILE)%'
@@ -84,6 +85,7 @@ services:
       $ircChannels:
         _default: '%irc.channel._default%'
         project: '%irc.channel.project%'
+        project_pipelines: '%irc.channel.project_pipelines%'
         usage: '%irc.channel.usage%'
 
   App\Provider\Sentry\Controller\:

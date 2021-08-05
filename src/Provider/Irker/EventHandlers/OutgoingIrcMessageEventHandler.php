@@ -49,19 +49,22 @@ class OutgoingIrcMessageEventHandler extends AbstractEventHandler implements Eve
     }
 
     $this->wrapHandler($event, function () use ($event) {
-      if (!$event->getChannel()
-          || !array_key_exists($event->getChannel(), $this->ircChannels)
-          || empty($this->ircChannels[$event->getChannel()])) {
-        if (empty($this->ircChannels['_default'])) {
-          throw new RuntimeException('The default channel is required for the Irker integration to work');
-        }
+      $to = $event->getChannel();
 
-        $to = $this->ircChannels['_default'];
-      } else {
-        $to = $this->ircChannels[$event->getChannel()];
+      if (!$to || empty($this->ircChannels[$to])) {
+        $to = $event->getFallbackChannel();
       }
 
-      $this->connector->send($to, $event->getMessage());
+      if (!$to || empty($this->ircChannels[$to])) {
+        $to = '_default';
+      }
+
+      if (empty($this->ircChannels[$to])) {
+        throw new RuntimeException(
+            sprintf('The requested channel (%s) is not available, the Irker integration will not work', $to));
+      }
+
+      $this->connector->send($this->ircChannels[$to], $event->getMessage());
     });
   }
 }
