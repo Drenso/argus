@@ -59,7 +59,7 @@
         "core-js": "3.16.1",
         "direct-vuex": "0.12.1",
         "jquery": "3.6.0",
-        "fork-ts-checker-webpack-plugin": "6.3.1",
+        "fork-ts-checker-webpack-plugin": "6.3.2",
         "messageformat": "2.3.0",
         "moment": "2.29.1",
         "moment-timezone": "0.5.33",
