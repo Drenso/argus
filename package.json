@@ -56,7 +56,7 @@
         "babel-preset-typescript-vue": "1.1.1",
         "big.js": "6.1.1",
         "bootstrap-vue": "2.21.2",
-        "core-js": "3.16.0",
+        "core-js": "3.16.1",
         "direct-vuex": "0.12.1",
         "jquery": "3.6.0",
         "fork-ts-checker-webpack-plugin": "6.3.1",
