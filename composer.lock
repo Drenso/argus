@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "181df5e35a881d42b0ce48ee5a956994",
+    "content-hash": "78ccc8c058e576e2944699d5a7d80088",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
@@ -3086,16 +3086,16 @@
         },
         {
             "name": "php-http/message",
-            "version": "1.11.2",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/message.git",
-                "reference": "295c82867d07261f2fa4b3a26677519fc6f7f5f6"
+                "reference": "39eb7548be982a81085fe5a6e2a44268cd586291"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/message/zipball/295c82867d07261f2fa4b3a26677519fc6f7f5f6",
-                "reference": "295c82867d07261f2fa4b3a26677519fc6f7f5f6",
+                "url": "https://api.github.com/repos/php-http/message/zipball/39eb7548be982a81085fe5a6e2a44268cd586291",
+                "reference": "39eb7548be982a81085fe5a6e2a44268cd586291",
                 "shasum": ""
             },
             "require": {
@@ -3154,9 +3154,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/message/issues",
-                "source": "https://github.com/php-http/message/tree/1.11.2"
+                "source": "https://github.com/php-http/message/tree/1.12.0"
             },
-            "time": "2021-08-03T11:52:11+00:00"
+            "time": "2021-08-29T09:13:12+00:00"
         },
         {
             "name": "php-http/message-factory",
@@ -3959,16 +3959,16 @@
         },
         {
             "name": "sentry/sentry-symfony",
-            "version": "4.1.4",
+            "version": "4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-symfony.git",
-                "reference": "6265b27867210a4cc34f0d75e5f1b92af627830b"
+                "reference": "a05a849f948f6f6e5e47064ab177bc9daca8a923"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/6265b27867210a4cc34f0d75e5f1b92af627830b",
-                "reference": "6265b27867210a4cc34f0d75e5f1b92af627830b",
+                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/a05a849f948f6f6e5e47064ab177bc9daca8a923",
+                "reference": "a05a849f948f6f6e5e47064ab177bc9daca8a923",
                 "shasum": ""
             },
             "require": {
@@ -3976,7 +3976,7 @@
                 "php": "^7.2||^8.0",
                 "php-http/discovery": "^1.11",
                 "sentry/sdk": "^3.1",
-                "symfony/cache-contracts": "^2.4",
+                "symfony/cache-contracts": "^1.1||^2.4",
                 "symfony/config": "^3.4.44||^4.4.20||^5.0.11",
                 "symfony/console": "^3.4.44||^4.4.20||^5.0.11",
                 "symfony/dependency-injection": "^3.4.44||^4.4.20||^5.0.11",
@@ -3987,7 +3987,7 @@
                 "symfony/security-core": "^3.4.44||^4.4.20||^5.0.11"
             },
             "require-dev": {
-                "doctrine/dbal": "^2.10||^3.0",
+                "doctrine/dbal": "^2.13||^3.0",
                 "doctrine/doctrine-bundle": "^1.12||^2.0",
                 "friendsofphp/php-cs-fixer": "^2.18",
                 "jangregor/phpstan-prophecy": "^0.8",
@@ -4018,7 +4018,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.x-dev",
+                    "dev-master": "4.2.x-dev",
                     "releases/3.2.x": "3.2.x-dev",
                     "releases/2.x": "2.x-dev",
                     "releases/1.x": "1.x-dev"
@@ -4056,7 +4056,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-symfony/issues",
-                "source": "https://github.com/getsentry/sentry-symfony/tree/4.1.4"
+                "source": "https://github.com/getsentry/sentry-symfony/tree/4.2.1"
             },
             "funding": [
                 {
@@ -4068,7 +4068,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-06-18T11:07:00+00:00"
+            "time": "2021-08-24T10:47:16+00:00"
         },
         {
             "name": "symfony/asset",
@@ -6193,16 +6193,16 @@
         },
         {
             "name": "symfony/options-resolver",
-            "version": "v5.3.4",
+            "version": "v5.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/options-resolver.git",
-                "reference": "a603e5701bd6e305cfc777a8b50bf081ef73105e"
+                "reference": "4b78e55b179003a42523a362cc0e8327f7a69b5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/a603e5701bd6e305cfc777a8b50bf081ef73105e",
-                "reference": "a603e5701bd6e305cfc777a8b50bf081ef73105e",
+                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/4b78e55b179003a42523a362cc0e8327f7a69b5e",
+                "reference": "4b78e55b179003a42523a362cc0e8327f7a69b5e",
                 "shasum": ""
             },
             "require": {
@@ -6242,7 +6242,7 @@
                 "options"
             ],
             "support": {
-                "source": "https://github.com/symfony/options-resolver/tree/v5.3.4"
+                "source": "https://github.com/symfony/options-resolver/tree/v5.3.7"
             },
             "funding": [
                 {
@@ -6258,7 +6258,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-23T15:55:36+00:00"
+            "time": "2021-08-04T21:20:46+00:00"
         },
         {
             "name": "symfony/orm-pack",
