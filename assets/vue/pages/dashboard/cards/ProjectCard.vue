@@ -167,6 +167,7 @@
 </template>
 
 <script lang="ts">
+  import {AxiosError} from 'axios';
   import {BFormInput, BModal, BvTableFieldArray} from 'bootstrap-vue';
   import {ValidationObserver} from 'vee-validate';
   import {Component, Ref, Vue} from 'vue-property-decorator';
@@ -234,8 +235,9 @@
           this.addProjectModal.hide();
           await this.reloadFilter();
         } catch (e) {
-          if (e.response && e.response.status === 400) {
-            this.errorMessage = e.response.data.reason;
+          const error = e as AxiosError;
+          if (error.response && error.response.status === 400) {
+            this.errorMessage = error.response.data.reason;
             return;
           }
           throw e;
