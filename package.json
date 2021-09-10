@@ -9,7 +9,7 @@
         "@types/webpack-env": "1.16.2",
         "@vue/cli-plugin-typescript": "4.5.13",
         "@vue/cli-service": "4.5.13",
-        "autoprefixer": "10.3.3",
+        "autoprefixer": "10.3.4",
         "browserslist": "4.16.8",
         "messageformat-loader": "0.8.1",
         "moment-locales-webpack-plugin": "1.2.0",
