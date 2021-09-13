@@ -24,7 +24,7 @@
         "jms/serializer-bundle": "3.10.0",
         "lcobucci/jwt": "3.4.5",
         "psr/log": "1.1.4",
-        "sensio/framework-extra-bundle": "6.1.5",
+        "sensio/framework-extra-bundle": "6.2.0",
         "sentry/sentry-symfony": "4.2.2",
         "symfony/config": "5.3.4",
         "symfony/console": "5.3.6",
