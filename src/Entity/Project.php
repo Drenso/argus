@@ -42,7 +42,7 @@ class Project
   /**
    * @var ProjectEnvironment[]|ArrayCollection|PersistentCollection
    *
-   * @ORM\OneToMany(targetEntity="App\Entity\ProjectEnvironment", mappedBy="project", fetch="EAGER")
+   * @ORM\OneToMany(targetEntity="App\Entity\ProjectEnvironment", mappedBy="project", fetch="EAGER", cascade={"all"})
    * @ORM\OrderBy({"name" = "ASC"})
    *
    * @Assert\Valid()
