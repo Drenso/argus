@@ -16,17 +16,22 @@ class OutgoingIrcMessageEventHandler extends AbstractEventHandler implements Eve
    */
   private $ircChannels;
   /**
+   * @var array
+   */
+  private $disabledChannels;
+  /**
    * @var Connector|null
    */
   private $connector;
 
   public function __construct(
       EventDispatcherInterface $dispatcher, LoggerInterface $logger,
-      string $irkerServer, int $irkerPort, array $ircChannels)
+      string $irkerServer, int $irkerPort, array $ircChannels, array $disabledChannels)
   {
     parent::__construct($dispatcher, $logger);
 
-    $this->ircChannels = $ircChannels;
+    $this->ircChannels      = $ircChannels;
+    $this->disabledChannels = $disabledChannels;
     if (!$irkerServer) {
       return;
     }
@@ -50,6 +55,11 @@ class OutgoingIrcMessageEventHandler extends AbstractEventHandler implements Eve
 
     $this->wrapHandler($event, function () use ($event) {
       $to = $event->getChannel();
+
+      if ($this->disabledChannels[$to] ?? false) {
+        // Channel has been disabled
+        return;
+      }
 
       if (!$to || empty($this->ircChannels[$to])) {
         $to = $event->getFallbackChannel();

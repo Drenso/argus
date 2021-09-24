@@ -32,6 +32,10 @@ parameters:
   irc.channel.project_pipelines: '%env(IRKER_CHANNEL_PROJECT_PIPELINES)%'
   irc.channel.usage: '%env(IRKER_CHANNEL_USAGE)%'
 
+  irc.disable.channel.project: '%env(bool:IRKER_DISABLE_CHANNEL_PROJECT)%'
+  irc.disable.channel.project_pipelines: '%env(bool:IRKER_DISABLE_CHANNEL_PROJECT_PIPELINES)%'
+  irc.disable.channel.usage: '%env(bool:IRKER_DISABLE_CHANNEL_USAGE)%'
+
   sentry.webhook.secret: '%env(string:key:sentry_webhook_secret:json:file:resolve:SECRETS_FILE)%'
   sentry.secret: '%env(string:key:sentry_secret:json:file:resolve:SECRETS_FILE)%'
 
@@ -87,6 +91,10 @@ services:
         project: '%irc.channel.project%'
         project_pipelines: '%irc.channel.project_pipelines%'
         usage: '%irc.channel.usage%'
+      $disabledChannels:
+        project: '%irc.disable.channel.project%'
+        project_pipelines: '%irc.disable.channel.project_pipelines%'
+        usage: '%irc.disable.channel.usage%'
 
   App\Provider\Sentry\Controller\:
     resource: '../src/Provider/Sentry/Controller'
