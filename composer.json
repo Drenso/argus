@@ -23,7 +23,7 @@
         "friendsofsymfony/jsrouting-bundle": "2.7.0",
         "jms/serializer": "3.14.0",
         "jms/serializer-bundle": "3.10.0",
-        "lcobucci/jwt": "3.4.5",
+        "lcobucci/jwt": "3.4.6",
         "psr/log": "1.1.4",
         "sensio/framework-extra-bundle": "6.2.0",
         "sentry/sentry-symfony": "4.2.2",
