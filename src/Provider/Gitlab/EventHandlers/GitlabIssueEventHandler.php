@@ -9,6 +9,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GitlabIssueEventHandler extends AbstractGitlabEventHandler implements EventSubscriberInterface
 {
+  use IgnoreIssueLabelTrait;
+
   protected function getDiscriminator(): string
   {
     return 'Issue Hook';
@@ -31,12 +33,8 @@ class GitlabIssueEventHandler extends AbstractGitlabEventHandler implements Even
     }
 
     // Ignore events that has one of the excluded labels
-    $excludedLabels = explode(',', $_ENV['GITLAB_EXCLUDE_ISSUE_LABELS']);
-    $issueLabels    = $this->getProp($data, '[labels]');
-    foreach ($issueLabels as $issueLabel) {
-      if (in_array($this->getProp($issueLabel, '[title]'), $excludedLabels)) {
-        return;
-      }
+    if ($this->isIssueIgnoredByLabel($this->getProp($data, '[labels]'))) {
+      return;
     }
 
     $this->projectEvent(new ProjectIssueEvent(
