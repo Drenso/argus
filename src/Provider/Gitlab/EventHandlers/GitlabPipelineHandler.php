@@ -8,6 +8,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GitlabPipelineHandler extends AbstractGitlabEventHandler implements EventSubscriberInterface
 {
+  use IgnoreBranchNameTrait;
 
   protected function getDiscriminator(): string
   {
@@ -17,8 +18,13 @@ class GitlabPipelineHandler extends AbstractGitlabEventHandler implements EventS
   protected function handleEvent(IncomingGitlabEvent $event): void
   {
     $data = $event->getPayload();
-    $id   = $this->getProp($data, '[object_attributes][id]');
-    $url  = $this->getProp($data, '[project][web_url]') . '/pipelines/' . $id;
+
+    if ($this->isBranchIgnored($this->getProp($data, '[object_attributes][ref]'))) {
+      return;
+    }
+
+    $id  = $this->getProp($data, '[object_attributes][id]');
+    $url = $this->getProp($data, '[project][web_url]') . '/pipelines/' . $id;
 
     $this->projectEvent(new ProjectPipelineEvent(
         $this->getProp($data, '[project][path_with_namespace]'),

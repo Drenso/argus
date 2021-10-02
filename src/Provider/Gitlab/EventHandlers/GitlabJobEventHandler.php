@@ -8,6 +8,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GitlabJobEventHandler extends AbstractGitlabEventHandler implements EventSubscriberInterface
 {
+  use IgnoreBranchNameTrait;
+
   // todo: make configurable
   public $disabled = true;
 
@@ -24,8 +26,13 @@ class GitlabJobEventHandler extends AbstractGitlabEventHandler implements EventS
     }
 
     $data = $event->getPayload();
-    $id   = $this->getProp($data, '[build_id]');
-    $url  = $this->getProp($data, '[repository][homepage]') . '/builds/' . $id;
+
+    if ($this->isBranchIgnored($this->getProp($data, '[ref]'))) {
+      return;
+    }
+
+    $id  = $this->getProp($data, '[build_id]');
+    $url = $this->getProp($data, '[repository][homepage]') . '/builds/' . $id;
 
     $this->projectEvent(new ProjectJobEvent(
         preg_replace('/\s+/', '', $this->getProp($data, '[project_name]')),

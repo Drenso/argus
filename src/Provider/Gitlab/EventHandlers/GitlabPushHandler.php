@@ -8,6 +8,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GitlabPushHandler extends AbstractGitlabEventHandler implements EventSubscriberInterface
 {
+  use IgnoreBranchNameTrait;
 
   protected function getDiscriminator(): string
   {
@@ -17,6 +18,12 @@ class GitlabPushHandler extends AbstractGitlabEventHandler implements EventSubsc
   protected function handleEvent(IncomingGitlabEvent $event): void
   {
     $data    = $event->getPayload();
+
+    $branch = preg_replace('/refs\/[^\/]*\//', '', $this->getProp($data, '[ref]'));
+    if ($this->isBranchIgnored($branch)) {
+      return;
+    }
+
     $commits = $this->getProp($data, '[commits]');
     usort($commits, function ($a, $b) {
       return $this->getProp($a, '[timestamp]') <=> $this->getProp($b, '[timestamp]');
@@ -25,7 +32,7 @@ class GitlabPushHandler extends AbstractGitlabEventHandler implements EventSubsc
     $this->projectEvent(new ProjectPushEvent(
         $this->getProp($data, '[project][path_with_namespace]'),
         $this->getProp($data, '[user_name]'),
-        preg_replace('/refs\/[^\/]*\//', '', $this->getProp($data, '[ref]')),
+        $branch,
         $this->getProp($data, '[repository][homepage]'),
         'push',
         $this->getProp($data, '[before]'),
