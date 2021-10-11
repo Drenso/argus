@@ -909,10 +909,10 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
-"@drenso/vue-frontend-shared@0.8.4":
-  version "0.8.4"
-  resolved "https://npm.drenso.dev/@drenso%2fvue-frontend-shared/-/vue-frontend-shared-0.8.4.tgz#ca8da3b70d09315514ca5cb62259de41b63e4f81"
-  integrity sha512-jJ9Wkn7feDZNa8HgMHc3d9K9zzPIus1DZVB2iegR6vtPijwwbhWD/sZ2VT90YH5EG89x5CZBOyNxBLu9t7tPgg==
+"@drenso/vue-frontend-shared@0.9.0":
+  version "0.9.0"
+  resolved "https://npm.drenso.dev/@drenso%2fvue-frontend-shared/-/vue-frontend-shared-0.9.0.tgz#5e9f79dcf9f18ea2b327165eb022b0acac364734"
+  integrity sha512-LA3QBCqiCMmNtRHersheeg6IHifOPcHoyTPgRVpwlV9gfWwzPAwVPppTSg81UvNmVeBociqT5dRTopftQyDzMQ==
 
 "@fortawesome/fontawesome-common-types@^0.2.36":
   version "0.2.36"
