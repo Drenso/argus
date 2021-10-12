@@ -17,7 +17,7 @@
         "doctrine/collections": "1.6.8",
         "doctrine/doctrine-bundle": "2.3.2",
         "doctrine/doctrine-migrations-bundle": "3.1.1",
-        "doctrine/orm": "2.10.0",
+        "doctrine/orm": "2.10.1",
         "doctrine/persistence": "2.2.2",
         "drenso/symfony-shared": "1.24.1",
         "friendsofsymfony/jsrouting-bundle": "2.7.0",
