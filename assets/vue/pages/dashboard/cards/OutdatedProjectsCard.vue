@@ -70,6 +70,7 @@
 </template>
 
 <script lang="ts">
+  import {AxiosResponse} from 'axios';
   import {BvTableFieldArray} from 'bootstrap-vue';
   import {Component, Vue} from 'vue-property-decorator';
   import {OutdatedProject} from '../../../api/ProjectTypes';
@@ -145,7 +146,8 @@
     }
 
     private async loadOutdatedProjects() {
-      const response = await this.$http.get(this.$sfRouter.generate('app_api_project_outdated'));
+      const response: AxiosResponse<OutdatedProject[]> =
+          await this.$http.get(this.$sfRouter.generate('app_api_project_outdated'));
       this.outdatedProjects = response.data;
       this.outdatedProjects!.forEach((p) => {
         Vue.set(this.creatingMrs, p.project.id, false);

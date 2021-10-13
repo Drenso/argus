@@ -167,11 +167,11 @@
 </template>
 
 <script lang="ts">
-  import {AxiosError} from 'axios';
+  import {AxiosError, AxiosResponse} from 'axios';
   import {BFormInput, BModal, BvTableFieldArray} from 'bootstrap-vue';
   import {ValidationObserver} from 'vee-validate';
   import {Component, Ref, Vue} from 'vue-property-decorator';
-  import {Project, ProjectEnvironmentState} from '../../../api/ProjectTypes';
+  import {Project, ProjectEnvironment, ProjectEnvironmentState} from '../../../api/ProjectTypes';
   import ErrorAlert from '../../../components/alerts/ErrorAlert.vue';
   import ValidatedField from '../../../components/form/ValidatedField.vue';
   import LoadingOverlay from '../../../components/layout/LoadingOverlay.vue';
@@ -227,9 +227,10 @@
         this.adding = true;
 
         try {
-          const response = await this.$http.post(this.$sfRouter.generate('app_api_project_add'), {
-            name: this.projectName,
-          });
+          const response: AxiosResponse<Project> =
+              await this.$http.post(this.$sfRouter.generate('app_api_project_add'), {
+                name: this.projectName,
+              });
 
           this.projects!.push(response.data);
           this.addProjectModal.hide();
@@ -237,7 +238,7 @@
         } catch (e) {
           const error = e as AxiosError;
           if (error.response && error.response.status === 400) {
-            this.errorMessage = error.response.data.reason;
+            this.errorMessage = (error.response.data as {reason: string}).reason;
             return;
           }
           throw e;
@@ -307,8 +308,10 @@
 
       this.refreshEnvironments[project.id] = true;
       try {
-        const response = await this.$http.post(
-            this.$sfRouter.generate('app_api_project_refreshenvironments', {project: project.id}));
+        const response: AxiosResponse<{ current_state: ProjectEnvironmentState, environments: ProjectEnvironment[] }> =
+            await this.$http.post(
+                this.$sfRouter.generate('app_api_project_refreshenvironments', {project: project.id}),
+            );
 
         // Update data
         project.current_state = response.data.current_state;
@@ -353,7 +356,8 @@
     }
 
     private async loadProjects() {
-      const response = await this.$http.get(this.$sfRouter.generate('app_api_project_list'));
+      const response: AxiosResponse<Project[]> =
+          await this.$http.get(this.$sfRouter.generate('app_api_project_list'));
       this.projects = response.data;
       this.projects!.forEach((p) => {
         Vue.set(this.refreshEnvironments, p.id, false);
