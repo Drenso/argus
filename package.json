@@ -1,5 +1,9 @@
 {
     "devDependencies": {
+        "@babel/core": "7.15.8",
+        "@babel/plugin-proposal-decorators": "7.15.8",
+        "@babel/plugin-proposal-logical-assignment-operators": "7.14.5",
+        "@babel/preset-env": "7.15.8",
         "@symfony/webpack-encore": "0.33.0",
         "@types/big.js": "6.1.2",
         "@types/jquery": "3.5.6",
@@ -10,6 +14,7 @@
         "@vue/cli-plugin-typescript": "4.5.13",
         "@vue/cli-service": "4.5.13",
         "autoprefixer": "10.3.5",
+        "babel-preset-typescript-vue": "1.1.1",
         "browserslist": "4.17.1",
         "fork-ts-checker-webpack-plugin": "6.3.4",
         "messageformat-loader": "0.8.1",
@@ -43,10 +48,6 @@
         "build:email": "/bin/true"
     },
     "dependencies": {
-        "@babel/core": "7.15.8",
-        "@babel/plugin-proposal-decorators": "7.15.8",
-        "@babel/plugin-proposal-logical-assignment-operators": "7.14.5",
-        "@babel/preset-env": "7.15.8",
         "@drenso/vue-frontend-shared": "0.9.0",
         "@fortawesome/fontawesome-free": "5.15.4",
         "@fortawesome/fontawesome-svg-core": "1.2.36",
@@ -54,7 +55,6 @@
         "@sentry/browser": "6.13.3",
         "@sentry/integrations": "6.13.3",
         "axios": "0.22.0",
-        "babel-preset-typescript-vue": "1.1.1",
         "big.js": "6.1.1",
         "bootstrap-vue": "2.21.2",
         "core-js": "3.18.2",
