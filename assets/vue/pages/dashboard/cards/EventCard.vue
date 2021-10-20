@@ -38,6 +38,7 @@
 </template>
 
 <script lang="ts">
+  import {AxiosResponse} from 'axios';
   import {Component, Vue} from 'vue-property-decorator';
   import {TimedEventStats} from '../../../api/EventTypes';
   import LoadingOverlay from '../../../components/layout/LoadingOverlay.vue';
@@ -69,7 +70,8 @@
     }
 
     private async loadLatestEvents() {
-      const response = await this.$http.get(this.$sfRouter.generate('app_api_event_stats'));
+      const response: AxiosResponse<TimedEventStats> =
+          await this.$http.get(this.$sfRouter.generate('app_api_event_stats'));
       this.stats = response.data;
     }
   }
