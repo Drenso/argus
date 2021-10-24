@@ -36,12 +36,16 @@ Encore
     .enableVueLoader(() => {
     }, {runtimeCompilerBuild: false})
 
-    // Do not load images as ES module
-    .configureUrlLoader({
-      images: {
-        esModule: false
-      }
+    .configureMiniCssExtractPlugin(() => {
+    }, (pluginConfig) => {
+      pluginConfig.ignoreOrder = true;
     })
+
+    // Do not load images as ES module
+    .configureImageRule({
+      type: 'asset/resource',
+    })
+
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 
@@ -57,7 +61,7 @@ Encore
      * https://symfony.com/doc/current/frontend.html#adding-more-features
      */
     .cleanupOutputBeforeBuild(['*/**', '!.gitkeep'])
-    .enableSourceMaps()
+    .enableSourceMaps(process.env.DISABLE_SOURCE_MAPS !== 'true')
     // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
 
@@ -93,6 +97,7 @@ Encore
       type: 'javascript/auto'
     })
 
+    .addPlugin(new MomentLocalesPlugin())
     .addPlugin(new ForkTsCheckerWebpackPlugin({
       typescript: {
         extensions: {
@@ -101,14 +106,22 @@ Encore
       },
     }))
 
-    .addPlugin(new MomentLocalesPlugin())
-;
+    .configureDevServerOptions(options => {
+      options.allowedHosts = 'all';
+      options.https = {
+        cert: '/etc/apache2/ssl/drenso.dev/fullchain.pem',
+        key: '/etc/apache2/ssl/drenso.dev/privkey.pem',
+      };
+    })
 
-// Fixes CSS HMR
-// See https://github.com/symfony/webpack-encore/issues/348
-if (Encore.isDevServer()) {
-  Encore.disableCssExtraction();
-}
+    // Enable the webpack build cache
+    .enableBuildCache({
+      // object of "buildDependencies"
+      // https://webpack.js.org/configuration/other-options/#cachebuilddependencies
+      // __filename means that changes to webpack.config.js should invalidate the cache
+      config: [__filename],
+    })
+;
 
 const webpackConfig = Encore.getWebpackConfig();
 
