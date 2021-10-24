@@ -1,4 +1,6 @@
 {
+    "name": "drenso/argus",
+    "description": "This application manages our GitLab applications (settings) and keeps track of the project status.",
     "type": "project",
     "license": "MIT",
     "repositories": [{
