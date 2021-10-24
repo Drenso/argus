@@ -42,7 +42,7 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "dev-server": "yarn build:email && yarn watch:email & encore dev-server --host localhost.drenso.dev --hot --https --disableHostCheck=true --cert /etc/apache2/ssl/drenso.dev/fullchain.pem --key /etc/apache2/ssl/drenso.dev/privkey.pem",
+        "dev-server": "yarn build:email && yarn watch:email & encore dev-server --host localhost.drenso.dev",
         "dev-server-bob": "yarn dev-server --port 8999",
         "dev-server-tobias": "yarn dev-server --port 8998",
         "dev": "yarn dev:email && yarn dev:encore",
