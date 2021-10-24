@@ -33,9 +33,6 @@ include:
     file: '/php/phan.yml'
   - project: 'intern/runner-templates'
     ref: "4.0"
-    file: '/ts/tslint.yml'
-  - project: 'intern/runner-templates'
-    ref: "4.0"
     file: '/yaml/yamllint.yml'
   - project: 'intern/runner-templates'
     ref: "4.0"

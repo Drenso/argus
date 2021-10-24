@@ -1,36 +1,70 @@
 <template>
-  <b-card header-bg-variant="primary" header-text-variant="white">
+  <b-card
+      header-bg-variant="primary"
+      header-text-variant="white">
     <template #header>
       <div class="d-flex">
         <div class="flex-fill">
           {{ 'event.title.stats'|trans }}
         </div>
         <div class="ml-2">
-          <a @click="refresh" class="pointer text-white" v-if="stats !== null"
-             v-b-tooltip.hover.left :title="'general.refresh'|trans">
-            <font-awesome-icon icon="sync-alt" fixed-width :spin="refreshing"/>
+          <a
+              v-if="stats !== null"
+              v-b-tooltip.hover.left
+              class="pointer text-white"
+              :title="'general.refresh'|trans"
+              @click="refresh">
+            <font-awesome-icon
+                fixed-width
+                icon="sync-alt"
+                :spin="refreshing"/>
           </a>
         </div>
       </div>
     </template>
 
-    <div class="text-center" v-if="stats === null">
+    <div
+        v-if="stats === null"
+        class="text-center">
       <LoadingOverlayIcon/>
     </div>
     <div v-else>
       <LoadingOverlay :show="refreshing">
-        <b-tabs content-class="my-2" justified>
-          <EventStats :stats="stats.last_hour" :title="'event.title.last-hour'|trans"/>
-          <EventStats :stats="stats.last_day" :title="'event.title.last-day'|trans"/>
-          <EventStats :stats="stats.last_week" :title="'event.title.last-week'|trans"/>
-          <EventStats :stats="stats.last_month" :title="'event.title.last-month'|trans"/>
-          <EventStats :stats="stats.last_year" :title="'event.title.last-year'|trans"/>
+        <b-tabs
+            content-class="my-2"
+            justified>
+          <EventStats
+              :stats="stats.last_hour"
+              :title="'event.title.last-hour'|trans"/>
+          <EventStats
+              :stats="stats.last_day"
+              :title="'event.title.last-day'|trans"/>
+          <EventStats
+              :stats="stats.last_week"
+              :title="'event.title.last-week'|trans"/>
+          <EventStats
+              :stats="stats.last_month"
+              :title="'event.title.last-month'|trans"/>
+          <EventStats
+              :stats="stats.last_year"
+              :title="'event.title.last-year'|trans"/>
         </b-tabs>
 
-        <b-progress max="3" show-value>
-          <b-progress-bar value="1" variant="success" :label="'event.info.fully-handled'|trans"/>
-          <b-progress-bar value="1" variant="warning" :label="'event.info.partially-handled'|trans"/>
-          <b-progress-bar value="1" variant="danger" :label="'event.info.unhandled'|trans"/>
+        <b-progress
+            max="3"
+            show-value>
+          <b-progress-bar
+              :label="'event.info.fully-handled'|trans"
+              value="1"
+              variant="success"/>
+          <b-progress-bar
+              :label="'event.info.partially-handled'|trans"
+              value="1"
+              variant="warning"/>
+          <b-progress-bar
+              :label="'event.info.unhandled'|trans"
+              value="1"
+              variant="danger"/>
         </b-progress>
       </LoadingOverlay>
     </div>
@@ -49,14 +83,14 @@
     components: {LoadingOverlay, LoadingOverlayIcon, EventStats},
   })
   export default class EventCard extends Vue {
-    protected refreshing: boolean = false;
+    protected refreshing = false;
     protected stats: TimedEventStats | null = null;
 
-    public mounted() {
+    public mounted(): void {
       this.loadLatestEvents();
     }
 
-    protected async refresh() {
+    protected async refresh(): Promise<void> {
       if (this.refreshing) {
         return;
       }
@@ -69,7 +103,7 @@
       }
     }
 
-    private async loadLatestEvents() {
+    private async loadLatestEvents(): Promise<void> {
       const response: AxiosResponse<TimedEventStats> =
           await this.$http.get(this.$sfRouter.generate('app_api_event_stats'));
       this.stats = response.data;

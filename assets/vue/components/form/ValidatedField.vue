@@ -1,20 +1,38 @@
 <template>
-  <ValidationProvider tag="div" class="validated-field" :debounce="100" :rules="rules" v-slot="{ errors }">
-    <b-form-group class="mb-0" :label="label" :id="id" :state="errors.length > 0 ? false : null">
-
+  <ValidationProvider
+      v-slot="{ errors }"
+      class="validated-field"
+      :debounce="100"
+      :rules="rules"
+      tag="div">
+    <b-form-group
+        :id="id"
+        class="mb-0"
+        :label="label"
+        :state="errors.length > 0 ? false : null">
       <template #invalid-feedback>
-        <slot name="messages" :errors="errors" :icon="icon" :help="help">
-          <b-form-invalid-feedback :state="false" v-for="error in errors" :key="error">
-            <TextWithLeftIcon :icon="icon">{{ error }}</TextWithLeftIcon>
+        <slot
+            :errors="errors"
+            :help="help"
+            :icon="icon"
+            name="messages">
+          <b-form-invalid-feedback
+              v-for="error in errors"
+              :key="error"
+              :state="false">
+            <TextWithLeftIcon :icon="icon">
+              {{ error }}
+            </TextWithLeftIcon>
           </b-form-invalid-feedback>
         </slot>
       </template>
 
       <slot :state="errors.length > 0 ? false : null"/>
       <b-form-text v-if="!!help">
-        <TextWithLeftIcon icon="info-circle">{{ help }}</TextWithLeftIcon>
+        <TextWithLeftIcon icon="info-circle">
+          {{ help }}
+        </TextWithLeftIcon>
       </b-form-text>
-
     </b-form-group>
   </ValidationProvider>
 </template>
@@ -38,7 +56,7 @@
     public readonly icon!: string;
 
     @Prop()
-    public readonly rules!: any | undefined;
+    public readonly rules!: unknown | undefined;
 
     protected readonly id: string = this.$random();
   }

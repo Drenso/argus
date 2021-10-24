@@ -1,6 +1,9 @@
 <template>
   <div class="text-center">
-    <font-awesome-icon icon="circle-notch" spin size="4x"/>
+    <font-awesome-icon
+        icon="circle-notch"
+        size="4x"
+        spin/>
   </div>
 </template>
 

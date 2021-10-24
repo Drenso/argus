@@ -1,31 +1,58 @@
 <template>
   <div class="d-flex flex-column">
-    <div class="login-header"></div>
-    <div class="login-brand">{{ 'brand.argus'|trans }}</div>
+    <div class="login-header"/>
+    <div class="login-brand">
+      {{ 'brand.argus'|trans }}
+    </div>
 
     <div class="login-card">
-      <ValidationObserver slim ref="validationObserver" v-slot="observer">
+      <ValidationObserver
+          ref="validationObserver"
+          v-slot="observer"
+          slim>
         <form @submit.prevent="observer.handleSubmit(doLogin)">
           <LoadingOverlay :show="loggingIn">
             <b-card>
               <template #header>
-                <font-awesome-icon icon="sign-in-alt" fixed-width/>
+                <font-awesome-icon
+                    fixed-width
+                    icon="sign-in-alt"/>
                 {{ 'title.login'|trans }}
               </template>
 
-              <ErrorAlert :show="showLoginAlert" :text="'auth.flash.auth-failed'|trans"/>
+              <ErrorAlert
+                  :show="showLoginAlert"
+                  :text="'auth.flash.auth-failed'|trans"/>
 
-              <ValidatedField rules="required|email" :label="'auth.field.username'|trans">
-                <b-input ref="usernameField" type="email" v-model="username" autofocus autocomplete="username" trim/>
+              <ValidatedField
+                  :label="'auth.field.username'|trans"
+                  rules="required|email">
+                <b-input
+                    ref="usernameField"
+                    v-model="username"
+                    autocomplete="username"
+                    autofocus
+                    trim
+                    type="email"/>
               </ValidatedField>
 
-              <ValidatedField rules="required" :label="'auth.field.password'|trans">
-                <b-input v-model="password" type="password" autocomplete="current-password"/>
+              <ValidatedField
+                  :label="'auth.field.password'|trans"
+                  rules="required">
+                <b-input
+                    v-model="password"
+                    autocomplete="current-password"
+                    type="password"/>
               </ValidatedField>
 
               <div class="d-flex justify-content-end">
-                <b-button type="submit" variant="primary" :disabled="loggingIn">
-                  <font-awesome-icon icon="sign-in-alt" fixed-width/>
+                <b-button
+                    :disabled="loggingIn"
+                    type="submit"
+                    variant="primary">
+                  <font-awesome-icon
+                      fixed-width
+                      icon="sign-in-alt"/>
                   {{ 'auth.button.login'|trans }}
                 </b-button>
               </div>
@@ -50,11 +77,11 @@
     components: {LoadingOverlay, ValidatedField, ErrorAlert, ArgusAlert},
   })
   export default class LoginPage extends Vue {
-    protected loggingIn: boolean = false;
-    protected showLoginAlert: boolean = false;
+    protected loggingIn = false;
+    protected showLoginAlert = false;
 
-    protected username: string = '';
-    protected password: string = '';
+    protected username = '';
+    protected password = '';
 
     @Ref()
     private readonly validationObserver!: InstanceType<typeof ValidationObserver>;
@@ -62,7 +89,7 @@
     @Ref()
     private readonly usernameField!: BFormInput;
 
-    public async doLogin() {
+    public async doLogin(): Promise<void> {
       if (this.loggingIn) {
         return;
       }

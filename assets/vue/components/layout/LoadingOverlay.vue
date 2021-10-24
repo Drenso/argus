@@ -3,7 +3,7 @@
     <template #overlay>
       <LoadingOverlayIcon/>
     </template>
-    <slot></slot>
+    <slot/>
   </b-overlay>
 </template>
 

@@ -1,5 +1,9 @@
 <template>
-  <ArgusAlert v-bind="$attrs" v-on="$listeners" icon="times" variant="danger">
+  <ArgusAlert
+      v-bind="$attrs"
+      icon="times"
+      variant="danger"
+      v-on="$listeners">
     <template #text>
       <slot>{{ text }}</slot>
     </template>

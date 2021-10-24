@@ -1,13 +1,23 @@
 <template>
   <div>
     <transition name="fade">
-      <div class="init-loader" v-if="loading">
-        <font-awesome-icon icon="circle-notch" spin size="6x"/>
-        <div class="loader-text">{{ 'brand.loading'|trans }}</div>
+      <div
+          v-if="loading"
+          class="init-loader">
+        <font-awesome-icon
+            icon="circle-notch"
+            size="6x"
+            spin/>
+        <div class="loader-text">
+          {{ 'brand.loading'|trans }}
+        </div>
       </div>
     </transition>
 
-    <b-overlay :show="$store.direct.state.isWorking" variant="dark" class="app-overlay">
+    <b-overlay
+        class="app-overlay"
+        :show="$store.direct.state.isWorking"
+        variant="dark">
       <template #overlay>
         <LoadingOverlayIcon class="text-white"/>
       </template>
@@ -15,13 +25,16 @@
       <transition name="router-fade">
         <div v-if="!loading">
           <transition name="router-fade">
-            <LoginPage key="login" v-if="!$store.direct.state.isAuthenticated"/>
+            <LoginPage
+                v-if="!$store.direct.state.isAuthenticated"
+                key="login"/>
 
-            <div key="content" v-else>
+            <div
+                v-else
+                key="content">
               <Menu/>
 
               <div class="container">
-
                 <div class="content">
                   <transition name="router-fade">
                     <RouterView/>
@@ -46,13 +59,13 @@
     components: {LoadingOverlayIcon, LoginPage, Menu},
   })
   export default class App extends Vue {
-    public loading: boolean = true;
+    public loading = true;
 
-    public async mounted() {
+    public mounted(): void {
       this.$nextTick(() => this.testAuthentication());
     }
 
-    private async testAuthentication() {
+    private async testAuthentication(): Promise<void> {
       try {
         await this.$httpInstance.get(this.$sfRouter.generate('auth_test'));
         this.$store.direct.commit.loggedIn();

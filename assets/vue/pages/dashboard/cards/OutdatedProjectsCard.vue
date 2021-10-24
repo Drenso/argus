@@ -1,66 +1,100 @@
 <template>
-  <b-card header-bg-variant="primary" header-text-variant="white">
+  <b-card
+      header-bg-variant="primary"
+      header-text-variant="white">
     <template #header>
       <div class="d-flex">
         <div class="flex-fill">
           {{ 'outdated-project.title._'|trans }}
         </div>
         <div class="ml-2">
-          <a @click="refresh" class="pointer text-white" v-if="outdatedProjects !== null"
-             v-b-tooltip.hover.left :title="'general.refresh'|trans">
-            <font-awesome-icon icon="sync-alt" fixed-width :spin="refreshing"/>
+          <a
+              v-if="outdatedProjects !== null"
+              v-b-tooltip.hover.left
+              class="pointer text-white"
+              :title="'general.refresh'|trans"
+              @click="refresh">
+            <font-awesome-icon
+                fixed-width
+                icon="sync-alt"
+                :spin="refreshing"/>
           </a>
         </div>
       </div>
     </template>
 
-    <div class="text-center" v-if="outdatedProjects === null">
+    <div
+        v-if="outdatedProjects === null"
+        class="text-center">
       <LoadingOverlayIcon/>
     </div>
     <div v-else>
       <LoadingOverlay :show="refreshing">
         <div class="d-flex flex-wrap m-n1">
           <div class="flex-fill m-1 filter">
-            <b-input autofocus v-model="filter" :placeholder="'general.filter'|trans" @keydown.esc="filter = ''"/>
+            <b-input
+                v-model="filter"
+                autofocus
+                :placeholder="'general.filter'|trans"
+                @keydown.esc="filter = ''"/>
           </div>
-          <div class="flex-shrink-0 flex-grow-1 m-1" v-show="rows > perPage">
+          <div
+              v-show="rows > perPage"
+              class="flex-shrink-0 flex-grow-1 m-1">
             <b-pagination
-                class="mb-0"
                 v-model="currentPage"
                 align="fill"
-                :total-rows="rows" :per-page="perPage"/>
+                class="mb-0"
+                :per-page="perPage"
+                :total-rows="rows"/>
           </div>
         </div>
 
         <b-table
-            small class="mt-2 mb-2" show-empty
+            class="mt-2 mb-2"
+            :current-page="currentPage"
+            :fields="fields"
+            :filter="filter"
+            :items="outdatedProjects"
+            :per-page="perPage"
+            show-empty
+            small
             sort-by="project.name"
             stacked="md"
-            :filter="filter"
-            :fields="fields" :items="outdatedProjects" :per-page="perPage" :current-page="currentPage"
             @filtered="onFiltered">
-
           <template #cell(_actions)="row">
-            <a class="pointer text-secondary"
-               v-b-tooltip.hover.topleft
-               :title="'outdated-project.button.show-diff'|trans"
-               @click="showDiff(row.item)">
+            <a
+                v-b-tooltip.hover.topleft
+                class="pointer text-secondary"
+                :title="'outdated-project.button.show-diff'|trans"
+                @click="showDiff(row.item)">
               <font-awesome-icon icon="search"/>
             </a>
 
-            <a class="pointer text-primary"
-               v-b-tooltip.hover.topleft
-               :title="'outdated-project.button.create-mr'|trans"
-               @click="createMr(row.item)">
-              <font-awesome-icon :icon="creatingMrs[row.item.project.id] ? 'circle-notch' : 'play'"
-                                 fixed-width :spin="creatingMrs[row.item.project.id]"/>
+            <a
+                v-b-tooltip.hover.topleft
+                class="pointer text-primary"
+                :title="'outdated-project.button.create-mr'|trans"
+                @click="createMr(row.item)">
+              <font-awesome-icon
+                  fixed-width
+                  :icon="creatingMrs[row.item.project.id] ? 'circle-notch' : 'play'"
+                  :spin="creatingMrs[row.item.project.id]"/>
             </a>
           </template>
         </b-table>
 
-        <div class="text-right" v-if="outdatedProjects.length > 1">
-          <b-button variant="success" @click="createMrs" :disabled="isBusy">
-            <font-awesome-icon :icon="creatingAllMrs ? 'circle-notch' : 'play'" :spin="creatingAllMrs" fixed-width/>
+        <div
+            v-if="outdatedProjects.length > 1"
+            class="text-right">
+          <b-button
+              :disabled="isBusy"
+              variant="success"
+              @click="createMrs">
+            <font-awesome-icon
+                fixed-width
+                :icon="creatingAllMrs ? 'circle-notch' : 'play'"
+                :spin="creatingAllMrs"/>
             {{ 'outdated-project.button.create-mrs'|trans }}
           </b-button>
         </div>
@@ -82,22 +116,22 @@
     components: {LoadingOverlay, LoadingOverlayIcon, EventStats},
   })
   export default class OutdatedProjectsCard extends Vue {
-    protected refreshing: boolean = false;
+    protected refreshing = false;
     protected outdatedProjects: OutdatedProject[] | null = null;
 
-    protected filter: string = '';
-    protected rows: number = 0;
-    protected perPage: number = 5;
-    protected currentPage: number = 1;
+    protected filter = '';
+    protected rows = 0;
+    protected perPage = 5;
+    protected currentPage = 1;
 
-    protected creatingAllMrs: boolean = false;
+    protected creatingAllMrs = false;
     protected creatingMrs: { [projectId: number]: boolean } = {};
 
-    public mounted() {
+    public mounted(): void {
       this.loadOutdatedProjects();
     }
 
-    protected async createMr(item: OutdatedProject) {
+    protected async createMr(item: OutdatedProject): Promise<void> {
       if (this.isBusy) {
         return;
       }
@@ -110,7 +144,7 @@
       }
     }
 
-    protected async createMrs() {
+    protected async createMrs(): Promise<void> {
       if (this.isBusy) {
         return;
       }
@@ -123,12 +157,12 @@
       }
     }
 
-    protected onFiltered(filteredItems: OutdatedProject[]) {
+    protected onFiltered(filteredItems: OutdatedProject[]): void {
       this.rows = filteredItems.length;
       this.currentPage = 1;
     }
 
-    protected async refresh() {
+    protected async refresh(): Promise<void> {
       if (this.refreshing) {
         return;
       }
@@ -145,14 +179,14 @@
       window.open(project.gitlab_diff_url, '_blank');
     }
 
-    private async loadOutdatedProjects() {
+    private async loadOutdatedProjects(): Promise<void> {
       const response: AxiosResponse<OutdatedProject[]> =
           await this.$http.get(this.$sfRouter.generate('app_api_project_outdated'));
       this.outdatedProjects = response.data;
-      this.outdatedProjects!.forEach((p) => {
+      this.outdatedProjects?.forEach((p) => {
         Vue.set(this.creatingMrs, p.project.id, false);
       });
-      this.rows = this.outdatedProjects!.length;
+      this.rows = this.outdatedProjects?.length ?? 0;
     }
 
     protected get fields(): BvTableFieldArray {

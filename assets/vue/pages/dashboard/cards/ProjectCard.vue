@@ -1,83 +1,125 @@
 <template>
-  <b-card header-bg-variant="primary" header-text-variant="white">
+  <b-card
+      header-bg-variant="primary"
+      header-text-variant="white">
     <template #header>
       <div class="d-flex">
         <div class="flex-fill">
           {{ 'project.title.list'|trans }}
         </div>
         <div class="ml-2">
-          <a class="pointer text-white" v-if="projects !== null"
-             v-b-tooltip.hover.left
-             :title="'general.refresh'|trans"
-             @click="refresh">
-            <font-awesome-icon icon="sync-alt" fixed-width :spin="refreshing"/>
+          <a
+              v-if="projects !== null"
+              v-b-tooltip.hover.left
+              class="pointer text-white"
+              :title="'general.refresh'|trans"
+              @click="refresh">
+            <font-awesome-icon
+                fixed-width
+                icon="sync-alt"
+                :spin="refreshing"/>
           </a>
         </div>
       </div>
     </template>
 
-    <div class="text-center" v-if="projects === null">
+    <div
+        v-if="projects === null"
+        class="text-center">
       <LoadingOverlayIcon/>
     </div>
     <div v-else>
       <LoadingOverlay :show="isBusy">
         <div class="d-flex flex-wrap m-n1">
           <div class="flex-fill m-1 filter">
-            <b-input autofocus v-model="filter" :placeholder="'general.filter'|trans" @keydown.esc="filter = ''"/>
+            <b-input
+                v-model="filter"
+                autofocus
+                :placeholder="'general.filter'|trans"
+                @keydown.esc="filter = ''"/>
           </div>
-          <div class="flex-shrink-0 flex-grow-1 m-1" v-show="rows > perPage">
+          <div
+              v-show="rows > perPage"
+              class="flex-shrink-0 flex-grow-1 m-1">
             <b-pagination
-                class="mb-0"
                 v-model="currentPage"
                 align="fill"
-                :total-rows="rows" :per-page="perPage"/>
+                class="mb-0"
+                :per-page="perPage"
+                :total-rows="rows"/>
           </div>
         </div>
 
         <b-table
-            small class="mt-2 mb-2" show-empty
-            sort-by="last_event" sort-desc
-            stacked="md"
+            class="mt-2 mb-2"
+            :current-page="currentPage"
+            :fields="fields"
             :filter="filter"
-            :fields="fields" :items="projects" :per-page="perPage" :current-page="currentPage"
+            :items="projects"
+            :per-page="perPage"
+            show-empty
+            small
+            sort-by="last_event"
+            sort-desc
+            stacked="md"
             @filtered="onFiltered">
           <template #cell(current_state)="row">
-            <a href="#" v-b-tooltip.hover.topright
-               :title="`project-environment.state.${row.value}`|trans"
-               :class="stateColor(row.value)"
-               @click="row.toggleDetails">
-              <font-awesome-icon icon="circle" fixed-width/>
+            <a
+                v-b-tooltip.hover.topright
+                :class="stateColor(row.value)"
+                href="#"
+                :title="`project-environment.state.${row.value}`|trans"
+                @click="row.toggleDetails">
+              <font-awesome-icon
+                  fixed-width
+                  icon="circle"/>
             </a>
-            <a class="pointer ml" href="#" v-b-tooltip.hover.topright
-               :title="'project.button.environments'|trans"
-               :class="stateColor(row.value)"
-               @click="row.toggleDetails">
-              <font-awesome-icon icon="caret-down" fixed-width :rotation="row.item._showDetails ? null : 90"/>
+            <a
+                v-b-tooltip.hover.topright
+                class="pointer ml"
+                :class="stateColor(row.value)"
+                href="#"
+                :title="'project.button.environments'|trans"
+                @click="row.toggleDetails">
+              <font-awesome-icon
+                  fixed-width
+                  icon="caret-down"
+                  :rotation="row.item._showDetails ? null : 90"/>
             </a>
           </template>
 
           <template #cell(_actions)="row">
-            <a class="pointer text-primary" target="_blank"
-               v-b-tooltip.hover.topleft
-               :title="'project.button.gitlab'|trans"
-               :href="row.item._gitlab_url">
-              <font-awesome-icon :icon="['fab', 'gitlab']" fixed-width/>
+            <a
+                v-b-tooltip.hover.topleft
+                class="pointer text-primary"
+                :href="row.item._gitlab_url"
+                target="_blank"
+                :title="'project.button.gitlab'|trans">
+              <font-awesome-icon
+                  fixed-width
+                  :icon="['fab', 'gitlab']"/>
             </a>
 
-            <a class="pointer text-secondary"
-               v-b-tooltip.hover.topleft
-               :title="'project.button.resync'|trans"
-               @click="resyncProject(row.item)">
-              <font-awesome-icon :icon="resyncing[row.item.id] ? 'circle-notch' : 'sync'"
-                                 fixed-width :spin="resyncing[row.item.id]"/>
+            <a
+                v-b-tooltip.hover.topleft
+                class="pointer text-secondary"
+                :title="'project.button.resync'|trans"
+                @click="resyncProject(row.item)">
+              <font-awesome-icon
+                  fixed-width
+                  :icon="resyncing[row.item.id] ? 'circle-notch' : 'sync'"
+                  :spin="resyncing[row.item.id]"/>
             </a>
 
-            <a class="pointer text-danger"
-               v-b-tooltip.hover.topleft
-               :title="'project.button.delete'|trans"
-               @click="deleteProject(row.item)">
-              <font-awesome-icon :icon="deleting[row.item.id] ? 'circle-notch' : 'trash'"
-                                 fixed-width :spin="deleting[row.item.id]"/>
+            <a
+                v-b-tooltip.hover.topleft
+                class="pointer text-danger"
+                :title="'project.button.delete'|trans"
+                @click="deleteProject(row.item)">
+              <font-awesome-icon
+                  fixed-width
+                  :icon="deleting[row.item.id] ? 'circle-notch' : 'trash'"
+                  :spin="deleting[row.item.id]"/>
             </a>
           </template>
 
@@ -86,29 +128,41 @@
               <h6>
                 {{ 'project-environment.title._multiple'|trans }}
 
-                <a class="pointer text-secondary"
-                   v-b-tooltip.hover.right
-                   :title="'project-environment.button.refresh'|trans"
-                   @click="refreshProjectEnvironments(row.item)">
-                  <font-awesome-icon :icon="refreshEnvironments[row.item.id] ? 'circle-notch' : 'redo'"
-                                     fixed-width :spin="refreshEnvironments[row.item.id]"/>
+                <a
+                    v-b-tooltip.hover.right
+                    class="pointer text-secondary"
+                    :title="'project-environment.button.refresh'|trans"
+                    @click="refreshProjectEnvironments(row.item)">
+                  <font-awesome-icon
+                      fixed-width
+                      :icon="refreshEnvironments[row.item.id] ? 'circle-notch' : 'redo'"
+                      :spin="refreshEnvironments[row.item.id]"/>
                 </a>
               </h6>
 
-              <span v-if="row.item.environments.length === 0" class="font-italic">
+              <span
+                  v-if="row.item.environments.length === 0"
+                  class="font-italic">
                 {{ 'project-environment.text.none'|trans }}
               </span>
               <div v-else>
                 <b-table
-                    small class="mt-2 mb-0"
-                    sort-by="name" sort-asc
-                    stacked="md"
-                    :fields="environmentFields" :items="row.item.environments">
-                  <template #cell(current_state)="row">
-                    <a href="#" v-b-tooltip.hover.topright
-                       :title="`project-environment.state.${row.value}`|trans"
-                       :class="stateColor(row.value)">
-                      <font-awesome-icon icon="circle" fixed-width/>
+                    class="mt-2 mb-0"
+                    :fields="environmentFields"
+                    :items="row.item.environments"
+                    small
+                    sort-asc
+                    sort-by="name"
+                    stacked="md">
+                  <template #cell(current_state)="item">
+                    <a
+                        v-b-tooltip.hover.topright
+                        :class="stateColor(item.value)"
+                        href="#"
+                        :title="`project-environment.state.${item.value}`|trans">
+                      <font-awesome-icon
+                          fixed-width
+                          icon="circle"/>
                     </a>
                   </template>
                 </b-table>
@@ -118,43 +172,68 @@
         </b-table>
 
         <div class="text-right">
-          <b-button variant="success" @click="addProject">
-            <font-awesome-icon icon="plus" fixed-width/>
+          <b-button
+              variant="success"
+              @click="addProject">
+            <font-awesome-icon
+                fixed-width
+                icon="plus"/>
             {{ 'general.add'|trans }}
           </b-button>
         </div>
       </LoadingOverlay>
     </div>
 
-    <ValidationObserver slim ref="addObserver">
+    <ValidationObserver
+        ref="addObserver"
+        slim>
       <b-modal
-          ref="addProjectModal" body-class="p-0"
-          static hide-footer
+          ref="addProjectModal"
+          body-class="p-0"
+          hide-footer
           :hide-header-close="adding"
-          :no-close-on-esc="adding"
           :no-close-on-backdrop="adding"
+          :no-close-on-esc="adding"
+          static
           :title="'project.title.add'|trans"
           @shown="projectField.focus()">
         <LoadingOverlay :show="adding">
-          <form class="p-3" @submit.prevent="doAddProject">
-            <ErrorAlert :show="errorMessage !== null" :text="errorMessage"/>
+          <form
+              class="p-3"
+              @submit.prevent="doAddProject">
+            <ErrorAlert
+                :show="errorMessage !== null"
+                :text="errorMessage"/>
 
             <ValidatedField
-                rules="required"
-                :label="'project.field.name'|trans" :help="'project.help.name'|trans">
-              <b-input ref="projectField" v-model="projectName" autofocus trim/>
+                :help="'project.help.name'|trans"
+                :label="'project.field.name'|trans"
+                rules="required">
+              <b-input
+                  ref="projectField"
+                  v-model="projectName"
+                  autofocus
+                  trim/>
             </ValidatedField>
 
             <div class="d-flex flex-wrap justify-content-end m-n1">
               <div class="flex-shrink-0 m-1">
-                <b-button variant="secondary" @click="addProjectModal.hide()">
-                  <font-awesome-icon icon="times" fixed-width/>
+                <b-button
+                    variant="secondary"
+                    @click="addProjectModal.hide()">
+                  <font-awesome-icon
+                      fixed-width
+                      icon="times"/>
                   {{ 'general.cancel'|trans }}
                 </b-button>
               </div>
               <div class="flex-shrink-0 m-1">
-                <b-button variant="success" @click="doAddProject">
-                  <font-awesome-icon icon="plus" fixed-width/>
+                <b-button
+                    variant="success"
+                    @click="doAddProject">
+                  <font-awesome-icon
+                      fixed-width
+                      icon="plus"/>
                   {{ 'general.add'|trans }}
                 </b-button>
               </div>
@@ -181,19 +260,19 @@
     components: {ErrorAlert, ValidatedField, LoadingOverlayIcon, LoadingOverlay},
   })
   export default class ProjectCard extends Vue {
-    protected adding: boolean = false;
-    protected refreshing: boolean = false;
+    protected adding = false;
+    protected refreshing = false;
     protected refreshEnvironments: { [projectId: number]: boolean } = {};
     protected resyncing: { [projectId: number]: boolean } = {};
     protected deleting: { [projectId: number]: boolean } = {};
     protected projects: Project[] | null = null;
 
-    protected filter: string = '';
-    protected rows: number = 0;
-    protected perPage: number = 5;
-    protected currentPage: number = 1;
+    protected filter = '';
+    protected rows = 0;
+    protected perPage = 5;
+    protected currentPage = 1;
 
-    protected projectName: string = '';
+    protected projectName = '';
 
     protected errorMessage: string | null = null;
 
@@ -206,11 +285,11 @@
     @Ref()
     private readonly projectField!: BFormInput;
 
-    public mounted() {
+    public mounted(): void {
       this.loadProjects();
     }
 
-    protected async addProject() {
+    protected async addProject(): Promise<void> {
       this.errorMessage = null;
       this.projectName = '';
       await this.$nextTick();
@@ -219,7 +298,7 @@
       this.addProjectModal.show();
     }
 
-    protected async doAddProject() {
+    protected async doAddProject(): Promise<void> {
       await this.addObserver.handleSubmit(async () => {
         if (this.adding) {
           return;
@@ -232,7 +311,7 @@
                 name: this.projectName,
               });
 
-          this.projects!.push(response.data);
+          this.projects?.push(response.data);
           this.addProjectModal.hide();
           await this.reloadFilter();
         } catch (e) {
@@ -248,12 +327,12 @@
       });
     }
 
-    protected onFiltered(filteredItems: Project[]) {
+    protected onFiltered(filteredItems: Project[]): void {
       this.rows = filteredItems.length;
       this.currentPage = 1;
     }
 
-    protected async refresh() {
+    protected async refresh(): Promise<void> {
       if (this.isBusy) {
         return;
       }
@@ -266,8 +345,8 @@
       }
     }
 
-    protected async deleteProject(project: Project) {
-      if (this.isBusy) {
+    protected async deleteProject(project: Project): Promise<void> {
+      if (this.isBusy || !this.projects) {
         return;
       }
 
@@ -283,9 +362,9 @@
       try {
         await this.$http.delete(this.$sfRouter.generate('app_api_project_delete', {project: project.id}));
 
-        const toRemoveIndex = this.projects!.findIndex((p) => p.id === project.id);
+        const toRemoveIndex = this.projects.findIndex((p) => p.id === project.id);
         if (toRemoveIndex !== -1) {
-          this.projects!.splice(toRemoveIndex, 1);
+          this.projects.splice(toRemoveIndex, 1);
         }
         await this.reloadFilter();
       } finally {
@@ -293,7 +372,7 @@
       }
     }
 
-    protected async refreshProjectEnvironments(project: Project) {
+    protected async refreshProjectEnvironments(project: Project): Promise<void> {
       if (this.isBusy) {
         return;
       }
@@ -321,7 +400,7 @@
       }
     }
 
-    protected async resyncProject(project: Project) {
+    protected async resyncProject(project: Project): Promise<void> {
       if (this.isBusy) {
         return;
       }
@@ -355,22 +434,22 @@
       }
     }
 
-    private async loadProjects() {
+    private async loadProjects(): Promise<void> {
       const response: AxiosResponse<Project[]> =
           await this.$http.get(this.$sfRouter.generate('app_api_project_list'));
       this.projects = response.data;
-      this.projects!.forEach((p) => {
+      this.projects?.forEach((p) => {
         Vue.set(this.refreshEnvironments, p.id, false);
         Vue.set(this.resyncing, p.id, false);
         Vue.set(this.deleting, p.id, false);
       });
-      this.rows = this.projects!.length;
+      this.rows = this.projects?.length ?? 0;
     }
 
-    private async reloadFilter() {
+    private async reloadFilter(): Promise<void> {
       const filter = this.filter;
       if (!filter) {
-        this.rows = this.projects!.length;
+        this.rows = this.projects?.length ?? 0;
         return;
       }
 

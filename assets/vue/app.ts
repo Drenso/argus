@@ -16,8 +16,8 @@ Vue.use(BootstrapVue);
 // Font Awesome
 import {FontAwesomeIcon, FontAwesomeLayers} from '@fortawesome/vue-fontawesome';
 
-Vue.component('font-awesome-icon', FontAwesomeIcon);
-Vue.component('font-awesome-layers', FontAwesomeLayers);
+Vue.component('FontAwesomeIcon', FontAwesomeIcon);
+Vue.component('FontAwesomeLayers', FontAwesomeLayers);
 
 // Sentry
 import * as Sentry from '@sentry/browser';

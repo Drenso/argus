@@ -1,14 +1,27 @@
 <template>
-  <b-navbar type="dark" variant="primary" sticky>
+  <b-navbar
+      sticky
+      type="dark"
+      variant="primary">
     <b-navbar-brand :to="{name: 'dashboard'}">
-      <img src="../../../img/argus_white.svg" width="30" height="30"
-           class="d-inline-block align-top mr-2" :alt="'brand.argus'|uppercase">
+      <img
+          :alt="'brand.argus'|uppercase"
+          class="d-inline-block align-top mr-2"
+          height="30"
+          src="../../../img/argus_white.svg"
+          width="30">
       {{ 'brand.argus'|trans|uppercase }}
     </b-navbar-brand>
 
     <b-navbar-nav class="ml-auto">
-      <b-button variant="light" @click="logout" :disabled="logoutPending">
-        <font-awesome-icon :icon="logoutPending ? 'circle-notch' : 'sign-out-alt'" fixed-width :spin="logoutPending"/>
+      <b-button
+          :disabled="logoutPending"
+          variant="light"
+          @click="logout">
+        <font-awesome-icon
+            fixed-width
+            :icon="logoutPending ? 'circle-notch' : 'sign-out-alt'"
+            :spin="logoutPending"/>
         {{ 'auth.button.logout'|trans }}
       </b-button>
     </b-navbar-nav>
@@ -20,9 +33,9 @@
 
   @Component
   export default class Menu extends Vue {
-    protected logoutPending: boolean = false;
+    protected logoutPending = false;
 
-    public async logout() {
+    public async logout(): Promise<void> {
       this.logoutPending = true;
       this.$store.direct.commit.startWork();
       await this.$http.delete(this.$sfRouter.generate('auth_clear'));
