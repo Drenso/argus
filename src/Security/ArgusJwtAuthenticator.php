@@ -3,10 +3,12 @@
 namespace App\Security;
 
 use Drenso\Shared\Helper\DateTimeProvider;
-use Lcobucci\JWT\Builder;
-use Lcobucci\JWT\Parser;
+use Lcobucci\Clock\FrozenClock;
+use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Hmac\Sha512;
 use Lcobucci\JWT\Signer\Key;
+use Lcobucci\JWT\Validation\Constraint\LooseValidAt;
+use Lcobucci\JWT\Validation\Constraint\SignedWith;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,14 +58,15 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
 
   public function createCookieForUser(UserInterface $user)
   {
-    $jwt = (new Builder())
+    $config = $this->getJwtConfiguration();
+    $jwt    = $config->builder()
         ->identifiedBy(bin2hex(random_bytes(20)))
         ->withClaim(self::CLAIM_USERNAME, $user->getUserIdentifier())
         ->expiresAt($this->dateTimeProvider->utcNow()->modify('+' . $this->tokenValidity))
-        ->getToken(new Sha512(), new Key($this->jwtSecret));
+        ->getToken($config->signer(), $config->signingKey());
 
     return Cookie::create(
-        self::COOKIE_NAME, $jwt,
+        self::COOKIE_NAME, $jwt->toString(),
         0, '/', NULL, true, true, false, Cookie::SAMESITE_STRICT);
   }
 
@@ -79,10 +82,10 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
       throw new CustomUserMessageAuthenticationException('Auth token was not provided');
     }
 
-    $token = (new Parser())
-        ->parse($jwt);
+    $config = $this->getJwtConfiguration();
+    $token  = $config->parser()->parse($jwt);
     /** @phan-suppress-next-line PhanDeprecatedFunction */
-    if (!$token->verify(new Sha512(), new Key($this->jwtSecret))) {
+    if (!$config->validator()->validate($token, ...$config->validationConstraints())) {
       throw new CustomUserMessageAuthenticationException('Auth token invalid');
     }
 
@@ -91,7 +94,7 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
     }
 
     /** @phan-suppress-next-line PhanDeprecatedFunction */
-    return new SelfValidatingPassport(new UserBadge($token->getClaim(self::CLAIM_USERNAME)));
+    return new SelfValidatingPassport(new UserBadge($token->claims()->get(self::CLAIM_USERNAME)));
   }
 
   public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
@@ -110,5 +113,16 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
   private function isApiController(Request $request)
   {
     return u($request->get('_controller'))->startsWith($this->apiControllerPrefix);
+  }
+
+  private function getJwtConfiguration(): Configuration
+  {
+    $config = Configuration::forSymmetricSigner(new Sha512(), Key\InMemory::plainText($this->jwtSecret));
+    $config->setValidationConstraints(
+        new SignedWith($config->signer(), $config->signingKey()),
+        new LooseValidAt(new FrozenClock($this->dateTimeProvider->utcNow()))
+    );
+
+    return $config;
   }
 }
