@@ -13,6 +13,7 @@ use App\RemoteConfiguration\RemoteConfigurationInterface;
 use App\Repository\ProjectEnvironmentRepository;
 use App\Repository\ProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Generator;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -305,9 +306,9 @@ class ProjectService
   }
 
   /**
-   * @return RemoteConfigurationInterface[]
+   * @return Generator<RemoteConfigurationInterface>
    */
-  private function configurationServices(): iterable
+  private function configurationServices(): Generator
   {
     foreach ($this->remoteConfigurationServices->getProvidedServices() as $serviceId) {
       $remoteConfigurationService = $this->remoteConfigurationServices->get($serviceId);

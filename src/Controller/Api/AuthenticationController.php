@@ -48,7 +48,6 @@ class AuthenticationController extends AbstractApiController
     }
 
     assert($user instanceof PasswordAuthenticatedUserInterface && $user instanceof UserInterface);
-    /** @phan-suppress-next-line PhanTypeMismatchArgument */
     if (!$passwordEncoder->isPasswordValid($user, $data['password'])) {
       return $this->createUnauthorizedResponse('Invalid credentials');
     }

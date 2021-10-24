@@ -7,6 +7,7 @@ use Lcobucci\Clock\FrozenClock;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Hmac\Sha512;
 use Lcobucci\JWT\Signer\Key;
+use Lcobucci\JWT\UnencryptedToken;
 use Lcobucci\JWT\Validation\Constraint\LooseValidAt;
 use Lcobucci\JWT\Validation\Constraint\SignedWith;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -29,23 +30,10 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
   public const COOKIE_NAME = 'argusAuthentication';
   private const CLAIM_USERNAME = 'username';
 
-  /**
-   * @var string
-   */
-  private $apiControllerPrefix;
-
-  /**
-   * @var DateTimeProvider
-   */
-  private $dateTimeProvider;
-  /**
-   * @var string
-   */
-  private $jwtSecret;
-  /**
-   * @var string
-   */
-  private $tokenValidity;
+  private string $apiControllerPrefix;
+  private DateTimeProvider $dateTimeProvider;
+  private string $jwtSecret;
+  private string $tokenValidity;
 
   public function __construct(
       DateTimeProvider $dateTimeProvider, string $apiControllerPrefix, string $jwtSecret, string $tokenValidity)
@@ -56,7 +44,7 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
     $this->tokenValidity       = $tokenValidity;
   }
 
-  public function createCookieForUser(UserInterface $user)
+  public function createCookieForUser(UserInterface $user): Cookie
   {
     $config = $this->getJwtConfiguration();
     $jwt    = $config->builder()
@@ -84,8 +72,8 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
 
     $config = $this->getJwtConfiguration();
     $token  = $config->parser()->parse($jwt);
-    /** @phan-suppress-next-line PhanDeprecatedFunction */
-    if (!$config->validator()->validate($token, ...$config->validationConstraints())) {
+    /** @noinspection PhpConditionAlreadyCheckedInspection */
+    if (!$token instanceof UnencryptedToken || !$config->validator()->validate($token, ...$config->validationConstraints())) {
       throw new CustomUserMessageAuthenticationException('Auth token invalid');
     }
 
@@ -93,7 +81,6 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
       throw new CustomUserMessageAccountStatusException('Token expired');
     }
 
-    /** @phan-suppress-next-line PhanDeprecatedFunction */
     return new SelfValidatingPassport(new UserBadge($token->claims()->get(self::CLAIM_USERNAME)));
   }
 
@@ -110,7 +97,7 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
     return $response;
   }
 
-  private function isApiController(Request $request)
+  private function isApiController(Request $request): bool
   {
     return u($request->get('_controller'))->startsWith($this->apiControllerPrefix);
   }
