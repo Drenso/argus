@@ -9,4 +9,4 @@ doctrine_migrations:
     table_storage:
       table_name: _migration_versions
 
-  all_or_nothing: true
+  transactional: false

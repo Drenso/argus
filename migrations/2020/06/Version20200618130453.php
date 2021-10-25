@@ -28,4 +28,9 @@ final class Version20200618130453 extends AbstractMigration
     // this down() migration is auto-generated, please modify it to your needs
     $this->addSql('ALTER TABLE stored_event DROP created_at');
   }
+
+  public function isTransactional(): bool
+  {
+    return false;
+  }
 }

@@ -30,4 +30,9 @@ final class Version20210506170948 extends AbstractMigration
     $this->addSql('DROP INDEX UNIQ_8EE929D9166D1F9C5E237E06 ON project_environment');
     $this->addSql('ALTER TABLE project_environment ADD gitlab_id INT NOT NULL');
   }
+
+  public function isTransactional(): bool
+  {
+    return false;
+  }
 }
