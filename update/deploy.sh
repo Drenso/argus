@@ -49,7 +49,7 @@ for service in "${messenger_services[@]}"; do
 done
 
 # Pull the new data
-ssh-agent bash -c 'ssh-add .ssh-token; git pull'
+ssh-agent bash -c 'ssh-add .ssh-token && git pull'
 
 # Set the current git hash in the local env
 COMMIT_HASH=$(git rev-parse --short=8 HEAD)
