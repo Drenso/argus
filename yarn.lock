@@ -921,10 +921,10 @@
   resolved "https://npm.drenso.dev/@discoveryjs%2fjson-ext/-/json-ext-0.5.5.tgz#9283c9ce5b289a3c4f61c12757469e59377f81f3"
   integrity sha512-6nFkfkmSeV/rqSaS4oWHgmpnYw194f6hmWF5is6b0J1naJZoiD0NTc9AiUwPHvWsowkjuHErCZT1wa0jg+BLIA==
 
-"@drenso/vue-frontend-shared@0.10.0":
-  version "0.10.0"
-  resolved "https://npm.drenso.dev/@drenso%2fvue-frontend-shared/-/vue-frontend-shared-0.10.0.tgz#75dba02f42cea1697e56bc1c5845eef642c2ca18"
-  integrity sha512-MF7OEfUN1rbmvmMod6bz3rPWj8OLwVG+35pQV0fSiOvrKLkELGXmADKT30FIXhFGZNSQSqX7EUO+acwfZkuMKw==
+"@drenso/vue-frontend-shared@0.11.0":
+  version "0.11.0"
+  resolved "https://npm.drenso.dev/@drenso%2fvue-frontend-shared/-/vue-frontend-shared-0.11.0.tgz#6cb92b372b52497c4ed31dce1bd9d48d6bb35035"
+  integrity sha512-1SGl88tNJUwWxktPSe6UZlahy/ekEJ6TaBNvJSk7QlysztEKoJlqWgHEGdv/yCS7dloI8rXKHR5LVEV4aX7nFg==
 
 "@es-joy/jsdoccomment@0.10.8":
   version "0.10.8"
