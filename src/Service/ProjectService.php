@@ -41,7 +41,7 @@ class ProjectService
   /**
    * Add a new project. Directly synchronises the correct settings with the remote services.
    *
-   * @param Project $source The source project used to create a new project
+   * @param string $path The web path of the project
    *
    * @return Project The newly managed project
    *
@@ -49,17 +49,24 @@ class ProjectService
    * @throws ProjectNotFoundException
    * @throws Throwable
    */
-  public function add(Project $source): Project
+  public function add(string $path): Project
   {
+    // Parse the path
+    $scheme = parse_url($path, PHP_URL_SCHEME);
+    $host   = parse_url($path, PHP_URL_HOST);
+    $name   = substr(parse_url($path, PHP_URL_PATH), 1);
+
     // Check if not duplicate
-    if ($this->projectRepository->findOneBy(['name' => $source->getName()])) {
-      throw new DuplicateProjectException($source);
+    if ($foundProject = $this->projectRepository->findOneByNameAndHost($name, $host)) {
+      throw new DuplicateProjectException($foundProject);
     }
 
     $this->entityManager->beginTransaction();
     try {
       $project = (new Project())
-          ->fromOther($source);
+          ->setName($name)
+          ->setHost($host)
+          ->setHostScheme($scheme);
 
       // Test whether the project actually exists
       try {

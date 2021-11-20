@@ -206,12 +206,12 @@
                 :text="errorMessage"/>
 
             <ValidatedField
-                :help="'project.help.name'|trans"
-                :label="'project.field.name'|trans"
+                :help="'project.help.path'|trans"
+                :label="'project.field.path'|trans"
                 rules="required">
               <b-input
                   ref="projectField"
-                  v-model="projectName"
+                  v-model="projectPath"
                   autofocus
                   trim/>
             </ValidatedField>
@@ -272,7 +272,7 @@
     protected perPage = 5;
     protected currentPage = 1;
 
-    protected projectName = '';
+    protected projectPath = '';
 
     protected errorMessage: string | null = null;
 
@@ -291,7 +291,7 @@
 
     protected async addProject(): Promise<void> {
       this.errorMessage = null;
-      this.projectName = '';
+      this.projectPath = '';
       await this.$nextTick();
 
       this.addObserver.reset();
@@ -308,7 +308,7 @@
         try {
           const response: AxiosResponse<Project> =
               await this.$http.post(this.$sfRouter.generate('app_api_project_add'), {
-                name: this.projectName,
+                path: this.projectPath,
               });
 
           this.projects?.push(response.data);

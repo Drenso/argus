@@ -55,14 +55,16 @@ project:
     resync: 'Resync configuration'
   exception:
     duplicate: 'This project is already added'
+    missing-path: 'Missing project path'
     not-found: 'This project is not found on Gitlab'
   field:
     current-state: 'Current state'
     host: 'Project host'
     last-event: 'Last recorded event'
     name: 'Project name'
+    path: 'Project path'
   help:
-    name: 'Enter the full project name including namespace. For example "drenso/argus".'
+    path: 'Enter the project web path. For example "https://gitlab.com/drenso/argus".'
   title:
     add: 'Add project'
     list: 'Projects'

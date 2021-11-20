@@ -14,38 +14,18 @@ use Throwable;
 
 abstract class AbstractApiController extends AbstractController
 {
-  /**
-   * @var SerializationContextFactoryInterface
-   */
-  protected $contextFactory;
-  /**
-   * @var SerializerInterface
-   */
-  protected $serializer;
-  /**
-   * @var EntityManagerInterface
-   */
-  protected $em;
-
   public function __construct(
-      SerializerInterface $serializer, SerializationContextFactoryInterface $contextFactory, EntityManagerInterface $em)
+      protected SerializerInterface                  $serializer,
+      protected SerializationContextFactoryInterface $contextFactory,
+      protected EntityManagerInterface               $em)
   {
-    $this->serializer     = $serializer;
-    $this->contextFactory = $contextFactory;
-    $this->em             = $em;
   }
 
   /**
    * Create a response with the correct serialization groups
-   *
-   * @param mixed      $data
-   * @param array|null $serializationGroups
-   * @param int        $statusCode
-   *
-   * @return JsonResponse
    */
   protected function createResponse(
-      $data, ?array $serializationGroups = NULL, int $statusCode = Response::HTTP_OK): JsonResponse
+      mixed $data, ?array $serializationGroups = NULL, int $statusCode = Response::HTTP_OK): JsonResponse
   {
     $context = $this->contextFactory->createSerializationContext();
     $context->setGroups($serializationGroups ?? ['Default']);
@@ -55,14 +35,8 @@ abstract class AbstractApiController extends AbstractController
 
   /**
    * Create a bad request response with the correct serialization groups
-   *
-   * @param string     $reason
-   * @param mixed      $data
-   * @param array|null $serializationGroups
-   *
-   * @return JsonResponse
    */
-  protected function createBadRequestResponse(string $reason, $data = NULL, ?array $serializationGroups = NULL): JsonResponse
+  protected function createBadRequestResponse(string $reason, mixed $data = NULL, ?array $serializationGroups = NULL): JsonResponse
   {
     return $this->createResponse([
         'reason'  => $reason,
@@ -72,14 +46,8 @@ abstract class AbstractApiController extends AbstractController
 
   /**
    * Create a bad request response with the correct serialization groups
-   *
-   * @param string     $reason
-   * @param mixed      $data
-   * @param array|null $serializationGroups
-   *
-   * @return JsonResponse
    */
-  protected function createUnauthorizedResponse(string $reason, $data = NULL, ?array $serializationGroups = NULL): JsonResponse
+  protected function createUnauthorizedResponse(string $reason, mixed $data = NULL, ?array $serializationGroups = NULL): JsonResponse
   {
     return $this->createResponse([
         'reason'  => $reason,
@@ -89,13 +57,8 @@ abstract class AbstractApiController extends AbstractController
 
   /**
    * Retrieve the data from the request body
-   *
-   * @param Request $request
-   * @param string  $type
-   *
-   * @return mixed The requested type
    */
-  protected function getFromBody(Request $request, string $type)
+  protected function getFromBody(Request $request, string $type): mixed
   {
     try {
       return $this->serializer->deserialize($request->getContent(), $type, 'json');

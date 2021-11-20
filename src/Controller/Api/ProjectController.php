@@ -26,10 +26,6 @@ class ProjectController extends AbstractApiController
    *
    * @Route("", methods={"GET"})
    * @IsGranted("ROLE_USER")
-   *
-   * @param ProjectRepository $projectRepository
-   *
-   * @return JsonResponse
    */
   public function list(ProjectRepository $projectRepository): JsonResponse
   {
@@ -42,25 +38,21 @@ class ProjectController extends AbstractApiController
    * @Route("", methods={"POST"})
    * @IsGranted("ROLE_USER")
    *
-   * @param Request             $request
-   * @param ProjectService      $projectService
-   * @param TranslatorInterface $translator
-   *
-   * @return JsonResponse
-   *
    * @throws Throwable
    */
   public function add(Request $request, ProjectService $projectService, TranslatorInterface $translator): JsonResponse
   {
-    $newProject = $this->getFromBody($request, Project::class);
-    assert($newProject instanceof Project);
-
     try {
-      return $this->createResponse($projectService->add($newProject));
+      $postedData = $this->getFromBody($request, 'array');
+      if (!$path = $postedData['path']){
+        return $this->createBadRequestResponse($translator->trans('project.exception.missing-path'));
+      }
+
+      return $this->createResponse($projectService->add($path));
     } catch (DuplicateProjectException $e) {
-      return $this->createBadRequestResponse($translator->trans('project.exception.duplicate'), $newProject);
+      return $this->createBadRequestResponse($translator->trans('project.exception.duplicate'), $e->getProject());
     } catch (ProjectNotFoundException $e) {
-      return $this->createBadRequestResponse($translator->trans('project.exception.not-found'), $newProject);
+      return $this->createBadRequestResponse($translator->trans('project.exception.not-found'), $e->getProject());
     }
   }
 
@@ -92,11 +84,6 @@ class ProjectController extends AbstractApiController
    * @Route("/{project<\d+>}", methods={"DELETE"})
    * @IsGranted("ROLE_USER")
    *
-   * @param Project        $project
-   * @param ProjectService $projectService
-   *
-   * @return Response
-   *
    * @throws Throwable
    */
   public function delete(Project $project, ProjectService $projectService): Response
@@ -122,11 +109,6 @@ class ProjectController extends AbstractApiController
    *
    * @Route("/{project<\d+>}/sync", methods={"POST"})
    * @IsGranted("ROLE_USER")
-   *
-   * @param Project        $project
-   * @param ProjectService $projectService
-   *
-   * @return Response
    */
   public function sync(Project $project, ProjectService $projectService): Response
   {
@@ -140,11 +122,6 @@ class ProjectController extends AbstractApiController
    *
    * @Route("/{project<\d+>}/environment/refresh", methods={"POST"})
    * @IsGranted("ROLE_USER")
-   *
-   * @param Project        $project
-   * @param ProjectService $projectService
-   *
-   * @return JsonResponse
    *
    * @throws Throwable
    */

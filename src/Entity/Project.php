@@ -51,7 +51,7 @@ class Project
    *
    * @ORM\Column(type="datetime_immutable", nullable=true)
    */
-  private ?DateTimeImmutable $lastEvent;
+  private ?DateTimeImmutable $lastEvent = null;
 
   /**
    * @var ProjectEnvironment[]|ArrayCollection|PersistentCollection
@@ -66,13 +66,6 @@ class Project
   public function __construct()
   {
     $this->environments = new ArrayCollection();
-  }
-
-  public function fromOther(Project $other)
-  {
-    return $this
-        ->setName($other->getName())
-        ->setLastEvent($other->getLastEvent());
   }
 
   public function getName(): string
