@@ -4,32 +4,19 @@ namespace App\Events\Project;
 
 class ProjectDeploymentEvent extends AbstractProjectEvent implements ProjectEvent
 {
-  /** @var string */
-  protected $environment;
-
-  /** @var string */
-  protected $shortSha;
-
   public function __construct(
-      string $projectName, string $user, string $iid, string $url, string $action, string $environment, string $shortSha)
+      string         $projectName, string $projectHost, string $user, string $iid, string $url, string $action,
+      private string $environment,
+      private string $shortSha)
   {
-    parent::__construct($projectName, $user, $iid, $url, $action);
-
-    $this->environment = $environment;
-    $this->shortSha    = $shortSha;
+    parent::__construct($projectName, $projectHost, $user, $iid, $url, $action);
   }
 
-  /**
-   * @return string
-   */
   public function getEnvironment(): string
   {
     return $this->environment;
   }
 
-  /**
-   * @return string
-   */
   public function getShortSha(): string
   {
     return $this->shortSha;

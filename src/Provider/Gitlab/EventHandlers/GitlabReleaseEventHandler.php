@@ -18,6 +18,7 @@ class GitlabReleaseEventHandler extends AbstractGitlabEventHandler implements Ev
 
     $this->projectEvent(new ProjectReleaseEvent(
         $this->getProp($data, '[project][path_with_namespace]'),
+        $this->getProp($data, '[project][web_url]'),
         'unknown', // The user creating the release is not available in the webhook data
         $this->getProp($data, '[tag]'),
         $this->getProp($data, '[url]'),

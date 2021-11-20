@@ -13,25 +13,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProjectEventHandler implements EventSubscriberInterface
 {
-  /**
-   * @var DateTimeProvider
-   */
-  private $dateTimeProvider;
-  /**
-   * @var EntityManagerInterface
-   */
-  private $entityManager;
-  /**
-   * @var ProjectRepository
-   */
-  private $projectRepository;
-
   public function __construct(
-      ProjectRepository $projectRepository, EntityManagerInterface $entityManager, DateTimeProvider $dateTimeProvider)
+      private ProjectRepository      $projectRepository,
+      private EntityManagerInterface $entityManager,
+      private DateTimeProvider       $dateTimeProvider)
   {
-    $this->projectRepository = $projectRepository;
-    $this->entityManager     = $entityManager;
-    $this->dateTimeProvider  = $dateTimeProvider;
   }
 
   public static function getSubscribedEvents()

@@ -4,20 +4,13 @@ namespace App\Events\Project;
 
 class ProjectReleaseEvent extends AbstractProjectEvent implements ProjectEvent
 {
-  /** @var string */
-  protected $name;
-
   public function __construct(
-      string $projectName, string $user, string $iid, string $url, string $action, string $name)
+      string         $projectName, string $projectHost, string $user, string $iid, string $url, string $action,
+      private string $name)
   {
-    parent::__construct($projectName, $user, $iid, $url, $action);
-
-    $this->name = $name;
+    parent::__construct($projectName, $projectHost, $user, $iid, $url, $action);
   }
 
-  /**
-   * @return string
-   */
   public function getName(): string
   {
     return $this->name;

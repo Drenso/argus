@@ -32,6 +32,7 @@ class GitlabTagPushHandler extends AbstractGitlabEventHandler implements EventSu
 
     $this->projectEvent(new ProjectTagEvent(
         $this->getProp($data, '[project][path_with_namespace]'),
+        $this->getProp($data, '[project][web_url]'),
         $this->getProp($data, '[user_name]'),
         preg_replace('/refs\/[^\/]*\//', '', $this->getProp($data, '[ref]')),
         $url,

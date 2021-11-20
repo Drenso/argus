@@ -4,20 +4,13 @@ namespace App\Events\Project;
 
 class ProjectMergeRequestEvent extends AbstractProjectEvent implements ProjectEvent
 {
-  /**
-   * @var string
-   */
-  protected $title;
-
-  public function __construct(string $projectName, string $user, string $iid, string $url, string $action, string $title)
+  public function __construct(
+      string         $projectName, string $projectHost, string $user, string $iid, string $url, string $action,
+      private string $title)
   {
-    parent::__construct($projectName, $user, $iid, $url, $action);
-    $this->title = $title;
+    parent::__construct($projectName, $projectHost, $user, $iid, $url, $action);
   }
 
-  /**
-   * @return string
-   */
   public function getTitle(): string
   {
     return $this->title;

@@ -4,33 +4,27 @@ namespace App\Events\Project;
 
 abstract class AbstractProjectEvent
 {
-  /** @var string */
-  protected $projectName;
-  /** @var string */
-  protected $user;
-  /** @var string */
-  protected $iid;
-  /** @var string */
-  protected $url;
-  /** @var string */
-  protected $action;
+  private string $projectHost;
 
   /**
    * AbstractProjectEvent constructor.
    *
    * @param string $projectName The project name
+   * @param string $projectHost The project gitlab host
    * @param string $user        The user triggering the event
    * @param string $iid         The related id
    * @param string $url         The related url
    * @param string $action      The related action
    */
-  public function __construct(string $projectName, string $user, string $iid, string $url, string $action)
+  public function __construct(
+      private string $projectName,
+      string $projectHost,
+      private string $user,
+      private string $iid,
+      private string $url,
+      private string $action)
   {
-    $this->projectName = $projectName;
-    $this->user        = $user;
-    $this->iid         = $iid;
-    $this->url         = $url;
-    $this->action      = $action;
+    $this->projectHost = parse_url($projectHost, PHP_URL_HOST);
   }
 
   public function getProjectName(): string
@@ -38,33 +32,26 @@ abstract class AbstractProjectEvent
     return $this->projectName;
   }
 
-  /**
-   * @return string
-   */
+  public function getProjectHost(): string
+  {
+    return $this->projectHost;
+  }
+
   public function getUser(): string
   {
     return $this->user;
   }
 
-  /**
-   * @return string
-   */
   public function getIid(): string
   {
     return $this->iid;
   }
 
-  /**
-   * @return string
-   */
   public function getUrl(): string
   {
     return $this->url;
   }
 
-  /**
-   * @return string
-   */
   public function getAction(): string
   {
     return $this->action;

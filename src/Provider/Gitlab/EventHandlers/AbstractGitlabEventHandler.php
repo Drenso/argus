@@ -25,8 +25,6 @@ abstract class AbstractGitlabEventHandler extends AbstractEventHandler
 
   /**
    * Handle the event
-   *
-   * @param IncomingGitlabEvent $event
    */
   protected abstract function handleEvent(IncomingGitlabEvent $event): void;
 }

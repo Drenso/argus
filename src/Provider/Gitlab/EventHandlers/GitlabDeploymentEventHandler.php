@@ -18,6 +18,7 @@ class GitlabDeploymentEventHandler extends AbstractGitlabEventHandler implements
 
     $this->projectEvent(new ProjectDeploymentEvent(
         $this->getProp($data, '[project][path_with_namespace]'),
+        $this->getProp($data, '[project][web_url]'),
         $this->getProp($data, '[user][name]'),
         $this->getProp($data, '[deployable_id]'),
         $this->getProp($data, '[deployable_url]'),
