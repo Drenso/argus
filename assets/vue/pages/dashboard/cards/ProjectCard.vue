@@ -317,7 +317,7 @@
         } catch (e) {
           const error = e as AxiosError;
           if (error.response && error.response.status === 400) {
-            this.errorMessage = (error.response.data as {reason: string}).reason;
+            this.errorMessage = (error.response.data as { reason: string }).reason;
             return;
           }
           throw e;
@@ -460,7 +460,7 @@
     }
 
     protected get fields(): BvTableFieldArray {
-      return [
+      const fields: BvTableFieldArray = [
         {
           key: 'current_state',
           label: this.$translator.trans('project.field.current-state'),
@@ -471,22 +471,40 @@
           label: this.$translator.trans('project.field.name'),
           sortable: true,
           class: 'project-name',
-        }, {
-          key: 'last_event',
-          label: this.$translator.trans('project.field.last-event'),
-          sortable: true,
-          formatter: (value) => {
-            return value
-                ? this.$moment(value).format('YYYY-MM-DD HH:mm:ss')
-                : '-';
-          },
-          class: 'project-last-event',
-        }, {
-          key: '_actions',
-          label: this.$translator.trans('general.actions'),
-          class: 'project-action',
         },
       ];
+
+      if (window.HAS_MULTIPLE_HOSTS) {
+        fields.push({
+          key: 'host',
+          label: this.$translator.trans('project.field.host'),
+          sortable: true,
+          class: 'project-host',
+          formatter: (value: string) => {
+            return value
+                ? value
+                : this.$translator.trans('general.unknown');
+          },
+        });
+      }
+
+      fields.push(...[{
+        key: 'last_event',
+        label: this.$translator.trans('project.field.last-event'),
+        sortable: true,
+        formatter: (value: string) => {
+          return value
+              ? this.$moment(value).format('YYYY-MM-DD HH:mm:ss')
+              : '-';
+        },
+        class: 'project-last-event',
+      }, {
+        key: '_actions',
+        label: this.$translator.trans('general.actions'),
+        class: 'project-action',
+      }]);
+
+      return fields;
     }
 
     protected get environmentFields(): BvTableFieldArray {

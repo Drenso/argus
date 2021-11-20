@@ -41,11 +41,14 @@ class ProjectEventHandler implements EventSubscriberInterface
     if (!$project = $this->projectRepository->findOneByNameAndHost($event->getProjectName(), $event->getProjectHost())) {
       $project = (new Project())
           ->setName($event->getProjectName())
-          ->setHost($event->getProjectHost());
+          ->setHost($event->getProjectHost())
+          ->setHostScheme($event->getProjectHostScheme());
     }
 
-    // Update last event
-    $project->setLastEvent($this->dateTimeProvider->utcNow());
+    // Update last event and host scheme
+    $project
+        ->setLastEvent($this->dateTimeProvider->utcNow())
+        ->setHostScheme($event->getProjectHostScheme());
 
     if ($project->getHost() === NULL) {
       $project->setHost($event->getProjectHost());

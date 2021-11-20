@@ -9,6 +9,7 @@ use App\Exception\DuplicateProjectException;
 use App\Exception\ProjectNotFoundException;
 use App\Provider\Gitlab\Exception\GitlabRemoteCallFailedException;
 use App\Provider\Gitlab\GitlabApiConnector;
+use App\Provider\Gitlab\ProjectPathService;
 use App\RemoteConfiguration\RemoteConfigurationInterface;
 use App\Repository\ProjectEnvironmentRepository;
 use App\Repository\ProjectRepository;
@@ -23,58 +24,18 @@ use Throwable;
 class ProjectService
 {
   /**
-   * @var EntityManagerInterface
-   */
-  private $entityManager;
-  /**
-   * @var EventDispatcherInterface
-   */
-  private $eventDispatcher;
-  /**
-   * @var GitlabApiConnector
-   */
-  private $gitlabApiConnector;
-  /**
-   * @var ProjectRepository
-   */
-  private $projectRepository;
-  /**
-   * @var ProjectEnvironmentRepository
-   */
-  private $projectEnvironmentRepository;
-  /**
-   * @var PropertyAccessorInterface
-   */
-  private $propertyAccessor;
-  /**
-   * @var ServiceLocator
-   */
-  private $remoteConfigurationServices;
-
-  /**
    * ProjectService constructor.
-   *
-   * @param ServiceLocator               $remoteConfigurationServices
-   * @param ProjectRepository            $projectRepository
-   * @param ProjectEnvironmentRepository $projectEnvironmentRepository
-   * @param PropertyAccessorInterface    $propertyAccessor
-   * @param EntityManagerInterface       $entityManager
-   * @param GitlabApiConnector           $gitlabApiConnector
-   * @param EventDispatcherInterface     $eventDispatcher
    */
   public function __construct(
-      ServiceLocator               $remoteConfigurationServices, ProjectRepository $projectRepository,
-      ProjectEnvironmentRepository $projectEnvironmentRepository, PropertyAccessorInterface $propertyAccessor,
-      EntityManagerInterface       $entityManager, GitlabApiConnector $gitlabApiConnector,
-      EventDispatcherInterface     $eventDispatcher)
+      private ServiceLocator               $remoteConfigurationServices,
+      private ProjectRepository            $projectRepository,
+      private ProjectEnvironmentRepository $projectEnvironmentRepository,
+      private ProjectPathService           $projectPathService,
+      private PropertyAccessorInterface    $propertyAccessor,
+      private EntityManagerInterface       $entityManager,
+      private GitlabApiConnector           $gitlabApiConnector,
+      private EventDispatcherInterface     $eventDispatcher)
   {
-    $this->remoteConfigurationServices  = $remoteConfigurationServices;
-    $this->projectRepository            = $projectRepository;
-    $this->projectEnvironmentRepository = $projectEnvironmentRepository;
-    $this->propertyAccessor             = $propertyAccessor;
-    $this->entityManager                = $entityManager;
-    $this->gitlabApiConnector           = $gitlabApiConnector;
-    $this->eventDispatcher              = $eventDispatcher;
   }
 
   /**
@@ -238,7 +199,7 @@ class ProjectService
           'project'         => $projectObj,
           'master_sha'      => $master,
           'production_sha'  => $production,
-          'gitlab_diff_url' => $this->gitlabApiConnector->projectDiffUrl($projectObj, 'master', 'production'),
+          'gitlab_diff_url' => $this->projectPathService->getProjectDiffUrl($projectObj, 'master', 'production'),
       ];
     }
 

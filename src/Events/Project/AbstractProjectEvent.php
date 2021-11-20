@@ -5,6 +5,7 @@ namespace App\Events\Project;
 abstract class AbstractProjectEvent
 {
   private string $projectHost;
+  private string $projectHostScheme;
 
   /**
    * AbstractProjectEvent constructor.
@@ -18,13 +19,14 @@ abstract class AbstractProjectEvent
    */
   public function __construct(
       private string $projectName,
-      string $projectHost,
+      string         $projectHost,
       private string $user,
       private string $iid,
       private string $url,
       private string $action)
   {
-    $this->projectHost = parse_url($projectHost, PHP_URL_HOST);
+    $this->projectHost       = parse_url($projectHost, PHP_URL_HOST);
+    $this->projectHostScheme = parse_url($projectHost, PHP_URL_SCHEME);
   }
 
   public function getProjectName(): string
@@ -35,6 +37,11 @@ abstract class AbstractProjectEvent
   public function getProjectHost(): string
   {
     return $this->projectHost;
+  }
+
+  public function getProjectHostScheme(): string
+  {
+    return $this->projectHostScheme;
   }
 
   public function getUser(): string

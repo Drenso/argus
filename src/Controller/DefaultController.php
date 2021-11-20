@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
@@ -12,7 +13,7 @@ class DefaultController extends AbstractController
   /**
    * @Route("/", name="index", options={"expose"=true})
    */
-  public function index()
+  public function index(): Response
   {
     // Create the response and disable all forms of caching for it
     $response = ($this->render('base.html.twig'))

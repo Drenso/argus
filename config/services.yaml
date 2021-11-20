@@ -82,6 +82,10 @@ services:
       $gitlabUrl: '%gitlab.url%'
       $gitlabToken: '%gitlab.token%'
 
+  App\Provider\Gitlab\ProjectPathService:
+    arguments:
+      $gitlabUrl: '%gitlab.url%'
+
   App\Provider\Irker\EventHandlers\OutgoingIrcMessageEventHandler:
     arguments:
       $irkerServer: '%irker.server%'
@@ -114,10 +118,6 @@ services:
       $apiControllerPrefix: '%api_controller_prefix%'
       $jwtSecret: "%env(string:key:jwt_secret:json:file:resolve:SECRETS_FILE)%"
       $tokenValidity: '%env(TOKEN_VALIDITY)%'
-
-  App\Serializer\Entity\ProjectSerializer:
-    arguments:
-      $gitlabUrl: '%gitlab.url%'
 
   App\Service\ProjectService:
     arguments:

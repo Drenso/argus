@@ -13,4 +13,6 @@ interface ProjectEvent
   public function getProjectName(): string;
 
   public function getProjectHost(): string;
+
+  public function getProjectHostScheme(): string;
 }

@@ -13,24 +13,14 @@ class GitlabApiConnector
 {
   private const API_BASE = 'api/v4';
 
-  /**
-   * @var string
-   */
-  private $gitlabUrl;
-  /**
-   * @var HttpClientInterface
-   */
-  private $httpClient;
-  /**
-   * @var SerializerInterface
-   */
-  private $serializer;
+  private HttpClientInterface $httpClient;
 
-  public function __construct(SerializerInterface $serializer, string $gitlabUrl, string $gitlabToken)
+  public function __construct(
+      private SerializerInterface $serializer,
+      private ProjectPathService $projectPathService,
+      private string $gitlabUrl,
+      string $gitlabToken)
   {
-    $this->serializer = $serializer;
-    $this->gitlabUrl  = $gitlabUrl;
-
     $this->httpClient = HttpClient::createForBaseUri($gitlabUrl, [
         'auth_bearer' => $gitlabToken,
     ]);
@@ -79,10 +69,5 @@ class GitlabApiConnector
 
       throw new GitlabRemoteCallFailedException(NULL, $e);
     }
-  }
-
-  public function projectDiffUrl(Project $project, string $source, string $target): string
-  {
-    return sprintf('%s/%s/-/compare/%s...%s', $this->gitlabUrl, $project->getName(), $target, $source);
   }
 }

@@ -42,6 +42,9 @@
   {% endblock %}
   {% block default_javascripts %}
     {{ encore_entry_script_tags('minimal') }}
+    <script type="text/javascript">
+      window.HAS_MULTIPLE_HOSTS = true;
+    </script>
   {% endblock %}
 
   <!-- Included JS -->

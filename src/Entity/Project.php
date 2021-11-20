@@ -38,6 +38,15 @@ class Project
   private ?string $host = null;
 
   /**
+   * The last detected gitlab host scheme for this project
+   *
+   * @var string|null
+   *
+   * @ORM\Column(type="string", nullable=true)
+   */
+  private ?string $hostScheme = null;
+
+  /**
    * The last event recorded for this project
    *
    * @ORM\Column(type="datetime_immutable", nullable=true)
@@ -86,6 +95,18 @@ class Project
   public function setHost(?string $host): self
   {
     $this->host = $host;
+
+    return $this;
+  }
+
+  public function getHostScheme(): ?string
+  {
+    return $this->hostScheme;
+  }
+
+  public function setHostScheme(?string $hostScheme): self
+  {
+    $this->hostScheme = $hostScheme;
 
     return $this;
   }

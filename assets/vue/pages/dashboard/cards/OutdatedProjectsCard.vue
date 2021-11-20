@@ -66,8 +66,9 @@
             <a
                 v-b-tooltip.hover.topleft
                 class="pointer text-secondary"
-                :title="'outdated-project.button.show-diff'|trans"
-                @click="showDiff(row.item)">
+                :href="row.item.gitlab_diff_url"
+                target="_blank"
+                :title="'outdated-project.button.show-diff'|trans">
               <font-awesome-icon icon="search"/>
             </a>
 
@@ -175,10 +176,6 @@
       }
     }
 
-    protected showDiff(project: OutdatedProject): void {
-      window.open(project.gitlab_diff_url, '_blank');
-    }
-
     private async loadOutdatedProjects(): Promise<void> {
       const response: AxiosResponse<OutdatedProject[]> =
           await this.$http.get(this.$sfRouter.generate('app_api_project_outdated'));
@@ -190,26 +187,45 @@
     }
 
     protected get fields(): BvTableFieldArray {
-      return [
+      const fields: BvTableFieldArray = [
         {
           key: 'project.name',
           label: this.$translator.trans('project.field.name'),
           sortable: true,
           class: 'project-name',
-        }, {
-          key: 'master_sha',
-          label: this.$translator.trans('outdated-project.field.master-sha'),
-          class: 'project-sha',
-        }, {
-          key: 'production_sha',
-          label: this.$translator.trans('outdated-project.field.production-sha'),
-          class: 'project-sha',
-        }, {
-          key: '_actions',
-          label: this.$translator.trans('general.actions'),
-          class: 'project-action',
         },
       ];
+
+
+      if (window.HAS_MULTIPLE_HOSTS) {
+        fields.push({
+          key: 'project.host',
+          label: this.$translator.trans('project.field.host'),
+          sortable: true,
+          class: 'project-host',
+          formatter: (value: string) => {
+            return value
+                ? value
+                : this.$translator.trans('general.unknown');
+          },
+        });
+      }
+
+      fields.push(...[{
+        key: 'master_sha',
+        label: this.$translator.trans('outdated-project.field.master-sha'),
+        class: 'project-sha',
+      }, {
+        key: 'production_sha',
+        label: this.$translator.trans('outdated-project.field.production-sha'),
+        class: 'project-sha',
+      }, {
+        key: '_actions',
+        label: this.$translator.trans('general.actions'),
+        class: 'project-action',
+      }]);
+
+      return fields;
     }
 
     protected get isBusy(): boolean {
