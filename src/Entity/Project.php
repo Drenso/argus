@@ -22,22 +22,27 @@ class Project
   /**
    * Project name, equals the full namespace
    *
-   * @var string
-   *
    * @ORM\Column(type="string", length=255, unique=true)
    *
    * @Assert\NotBlank()
    */
-  private $name = '';
+  private string $name = '';
+
+  /**
+   * The last detected gitlab host for this project
+   *
+   * @var string|null
+   *
+   * @ORM\Column(type="string", nullable=true)
+   */
+  private ?string $host = null;
 
   /**
    * The last event recorded for this project
    *
-   * @var DateTimeImmutable|null
-   *
    * @ORM\Column(type="datetime_immutable", nullable=true)
    */
-  private $lastEvent;
+  private ?DateTimeImmutable $lastEvent;
 
   /**
    * @var ProjectEnvironment[]|ArrayCollection|PersistentCollection
@@ -61,19 +66,11 @@ class Project
         ->setLastEvent($other->getLastEvent());
   }
 
-  /**
-   * @return string
-   */
   public function getName(): string
   {
     return $this->name;
   }
 
-  /**
-   * @param string $name
-   *
-   * @return Project
-   */
   public function setName(string $name): self
   {
     $this->name = $name;
@@ -81,19 +78,23 @@ class Project
     return $this;
   }
 
-  /**
-   * @return DateTimeImmutable|null
-   */
+  public function getHost(): ?string
+  {
+    return $this->host;
+  }
+
+  public function setHost(?string $host): self
+  {
+    $this->host = $host;
+
+    return $this;
+  }
+
   public function getLastEvent(): ?DateTimeImmutable
   {
     return $this->lastEvent;
   }
 
-  /**
-   * @param DateTimeImmutable|null $lastEvent
-   *
-   * @return Project
-   */
   public function setLastEvent(?DateTimeImmutable $lastEvent): self
   {
     $this->lastEvent = $lastEvent;
@@ -110,8 +111,6 @@ class Project
   }
 
   /**
-   * @return string
-   *
    * @Serializer\VirtualProperty()
    */
   public function getCurrentState(): string

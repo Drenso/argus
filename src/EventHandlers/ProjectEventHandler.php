@@ -38,13 +38,18 @@ class ProjectEventHandler implements EventSubscriberInterface
 
   public function onEvent(ProjectEvent $event)
   {
-    if (!$project = $this->projectRepository->findOneBy(['name' => $event->getProjectName()])) {
+    if (!$project = $this->projectRepository->findOneByNameAndHost($event->getProjectName(), $event->getProjectHost())) {
       $project = (new Project())
-          ->setName($event->getProjectName());
+          ->setName($event->getProjectName())
+          ->setHost($event->getProjectHost());
     }
 
     // Update last event
     $project->setLastEvent($this->dateTimeProvider->utcNow());
+
+    if ($project->getHost() === NULL) {
+      $project->setHost($event->getProjectHost());
+    }
 
     $this->entityManager->persist($project);
     $this->entityManager->flush();
