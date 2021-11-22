@@ -20,10 +20,9 @@ parameters:
 
   api_controller_prefix: 'App\Controller\Api\'
 
-  gitlab.url: '%env(GITLAB_URL)%'
-  gitlab.token: '%env(string:key:gitlab_token:json:file:resolve:SECRETS_FILE)%'
   gitlab.webhook.secret-enabled: '%env(bool:GITLAB_WEBHOOK_SECRET_ENABLED)%'
   gitlab.webhook.secret: '%env(string:key:gitlab_webhook_secret:json:file:resolve:SECRETS_FILE)%'
+  gitlab.configuration: '%env(GITLAB_CONFIGURATION_FILE)%'
 
   irker.server: '%env(IRKER_SERVER)%'
   irker.port: '%env(int:IRKER_PORT)%'
@@ -77,14 +76,12 @@ services:
       $gitlabWebhookSecretEnabled: '%gitlab.webhook.secret-enabled%'
       $gitlabWebhookSecret: '%gitlab.webhook.secret%'
 
-  App\Provider\Gitlab\GitlabApiConnector:
+  App\Provider\Gitlab\GitlabInstanceDetailsService:
     arguments:
-      $gitlabUrl: '%gitlab.url%'
-      $gitlabToken: '%gitlab.token%'
-
-  App\Provider\Gitlab\ProjectPathService:
-    arguments:
-      $gitlabUrl: '%gitlab.url%'
+      $gitlabUrl: '%env(string:resolve:GITLAB_URL)%'
+      $gitlabToken: '%env(string:key:gitlab_token:json:file:resolve:SECRETS_FILE)%'
+      $mrDefaultAssigneeId: '%env(resolve:MR_DEFAULT_ASSIGNEE_ID)%'
+      $gitlabConfigurationFile: '%env(string:resolve:GITLAB_CONFIGURATION_FILE)%'
 
   App\Provider\Irker\EventHandlers\OutgoingIrcMessageEventHandler:
     arguments:

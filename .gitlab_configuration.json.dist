@@ -1,0 +1,7 @@
+{
+  "gitlab.example.com": {
+    "base_url": "https://gitlab.example.com",
+    "token": "secret_token",
+    "mr_default_assignee_id": 1
+  }
+}

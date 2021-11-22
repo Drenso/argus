@@ -3,7 +3,7 @@
 namespace App\Serializer\Entity;
 
 use App\Entity\Project;
-use App\Provider\Gitlab\ProjectPathService;
+use App\Provider\Gitlab\GitlabInstanceDetailsService;
 use Drenso\Shared\Serializer\AbstractObjectSerializer;
 use JMS\Serializer\EventDispatcher\EventSubscriberInterface;
 use JMS\Serializer\EventDispatcher\ObjectEvent;
@@ -14,7 +14,7 @@ class ProjectSerializer extends AbstractObjectSerializer implements EventSubscri
 
   public const GITLAB_URL = 'gitlab_url';
 
-  public function __construct(private ProjectPathService $projectPathService)
+  public function __construct(private GitlabInstanceDetailsService $gitlabInstanceDetailsService)
   {
   }
 
@@ -29,7 +29,7 @@ class ProjectSerializer extends AbstractObjectSerializer implements EventSubscri
   protected function doSerialize(SerializationVisitorInterface $visitor, array $groups, $object, ObjectEvent $event): void
   {
     if (in_array(self::GITLAB_URL, $groups)) {
-      $this->addStringProperty($visitor, self::GITLAB_URL, $this->projectPathService->getProjectPath($object));
+      $this->addStringProperty($visitor, self::GITLAB_URL, $this->gitlabInstanceDetailsService->getProjectPath($object));
     }
   }
 }

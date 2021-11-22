@@ -13,36 +13,59 @@ class GitlabApiConnector
 {
   private const API_BASE = 'api/v4';
 
-  private HttpClientInterface $httpClient;
+  /** @var HttpClientInterface[] */
+  private array $httpClients = [];
 
   public function __construct(
-      private SerializerInterface $serializer,
-      private ProjectPathService $projectPathService,
-      private string $gitlabUrl,
-      string $gitlabToken)
+      private SerializerInterface          $serializer,
+      private GitlabInstanceDetailsService $gitlabInstanceDetailsService)
   {
-    $this->httpClient = HttpClient::createForBaseUri($gitlabUrl, [
-        'auth_bearer' => $gitlabToken,
-    ]);
   }
 
   /**
-   * Retrieve response from the Gitlab API
-   *
-   * @param Project|null $project
-   * @param string       $method
-   * @param string       $endpoint
-   * @param array        $requestOptions
-   *
-   * @return array|null
+   * Retrieve response from the Gitlab API for a specific project
    *
    * @throws GitlabRemoteCallFailedException
    */
-  public function projectApi(?Project $project, string $method, string $endpoint, array $requestOptions = []): ?array
+  public function projectApi(Project $project, string $method, string $endpoint, array $requestOptions = []): ?array
   {
+    return $this->executeCall(
+        $project,
+        $this->gitlabInstanceDetailsService->getProjectHost($project),
+        $method,
+        $endpoint,
+        $requestOptions
+    );
+  }
+
+  /**
+   * Retrieve response from the Gitlab API for a specific host
+   *
+   * @throws GitlabRemoteCallFailedException
+   */
+  public function gitlabApi(string $host, string $method, string $endpoint, array $requestOptions = []): ?array
+  {
+    return $this->executeCall(NULL, $host, $method, $endpoint, $requestOptions);
+  }
+
+  /**
+   * @throws GitlabRemoteCallFailedException
+   */
+  private function executeCall(?Project $project, string $host, string $method, string $endpoint, array $requestOptions): ?array
+  {
+    $baseUrl = $this->gitlabInstanceDetailsService->getHostBaseUrl($host);
+    if (!array_key_exists($host, $this->httpClients)) {
+      $this->httpClients[$host] = HttpClient::createForBaseUri(
+          $baseUrl,
+          [
+              'auth_bearer' => $this->gitlabInstanceDetailsService->getHostToken($host),
+          ]
+      );
+    }
+
     $url = sprintf(
         '%s/%s/projects%s%s%s%s',
-        $this->gitlabUrl,
+        $baseUrl,
         self::API_BASE,
         $project ? '/' : '',
         $project ? urlencode($project->getName()) : '',
@@ -55,7 +78,7 @@ class GitlabApiConnector
     $requestOptions['headers']['Accept'] = 'application/json';
 
     try {
-      $response = $this->httpClient->request($method, $url, $requestOptions);
+      $response = $this->httpClients[$host]->request($method, $url, $requestOptions);
 
       if ((($response->getHeaders()['content-type'] ?? [])[0] ?? NULL) === 'application/json') {
         return $this->serializer->deserialize($response->getContent(), 'array', 'json');
