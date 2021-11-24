@@ -16,20 +16,11 @@ class WebhookPayload
       self::STATUS_RUNNING,
   ];
 
-  /** @var string */
-  private $context;
-
-  /** @var string */
-  private $status;
-
-  private function __construct(string $context, string $status)
+  private function __construct(private string $context, private string $status)
   {
     if (!in_array($status, self::STATUSES)) {
       throw new InvalidArgumentException('Invalid status provided.');
     }
-
-    $this->context = $context;
-    $this->status  = $status;
   }
 
   public static function usagePayload(string $status): self
@@ -42,17 +33,11 @@ class WebhookPayload
     return new self('project', $status);
   }
 
-  /**
-   * @return string
-   */
   public function getContext(): string
   {
     return $this->context;
   }
 
-  /**
-   * @return string
-   */
   public function getStatus(): string
   {
     return $this->status;

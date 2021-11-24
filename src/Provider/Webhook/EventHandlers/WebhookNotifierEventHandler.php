@@ -13,31 +13,12 @@ use Throwable;
 
 class WebhookNotifierEventHandler implements EventSubscriberInterface
 {
-
-  /**
-   * @var string|null
-   */
-  private $endpoint;
-  /**
-   * @var string|null
-   */
-  private $endpointSecret;
-  /**
-   * @var HttpClientInterface
-   */
-  private $httpClient;
-  /**
-   * @var LoggerInterface
-   */
-  private $logger;
-
   public function __construct(
-      LoggerInterface $logger, HttpClientInterface $httpClient, ?string $endpoint, ?string $endpointSecret)
+      private LoggerInterface $logger,
+      private HttpClientInterface $httpClient,
+      private ?string $endpoint,
+      private ?string $endpointSecret)
   {
-    $this->logger         = $logger;
-    $this->httpClient     = $httpClient;
-    $this->endpoint       = $endpoint;
-    $this->endpointSecret = $endpointSecret;
   }
 
   public static function getSubscribedEvents()
@@ -49,8 +30,6 @@ class WebhookNotifierEventHandler implements EventSubscriberInterface
   }
 
   /**
-   * @param ProjectEnvironmentUpdatedEvent $projectEvent
-   *
    * @throws Throwable
    */
   public function onProjectEnvironmentUpdatedEvent(ProjectEnvironmentUpdatedEvent $projectEvent)
@@ -73,8 +52,6 @@ class WebhookNotifierEventHandler implements EventSubscriberInterface
   }
 
   /**
-   * @param UsageErrorEvent $usageEvent
-   *
    * @throws Throwable
    */
   public function onUsageErrorEvent(UsageErrorEvent $usageEvent)
@@ -83,9 +60,6 @@ class WebhookNotifierEventHandler implements EventSubscriberInterface
   }
 
   /**
-   * @param                $event
-   * @param WebhookPayload $payload
-   *
    * @throws Throwable
    */
   private function onEvent($event, WebhookPayload $payload)

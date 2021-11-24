@@ -19,12 +19,6 @@ class SentryController extends AbstractController
    * Handles the gitlab webhook
    *
    * @Route("/_webhook/sentry", methods={"POST"})
-   *
-   * @param Request                  $request
-   * @param SerializerInterface      $serializer
-   * @param EventDispatcherInterface $eventDispatcher
-   *
-   * @return Response
    */
   public function webhook(
       Request $request, SerializerInterface $serializer, EventDispatcherInterface $eventDispatcher): Response

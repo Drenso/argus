@@ -6,20 +6,11 @@ use App\Events\OutgoingEvent;
 
 class OutgoingIrcMessageEvent implements OutgoingEvent
 {
-  /** @var string|null */
-  private $channel;
+  private string $message;
 
-  /** @var string|null */
-  private $fallbackChannel;
-
-  /** @var string */
-  private $message;
-
-  public function __construct(string $message, ?string $channel, ?string $fallbackChannel)
+  public function __construct(string $message, private ?string $channel, private ?string $fallbackChannel)
   {
     $this->message         = preg_replace("/[\r\n]+/", " ", $message);
-    $this->channel         = $channel;
-    $this->fallbackChannel = $fallbackChannel;
   }
 
   public function getMessage(): string

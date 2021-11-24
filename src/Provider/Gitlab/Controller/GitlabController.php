@@ -21,12 +21,6 @@ class GitlabController extends AbstractController
    * Handles the gitlab webhook
    *
    * @Route("/_webhook/gitlab", methods={"POST"})
-   *
-   * @param Request                  $request
-   * @param SerializerInterface      $serializer
-   * @param EventDispatcherInterface $eventDispatcher
-   *
-   * @return Response
    */
   public function webhook(
       Request $request, SerializerInterface $serializer, EventDispatcherInterface $eventDispatcher): Response
