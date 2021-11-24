@@ -3,3 +3,4 @@ twig:
   globals:
     sentry_dsn: ~ # This disables sentry by default, we enable it explicitly in the prod environment
     sentry_release: '%sentry_release%'
+    gitlab: '@App\Provider\Gitlab\GitlabGlobalTwigService'
