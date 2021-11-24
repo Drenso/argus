@@ -40,8 +40,7 @@ cp update/controllers/update.php public/index.php
 
 # Stop the messenger services
 messenger_services=(
-#  "async"
-#  "email"
+  "async"
 )
 for service in "${messenger_services[@]}"; do
   echo "Stopping argus-messenger@${service}"
