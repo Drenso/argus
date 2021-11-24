@@ -6,8 +6,7 @@ namespace App\Events;
 
 trait IncomingEventTrait
 {
-  /** @var array */
-  protected $handlers = [];
+  protected array $handlers = [];
 
   public function isHandled(): bool
   {
@@ -35,7 +34,7 @@ trait IncomingEventTrait
     return true;
   }
 
-  public function markAsHandled(string $handler, bool $success, ?string $message)
+  public function markAsHandled(string $handler, bool $success, ?string $message): self
   {
     $this->handlers[] = [
         'handler' => $handler,

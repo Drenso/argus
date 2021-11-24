@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Provider\Gitlab\Controller;
 
-use App\Provider\Gitlab\Events\IncomingGitlabEvent;
-use JMS\Serializer\SerializerInterface;
+use App\Provider\Gitlab\Async\IncomingGitlabEventMessage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class GitlabController extends AbstractController
 {
@@ -22,8 +21,7 @@ class GitlabController extends AbstractController
    *
    * @Route("/_webhook/gitlab", methods={"POST"})
    */
-  public function webhook(
-      Request $request, SerializerInterface $serializer, EventDispatcherInterface $eventDispatcher): Response
+  public function webhook(Request $request, MessageBusInterface $messageBus): Response
   {
     if (!$request->headers->has(self::EventHeader)) {
       throw $this->createNotFoundException();
@@ -36,9 +34,8 @@ class GitlabController extends AbstractController
       }
     }
 
-    $payload = $serializer->deserialize($request->getContent(), 'array', 'json');
-
-    $eventDispatcher->dispatch(new IncomingGitlabEvent($request->headers->get(self::EventHeader), $payload));
+    $messageBus->dispatch(
+        new IncomingGitlabEventMessage($request->headers->get(self::EventHeader), $request->getContent()));
 
     return new Response();
   }

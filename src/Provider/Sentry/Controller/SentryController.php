@@ -2,13 +2,12 @@
 
 namespace App\Provider\Sentry\Controller;
 
-use App\Provider\Sentry\Events\IncomingSentryEvent;
-use JMS\Serializer\SerializerInterface;
+use App\Provider\Sentry\Async\IncomingSentryEventMessage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class SentryController extends AbstractController
 {
@@ -20,8 +19,7 @@ class SentryController extends AbstractController
    *
    * @Route("/_webhook/sentry", methods={"POST"})
    */
-  public function webhook(
-      Request $request, SerializerInterface $serializer, EventDispatcherInterface $eventDispatcher): Response
+  public function webhook(Request $request, MessageBusInterface $messageBus): Response
   {
     if (!$request->headers->has(self::ResourceHeader) || !$request->headers->has(self::SignatureHeader)) {
       throw $this->createNotFoundException();
@@ -34,9 +32,7 @@ class SentryController extends AbstractController
       throw $this->createAccessDeniedException();
     }
 
-    $payload = $serializer->deserialize($content, 'array', 'json');
-
-    $eventDispatcher->dispatch(new IncomingSentryEvent($request->headers->get(self::ResourceHeader), $payload));
+    $this->dispatchMessage(new IncomingSentryEventMessage($request->headers->get(self::ResourceHeader), $content));
 
     return new Response();
   }
