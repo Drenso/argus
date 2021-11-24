@@ -1,9 +1,9 @@
 # ARGUS
 
-Argus is a tool used to monitor your projects, based on incoming webhooks from external applications. It solely focuses
+Argus is a tool used to monitor your projects, based on incoming webhooks from external applications. It soly focusses
 on GitLab projects (from a single instance).
 
-Argus internally uses events internally, which means it is fully extendable for your use case. It would be appreciated
+Argus internally uses events internally, which means it is fully extendable for your usecase. It would be appreciated
 to share your extensions with us, so we can share it with everybody!
 
 # Run
@@ -39,12 +39,7 @@ The example does this by default.
 
 ### Updating
 
-When you update the application, make sure to remove the public assets volume created for nginx! 
-When installed in the `argus` directory, run the following to update (after changing the version in `docker-compose.yml`): 
-
-```
-docker-compose down && docker volume rm argus_argus-public && docker-compose up -d 
-```
+Just pull the latest argus container, and if you're using the provided sample configuration everything should just work! (tm)
 
 # Do you have questions?
 

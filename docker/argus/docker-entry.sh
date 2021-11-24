@@ -1,7 +1,12 @@
 #! /bin/bash -e
 
-# Wait for database
+# Detect public mirror directory, and update its contents
+if [[ -d /public_mirror ]]; then
+  rm -rf public_mirror/*
+  cp -r public/* public_mirror/
+fi
 
+# Wait for database
 if [[ -z "${DATABASE_CHECK}" ]]; then
   sleep 10
 else

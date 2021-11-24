@@ -24,7 +24,7 @@ services:
     depends_on:
       - argus
     volumes:
-      - 'argus-public:/usr/src/app'
+      - 'argus-public:/usr/src/app:ro'
       - './nginx/default.conf:/etc/nginx/conf.d/default.conf:ro'
 
   argus:
@@ -35,7 +35,7 @@ services:
     depends_on:
       - db
     volumes:
-      - 'argus-public:/usr/src/app/public'
+      - 'argus-public:/usr/src/app/public_mirror'
       - './.secrets.json:/usr/src/app/.secrets.json'
     environment:
       DATABASE_CHECK: 'db:3306'
