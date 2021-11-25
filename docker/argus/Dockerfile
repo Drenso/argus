@@ -42,6 +42,9 @@ RUN apt-get install netcat -y \
   && curl -s https://raw.githubusercontent.com/eficode/wait-for/master/wait-for -o wait-for \
   && chmod +x wait-for
 
+# Install supervisor
+RUN apt-get install -y supervisor
+
 # Install application
 COPY . .
 
@@ -51,14 +54,17 @@ RUN cp .secrets.json.dist .secrets.json \
   && composer install -o --apcu-autoloader --no-dev \
   && rm .secrets.json
 
-# Clean stuff up and set some permissions
-RUN mv docker/argus/docker-entry.sh . \
-  && rm -rf docker \
-  && mkdir -p var \
+# Set some permissions
+RUN mkdir -p var \
   && chmod o+r -R public \
   && find public -type d -exec chmod o+x {} \+ \
   && chown -R www-data . \
   && chmod u+rwx var
+
+# Setup container configuration and clean stuff up
+RUN mv docker/argus/docker-entry.sh . \
+  && mv docker/argus/supervisor/* /etc/supervisor/conf.d/ \
+  && rm -rf docker
 
 # Set entry point
 ENTRYPOINT ["./docker-entry.sh"]

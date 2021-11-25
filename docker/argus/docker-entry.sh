@@ -14,20 +14,7 @@ else
 fi
 
 # Migrate database
-bin/console doctrine:migrations:migrate --no-interaction --query-time --allow-no-migration -vv
+su -s /bin/bash -c "php bin/console doctrine:migrations:migrate --no-interaction --query-time --allow-no-migration -vv" www-data
 
-# Remove created cache from migration
-rm -rf var/*
-
-# Start messenger daemon
-start_messenger() {
-  while true; do
-    su -s /bin/bash -c "php ${BASE_DIR}/bin/console messenger:consume async -q --no-interaction --time-limit=3600" www-data
-  done
-}
-
-start_messenger &
-
-# Original entrypoint
-docker-php-entrypoint
-php-fpm
+# Start supervisor
+exec supervisord -c /etc/supervisor/supervisord.conf
