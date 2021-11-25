@@ -13,6 +13,7 @@ use RuntimeException;
 
 /**
  * @ORM\Entity(repositoryClass=StoredEventRepository::class)
+ * @ORM\Table(indexes={@ORM\Index(columns={"created_at"})})
  */
 class StoredEvent
 {
