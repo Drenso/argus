@@ -13,7 +13,7 @@ class GitlabInstanceDetailsService
   public function __construct(
       private string $gitlabUrl,
       private string $gitlabToken,
-      private ?int   $mrDefaultAssigneeId,
+      private mixed  $mrDefaultAssigneeId,
       private string $gitlabConfigurationFile)
   {
   }
@@ -105,7 +105,7 @@ class GitlabInstanceDetailsService
               $gitlabHost,
               $this->gitlabUrl,
               $this->gitlabToken,
-              $this->mrDefaultAssigneeId,
+              $this->mrDefaultAssigneeId ? (int)$this->mrDefaultAssigneeId : NULL,
           ),
       ];
 
