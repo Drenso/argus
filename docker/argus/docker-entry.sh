@@ -1,7 +1,7 @@
 #! /bin/bash -e
 
 # Detect public mirror directory, and update its contents
-if [[ -d /public_mirror ]]; then
+if [[ -d public_mirror ]]; then
   rm -rf public_mirror/*
   cp -r public/* public_mirror/
 fi
