@@ -76,7 +76,7 @@ class ProjectPushEventHandler extends AbstractProjectEventHandler implements Eve
           $url           = sprintf('%s/commit/%s', $event->getUrl(), $shortSha);
 
           // Only use first line from commit message
-          $commitMessage = trim(preg_split("/[\n\r]+/", $commitMessage));
+          $commitMessage = trim(preg_split("/[\n\r]+/", $commitMessage)[0]);
 
           // Create the message
           $this->message(sprintf('[%s/%s] %s: %s (by %s) [ %s ]',
