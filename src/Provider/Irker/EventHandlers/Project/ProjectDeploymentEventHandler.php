@@ -15,6 +15,11 @@ class ProjectDeploymentEventHandler extends AbstractProjectPipelineEventHandler 
     ];
   }
 
+  protected function message(string $message, ?string $channel = 'project_deployment', ?string $fallbackChannel = 'project')
+  {
+    parent::message($message, $channel, $fallbackChannel);
+  }
+
   public function onEvent(ProjectDeploymentEvent $event)
   {
     $this->wrapHandler($event, function () use ($event) {

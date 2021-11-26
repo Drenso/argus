@@ -28,10 +28,12 @@ parameters:
   irker.port: '%env(int:IRKER_PORT)%'
   irc.channel._default: '%env(IRKER_CHANNEL_DEFAULT)%'
   irc.channel.project: '%env(IRKER_CHANNEL_PROJECT)%'
+  irc.channel.project_deployment: '%env(IRKER_CHANNEL_PROJECT_DEPLOYMENT)%'
   irc.channel.project_pipelines: '%env(IRKER_CHANNEL_PROJECT_PIPELINES)%'
   irc.channel.usage: '%env(IRKER_CHANNEL_USAGE)%'
 
   irc.disable.channel.project: '%env(bool:IRKER_DISABLE_CHANNEL_PROJECT)%'
+  irc.disable.channel.project_deployment: '%env(bool:IRKER_DISABLE_CHANNEL_PROJECT_DEPLOYMENT)%'
   irc.disable.channel.project_pipelines: '%env(bool:IRKER_DISABLE_CHANNEL_PROJECT_PIPELINES)%'
   irc.disable.channel.usage: '%env(bool:IRKER_DISABLE_CHANNEL_USAGE)%'
 
@@ -90,10 +92,12 @@ services:
       $ircChannels:
         _default: '%irc.channel._default%'
         project: '%irc.channel.project%'
+        project_deployment: '%irc.channel.project_deployment%'
         project_pipelines: '%irc.channel.project_pipelines%'
         usage: '%irc.channel.usage%'
       $disabledChannels:
         project: '%irc.disable.channel.project%'
+        project_deployment: '%irc.disable.channel.project_deployment%'
         project_pipelines: '%irc.disable.channel.project_pipelines%'
         usage: '%irc.disable.channel.usage%'
 
