@@ -3,9 +3,9 @@
 namespace App\Provider\Irker\EventHandlers\Project;
 
 use App\Events\Project\ProjectPushEvent;
-use BobV\IrkerUtils\Colorize;
 use App\Utils\GitShaUtils;
 use App\Utils\PropertyAccessor;
+use BobV\IrkerUtils\Colorize;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\PropertyAccess\PropertyPathInterface;
@@ -13,18 +13,11 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class ProjectPushEventHandler extends AbstractProjectEventHandler implements EventSubscriberInterface
 {
-
-  /**
-   * @var PropertyAccessor
-   */
-  private $propertyAccessor;
-
   public function __construct(
-      EventDispatcherInterface $dispatcher, LoggerInterface $logger, PropertyAccessor $propertyAccessor)
+      EventDispatcherInterface $dispatcher, LoggerInterface $logger,
+      private PropertyAccessor $propertyAccessor)
   {
     parent::__construct($dispatcher, $logger);
-
-    $this->propertyAccessor = $propertyAccessor;
   }
 
   public static function getSubscribedEvents()
@@ -34,7 +27,7 @@ class ProjectPushEventHandler extends AbstractProjectEventHandler implements Eve
     ];
   }
 
-  public function onEvent(ProjectPushEvent $event)
+  public function onEvent(ProjectPushEvent $event): void
   {
     $this->wrapHandler($event, function () use ($event) {
       $commits   = $event->getCommits();
@@ -82,9 +75,8 @@ class ProjectPushEventHandler extends AbstractProjectEventHandler implements Eve
           $commitMessage = $this->getProp($commit, '[message]');
           $url           = sprintf('%s/commit/%s', $event->getUrl(), $shortSha);
 
-          // Strip enters from commit message
-          $commitMessage = preg_replace("/[\n\r]+/", " -- ", $commitMessage);
-          $commitMessage = preg_replace("/ -- $/", "", $commitMessage);
+          // Only use first line from commit message
+          $commitMessage = trim(preg_split("/[\n\r]+/", $commitMessage));
 
           // Create the message
           $this->message(sprintf('[%s/%s] %s: %s (by %s) [ %s ]',
@@ -124,13 +116,7 @@ class ProjectPushEventHandler extends AbstractProjectEventHandler implements Eve
     });
   }
 
-  /**
-   * @param object|array                 $object
-   * @param string|PropertyPathInterface $prop
-   *
-   * @return mixed
-   */
-  private function getProp($object, string $prop)
+  private function getProp(object|array $object, string|PropertyPathInterface $prop): mixed
   {
     return $this->propertyAccessor->getProperty($object, $prop);
   }
