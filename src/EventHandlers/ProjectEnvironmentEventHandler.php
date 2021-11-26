@@ -13,31 +13,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProjectEnvironmentEventHandler implements EventSubscriberInterface
 {
-  /**
-   * @var EntityManagerInterface
-   */
-  private $entityManager;
-  /**
-   * @var ProjectEnvironmentRepository
-   */
-  private $environmentRepository;
-  /**
-   * @var ProjectRepository
-   */
-  private $projectRepository;
-  /**
-   * @var ProjectService
-   */
-  private $projectService;
-
   public function __construct(
-      ProjectRepository $projectRepository, ProjectEnvironmentRepository $environmentRepository,
-      ProjectService $projectService, EntityManagerInterface $entityManager)
+      private ProjectRepository            $projectRepository,
+      private ProjectEnvironmentRepository $environmentRepository,
+      private ProjectService               $projectService,
+      private EntityManagerInterface       $entityManager)
   {
-    $this->projectRepository     = $projectRepository;
-    $this->environmentRepository = $environmentRepository;
-    $this->entityManager         = $entityManager;
-    $this->projectService        = $projectService;
   }
 
   public static function getSubscribedEvents()
@@ -47,7 +28,7 @@ class ProjectEnvironmentEventHandler implements EventSubscriberInterface
     ];
   }
 
-  public function onDeploymentEvent(ProjectDeploymentEvent $event)
+  public function onDeploymentEvent(ProjectDeploymentEvent $event): void
   {
     if (!$project = $this->projectRepository->findOneBy(['name' => $event->getProjectName()])) {
       // Silent ignore deployment events for undefined projects

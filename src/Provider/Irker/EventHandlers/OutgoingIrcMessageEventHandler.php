@@ -11,27 +11,22 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class OutgoingIrcMessageEventHandler extends AbstractEventHandler implements EventSubscriberInterface
 {
-  /**
-   * @var array
-   */
-  private $ircChannels;
-  /**
-   * @var array
-   */
-  private $disabledChannels;
-  /**
-   * @var Connector|null
-   */
-  private $connector;
+  private ?Connector $connector;
 
+  /**
+   * @param string[] $ircChannels
+   * @param string[] $disabledChannels
+   */
   public function __construct(
-      EventDispatcherInterface $dispatcher, LoggerInterface $logger,
-      string $irkerServer, int $irkerPort, array $ircChannels, array $disabledChannels)
+      EventDispatcherInterface $dispatcher,
+      LoggerInterface          $logger,
+      string                   $irkerServer,
+      int                      $irkerPort,
+      private array            $ircChannels,
+      private array            $disabledChannels)
   {
     parent::__construct($dispatcher, $logger);
 
-    $this->ircChannels      = $ircChannels;
-    $this->disabledChannels = $disabledChannels;
     if (!$irkerServer) {
       return;
     }
@@ -46,7 +41,7 @@ class OutgoingIrcMessageEventHandler extends AbstractEventHandler implements Eve
     ];
   }
 
-  public function onEvent(OutgoingIrcMessageEvent $event)
+  public function onEvent(OutgoingIrcMessageEvent $event): void
   {
     if (!$this->connector) {
       // This handler is disabled

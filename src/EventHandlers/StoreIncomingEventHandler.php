@@ -15,15 +15,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class StoreIncomingEventHandler implements EventSubscriberInterface
 {
-  /**
-   * @var EntityManagerInterface
-   */
-  private $em;
-  /**
-   * @var SerializerInterface
-   */
-  private $serializer;
-
   public static function getSubscribedEvents()
   {
     $result = [];
@@ -40,13 +31,13 @@ class StoreIncomingEventHandler implements EventSubscriberInterface
     return $result;
   }
 
-  public function __construct(EntityManagerInterface $em, SerializerInterface $serializer)
+  public function __construct(
+      private EntityManagerInterface $em,
+      private SerializerInterface    $serializer)
   {
-    $this->em         = $em;
-    $this->serializer = $serializer;
   }
 
-  public function onIncomingEvent(IncomingEvent $event)
+  public function onIncomingEvent(IncomingEvent $event): void
   {
     // Store the event in the database
     $dbEvent = (new StoredEvent())

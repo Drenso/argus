@@ -16,28 +16,14 @@ use Throwable;
  */
 abstract class AbstractEventHandler
 {
-  /**
-   * @var LoggerInterface
-   */
-  protected $logger;
-  /**
-   * @var PropertyAccessor
-   */
-  private $propertyAccessor;
-  /**
-   * @var EventDispatcherInterface
-   */
-  private $eventDispatcher;
-
   public function __construct(
-      LoggerInterface $logger, PropertyAccessor $propertyAccessor, EventDispatcherInterface $eventDispatcher)
+      protected LoggerInterface        $logger,
+      private PropertyAccessor         $propertyAccessor,
+      private EventDispatcherInterface $eventDispatcher)
   {
-    $this->logger           = $logger;
-    $this->propertyAccessor = $propertyAccessor;
-    $this->eventDispatcher  = $eventDispatcher;
   }
 
-  public function wrapEventHandler(IncomingEvent $event, callable $action)
+  public function wrapEventHandler(IncomingEvent $event, callable $action): void
   {
     if ($event->getDiscriminator() !== $this->getDiscriminator()) {
       $this->logger->debug(sprintf('Skipping handler "%s" as the event type "%s" does not match with "%s"',
@@ -62,38 +48,26 @@ abstract class AbstractEventHandler
   /**
    * Should return the discriminator for the handler to select
    * that will be handled by this handler
-   *
-   * @return string
    */
   protected abstract function getDiscriminator(): string;
 
-  /**
-   * @param object|array                 $object
-   * @param string|PropertyPathInterface $prop
-   *
-   * @return mixed
-   */
-  protected function getProp($object, string $prop)
+  protected function getProp(object|array $object, string|PropertyPathInterface $prop): mixed
   {
     return $this->propertyAccessor->getProperty($object, $prop);
   }
 
   /**
    * Dispatch a project event
-   *
-   * @param ProjectEvent $event
    */
-  protected function projectEvent(ProjectEvent $event)
+  protected function projectEvent(ProjectEvent $event): void
   {
     $this->eventDispatcher->dispatch($event);
   }
 
   /**
    * Dispatch an usage event
-   *
-   * @param UsageEvent $event
    */
-  protected function usageEvent(UsageEvent $event)
+  protected function usageEvent(UsageEvent $event): void
   {
     $this->eventDispatcher->dispatch($event);
   }
