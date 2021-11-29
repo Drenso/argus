@@ -57,7 +57,7 @@
         "symfony/translation-contracts": "2.5.0",
         "symfony/twig-bundle": "5.3.10",
         "symfony/validator": "5.3.12",
-        "symfony/webpack-encore-bundle": "1.13.0",
+        "symfony/webpack-encore-bundle": "1.13.1",
         "symfony/yaml": "5.3.11"
     },
     "require-dev": {
