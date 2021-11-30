@@ -32,7 +32,7 @@ class SentryController extends AbstractController
       throw $this->createAccessDeniedException();
     }
 
-    $this->dispatchMessage(new IncomingSentryEventMessage($request->headers->get(self::ResourceHeader), $content));
+    $messageBus->dispatch(new IncomingSentryEventMessage($request->headers->get(self::ResourceHeader), $content));
 
     return new Response();
   }

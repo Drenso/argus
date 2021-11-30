@@ -99,7 +99,7 @@ class ArgusJwtAuthenticator extends AbstractAuthenticator
 
   private function isApiController(Request $request): bool
   {
-    return u($request->get('_controller'))->startsWith($this->apiControllerPrefix);
+    return u($request->attributes->get('_controller'))->startsWith($this->apiControllerPrefix);
   }
 
   private function getJwtConfiguration(): Configuration
