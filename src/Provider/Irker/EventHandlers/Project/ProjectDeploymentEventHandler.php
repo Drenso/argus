@@ -34,7 +34,7 @@ class ProjectDeploymentEventHandler extends AbstractProjectPipelineEventHandler 
           $fill = '[%s] Deployment on environment "%s" (%s) ' . Colorize::colorize('failed', Colorize::COLOR_DARK_RED) . ' by %s: [ %s ]';
           break;
         case 'canceled':
-          $fill = '[%s] Deployment on environment "%s" (%s) ' . Colorize::colorize('canceled', Colorize::COLOR_LIGHT_RED) . ' by %s: [ %s ]';
+          $fill = '[%s] Deployment on environment "%s" (%s) ' . Colorize::colorize('cancelled', Colorize::COLOR_LIGHT_RED) . ' by %s: [ %s ]';
           break;
         default:
           $fill = '[%s] Unknown action on deployment on environment "%s" (%s) by %s: [ %s ]';
