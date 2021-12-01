@@ -65,7 +65,7 @@
         "phpunit/phpunit": "9.5.10",
         "symfony/browser-kit": "5.4.0",
         "symfony/css-selector": "5.4.0",
-        "symfony/maker-bundle": "1.36.3",
+        "symfony/maker-bundle": "1.36.4",
         "symfony/phpunit-bridge": "5.4.0",
         "symfony/stopwatch": "5.4.0",
         "symfony/web-profiler-bundle": "5.4.0"
