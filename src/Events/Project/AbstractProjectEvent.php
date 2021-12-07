@@ -13,6 +13,7 @@ abstract class AbstractProjectEvent
    * @param string $projectName The project name
    * @param string $projectHost The project gitlab host
    * @param string $user        The user triggering the event
+   * @param string $userHandle  The user handle triggering the event
    * @param string $iid         The related id
    * @param string $url         The related url
    * @param string $action      The related action
@@ -21,6 +22,7 @@ abstract class AbstractProjectEvent
       private string $projectName,
       string         $projectHost,
       private string $user,
+      private string $userHandle,
       private string $iid,
       private string $url,
       private string $action)
@@ -47,6 +49,11 @@ abstract class AbstractProjectEvent
   public function getUser(): string
   {
     return $this->user;
+  }
+
+  public function getUserHandle(): string
+  {
+    return $this->userHandle;
   }
 
   public function getIid(): string

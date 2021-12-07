@@ -5,12 +5,18 @@ namespace App\Events\Project;
 class ProjectNoteEvent extends AbstractProjectEvent implements ProjectEvent
 {
   public function __construct(
-      string         $projectName, string $projectHost, string $user, string $iid, string $url, string $action,
+      string         $projectName,
+      string         $projectHost,
+      string         $user,
+      string         $userHandle,
+      string         $iid,
+      string         $url,
+      string         $action,
       private string $title,
       private string $note,
       private bool   $confidential = false)
   {
-    parent::__construct($projectName, $projectHost, $user, $iid, $url, $action);
+    parent::__construct($projectName, $projectHost, $user, $userHandle, $iid, $url, $action);
   }
 
   public function getTitle(): string

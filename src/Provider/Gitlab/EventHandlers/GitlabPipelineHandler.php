@@ -30,6 +30,7 @@ class GitlabPipelineHandler extends AbstractGitlabEventHandler implements EventS
         $this->getProp($data, '[project][path_with_namespace]'),
         $this->getProp($data, '[project][web_url]'),
         $this->getProp($data, '[user][name]'),
+        $this->getProp($data, '[user][username]'),
         $id,
         $url,
         $this->getProp($data, '[object_attributes][status]'),

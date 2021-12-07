@@ -38,6 +38,7 @@ class GitlabJobEventHandler extends AbstractGitlabEventHandler implements EventS
         preg_replace('/\s+/', '', $this->getProp($data, '[project_name]')),
         $this->getProp($data, '[repository][git_http_url]'),
         $this->getProp($data, '[user][name]'),
+        $this->getProp($data, '[user][username]'),
         $id,
         $url,
         $this->getProp($data, '[build_status]')

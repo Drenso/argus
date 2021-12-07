@@ -5,14 +5,20 @@ namespace App\Events\Project;
 class ProjectPushEvent extends AbstractProjectEvent implements ProjectEvent
 {
   public function __construct(
-      string            $projectName, string $projectHost, string $user, string $branch, string $url, string $action,
+      string          $projectName,
+      string          $projectHost,
+      string          $user,
+      string          $userHandle,
+      string          $branch,
+      string          $url,
+      string          $action,
       private string  $before,
       private string  $after,
       private ?string $checkoutSha,
       private array   $commits,
       private int     $totalCommitCount)
   {
-    parent::__construct($projectName, $projectHost, $user, $branch, $url, $action);
+    parent::__construct($projectName, $projectHost, $user, $userHandle, $branch, $url, $action);
   }
 
   public function getAfter(): string
