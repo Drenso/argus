@@ -29,6 +29,9 @@ abstract class AbstractProjectEvent
   {
     $this->projectHost       = parse_url($projectHost, PHP_URL_HOST);
     $this->projectHostScheme = parse_url($projectHost, PHP_URL_SCHEME);
+
+    // Prepend user handle with @
+    $this->userHandle = '@' . $userHandle;
   }
 
   public function getProjectName(): string
