@@ -9,19 +9,8 @@ use Throwable;
 
 abstract class AbstractEventHandler
 {
-  /**
-   * @var EventDispatcherInterface
-   */
-  private $dispatcher;
-  /**
-   * @var LoggerInterface
-   */
-  private $logger;
-
-  public function __construct(EventDispatcherInterface $dispatcher, LoggerInterface $logger)
+  public function __construct(private EventDispatcherInterface $dispatcher, private LoggerInterface $logger)
   {
-    $this->dispatcher = $dispatcher;
-    $this->logger     = $logger;
   }
 
   /**

@@ -42,7 +42,7 @@ class ProjectJobEventHandler extends AbstractProjectPipelineEventHandler impleme
       $this->message(sprintf($fill,
           Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
           $event->getIid(),
-          $event->getUser(),
+          $this->getUserFromEvent($event),
           Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
       ));
     });

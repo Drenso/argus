@@ -59,7 +59,7 @@ class ProjectPipelineEventHandler extends AbstractProjectPipelineEventHandler im
             Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
             $event->getIid(),
             $shortSha,
-            $event->getUser(),
+            $this->getUserFromEvent($event),
             Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
         ));
       } else {
@@ -69,7 +69,7 @@ class ProjectPipelineEventHandler extends AbstractProjectPipelineEventHandler im
             $shortSha,
             $event->getNumJobs(),
             $event->getNumJobs() > 1 ? 's' : '',
-            $event->getUser(),
+            $this->getUserFromEvent($event),
             Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
         ));
       }

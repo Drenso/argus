@@ -38,7 +38,7 @@ class ProjectWikiEventHandler extends AbstractProjectEventHandler implements Eve
             $this->message(sprintf($fill,
                 Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
                 $event->getIid(),
-                $event->getUser(),
+                $this->getUserFromEvent($event),
                 $message
             ));
 
@@ -49,7 +49,7 @@ class ProjectWikiEventHandler extends AbstractProjectEventHandler implements Eve
             $this->message(sprintf($fill,
                 Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
                 $event->getIid(),
-                $event->getUser(),
+                $this->getUserFromEvent($event),
                 Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
             ));
 
@@ -59,7 +59,7 @@ class ProjectWikiEventHandler extends AbstractProjectEventHandler implements Eve
         $this->message(sprintf($fill,
             Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
             $event->getIid(),
-            $event->getUser(),
+            $this->getUserFromEvent($event),
             $message,
             Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
         ));
@@ -78,7 +78,7 @@ class ProjectWikiEventHandler extends AbstractProjectEventHandler implements Eve
             $this->message(sprintf($fill,
                 Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
                 $event->getIid(),
-                $event->getUser(),
+                $this->getUserFromEvent($event),
             ));
 
             return;
@@ -88,7 +88,7 @@ class ProjectWikiEventHandler extends AbstractProjectEventHandler implements Eve
             $this->message(sprintf($fill,
                 Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
                 $event->getIid(),
-                $event->getUser(),
+                $this->getUserFromEvent($event),
                 Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
             ));
 
@@ -98,7 +98,7 @@ class ProjectWikiEventHandler extends AbstractProjectEventHandler implements Eve
         $this->message(sprintf($fill,
             Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
             $event->getIid(),
-            $event->getUser(),
+            $this->getUserFromEvent($event),
             Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
         ));
       }

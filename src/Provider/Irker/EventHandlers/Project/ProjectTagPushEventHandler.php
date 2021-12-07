@@ -26,7 +26,7 @@ class ProjectTagPushEventHandler extends AbstractProjectEventHandler implements 
               Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
               $event->getTag(),
               Colorize::colorize(GitShaUtils::getShortSha($event->getCheckoutSha()), Colorize::COLOR_GREY),
-              $event->getUser(),
+              $this->getUserFromEvent($event),
               Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
           ));
           break;
@@ -35,7 +35,7 @@ class ProjectTagPushEventHandler extends AbstractProjectEventHandler implements 
               Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
               $event->getTag(),
               Colorize::colorize(GitShaUtils::getShortSha($event->getBefore()), Colorize::COLOR_GREY),
-              $event->getUser()
+              $this->getUserFromEvent($event),
           ));
           break;
         default:
@@ -43,7 +43,7 @@ class ProjectTagPushEventHandler extends AbstractProjectEventHandler implements 
               Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
               Colorize::colorize($event->getTag(), Colorize::COLOR_GREEN),
               Colorize::colorize(GitShaUtils::getShortSha($event->getBefore()), Colorize::COLOR_GREY),
-              $event->getUser()
+              $this->getUserFromEvent($event),
           ));
           break;
       }

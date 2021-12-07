@@ -38,7 +38,7 @@ class ProjectPushEventHandler extends AbstractProjectEventHandler implements Eve
         $this->message(sprintf('[%s/%s] %s pushed a %s branch with %d commit%s [ %s ]',
             Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
             Colorize::colorize($event->getBranch(), Colorize::COLOR_DARK_RED),
-            $event->getUser(),
+            $this->getUserFromEvent($event),
             Colorize::colorize('new', Colorize::COLOR_GREEN),
             $event->getTotalCommitCount(),
             $event->getTotalCommitCount() > 1 ? 's' : '',
@@ -48,7 +48,7 @@ class ProjectPushEventHandler extends AbstractProjectEventHandler implements Eve
         // Removed branch
         $this->message(sprintf('[%s] %s %s branch %s',
             Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
-            $event->getUser(),
+            $this->getUserFromEvent($event),
             Colorize::colorize('deleted', Colorize::COLOR_DARK_RED),
             $event->getBranch(),
         ));
@@ -57,7 +57,7 @@ class ProjectPushEventHandler extends AbstractProjectEventHandler implements Eve
         $this->message(sprintf('[%s/%s] %s pushed %d commit%s [ %s ]',
             Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
             Colorize::colorize($event->getBranch(), Colorize::COLOR_DARK_RED),
-            $event->getUser(),
+            $this->getUserFromEvent($event),
             $event->getTotalCommitCount(),
             $event->getTotalCommitCount() > 1 ? 's' : '',
             Colorize::colorize($branchUrl, Colorize::COLOR_BLUE)

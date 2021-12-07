@@ -44,7 +44,7 @@ class ProjectDeploymentEventHandler extends AbstractProjectPipelineEventHandler 
           Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
           $event->getEnvironment(),
           Colorize::colorize($event->getShortSha(), Colorize::COLOR_GREY),
-          $event->getUser(),
+          $this->getUserFromEvent($event),
           Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
       ));
     });

@@ -41,7 +41,7 @@ class ProjectNoteEventHandler extends AbstractProjectEventHandler implements Eve
         default:
           $this->message(sprintf('[%s] Unknown update by %s: %s [%s]',
               Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
-              $event->getUser(),
+              $this->getUserFromEvent($event),
               $note,
               Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
           ));
@@ -54,7 +54,7 @@ class ProjectNoteEventHandler extends AbstractProjectEventHandler implements Eve
           $event->isConfidential() ? (' ' . Colorize::colorize('confidential', Colorize::COLOR_ORANGE)) : '',
           $event->getTitle(),
           $event->getIid(),
-          $event->getUser(),
+          $this->getUserFromEvent($event),
           $note,
           Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
       ));

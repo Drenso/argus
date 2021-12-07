@@ -51,7 +51,7 @@ class ProjectMergeRequestEventHandler extends AbstractProjectEventHandler implem
       $this->message(sprintf($fill,
           Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
           $event->getIid(),
-          $event->getUser(),
+          $this->getUserFromEvent($event),
           $event->getTitle(),
           Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
       ));

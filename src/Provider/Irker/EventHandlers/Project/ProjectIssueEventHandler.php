@@ -42,7 +42,7 @@ class ProjectIssueEventHandler extends AbstractProjectEventHandler implements Ev
           Colorize::colorize($event->getProjectName(), Colorize::COLOR_LIGHT_RED),
           $event->getIid(),
           $event->isConfidential() ? (' ' . Colorize::colorize('(confidential)', Colorize::COLOR_ORANGE)) : '',
-          $event->getUser(),
+          $this->getUserFromEvent($event),
           $event->getTitle(),
           Colorize::colorize($event->getUrl(), Colorize::COLOR_BLUE)
       ));
