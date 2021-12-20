@@ -29,7 +29,7 @@
         "lcobucci/jwt": "4.1.5",
         "psr/log": "1.1.4",
         "sensio/framework-extra-bundle": "6.2.1",
-        "sentry/sentry-symfony": "4.2.4",
+        "sentry/sentry-symfony": "4.2.5",
         "symfony/config": "5.4.0",
         "symfony/console": "5.4.1",
         "symfony/dependency-injection": "5.4.1",
