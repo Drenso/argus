@@ -22,7 +22,7 @@
         "doctrine/orm": "2.9.6",
         "doctrine/persistence": "2.2.3",
         "drenso/symfony-shared": "1.27.2",
-        "friendsofsymfony/jsrouting-bundle": "2.7.0",
+        "friendsofsymfony/jsrouting-bundle": "3.0.0",
         "jms/serializer": "3.16.0",
         "jms/serializer-bundle": "3.10.0",
         "lcobucci/clock": "2.1.0",
