@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "283c309f01df80cce997be60039cbc36",
+    "content-hash": "00093f3b7334aa037dd6ccdfbce12ba1",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
@@ -1668,17 +1668,17 @@
         },
         {
             "name": "drenso/symfony-shared",
-            "version": "1.27.2",
+            "version": "1.27.3",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.drenso.dev:intern/symfony-shared.git",
-                "reference": "877cc433da0e74c6c03060f8ec56ae4f0d3727b5"
+                "reference": "a505820a51529959fb14503b474f5de987c8aa30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.drenso.dev/dist/drenso/symfony-shared/drenso-symfony-shared-1.27.2-32ed39.zip",
-                "reference": "877cc433da0e74c6c03060f8ec56ae4f0d3727b5",
-                "shasum": "4dea0aa421673ecf9a6ef6844f1f8688e64b9b60"
+                "url": "https://composer.drenso.dev/dist/drenso/symfony-shared/drenso-symfony-shared-1.27.3-a8f4ac.zip",
+                "reference": "a505820a51529959fb14503b474f5de987c8aa30",
+                "shasum": "60932b8b8e55e66e5028113790f159a2fcf1963e"
             },
             "require": {
                 "ext-iconv": "*",
@@ -1698,7 +1698,7 @@
                 "bomo/ical-bundle": "^2.0.2",
                 "doctrine/orm": "^2.7",
                 "drenso/phan-extensions": "~2.5 || ~3.0",
-                "jms/serializer-bundle": "^3.3",
+                "jms/serializer-bundle": "^3.3 || ^4.0",
                 "kigkonsult/icalcreator": "^2.39",
                 "php-decimal/php-decimal": "^1.1",
                 "phpoffice/phpspreadsheet": "^1.10",
@@ -1711,7 +1711,7 @@
                 "symfony/mailer": "~4.4 || ~5.0",
                 "symfony/routing": "~3.4 || ~4.0 || ~5.0",
                 "symfony/security-core": "~3.4 || ~4.0 || ~5.0",
-                "symfony/translation-contracts": "~1.1 || ~2.0",
+                "symfony/translation-contracts": "~1.1 || ~2.0 || ~3.0",
                 "symfony/twig-bridge": "~3.4 || ~4.0 || ~5.0",
                 "symfony/validator": "~3.4 || ~4.0 || ~5.0"
             },
@@ -1759,7 +1759,7 @@
                 "shared",
                 "symfony"
             ],
-            "time": "2021-11-16T16:25:59+00:00"
+            "time": "2022-01-19T21:21:26+00:00"
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
