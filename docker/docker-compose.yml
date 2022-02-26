@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   db:
-    image: 'mariadb:10.7.1'
+    image: 'mariadb:10.8.2'
     restart: on-failure
     networks:
       - argus-network
