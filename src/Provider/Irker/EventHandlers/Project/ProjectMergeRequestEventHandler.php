@@ -39,6 +39,7 @@ class ProjectMergeRequestEventHandler extends AbstractProjectEventHandler implem
           $fill = '[%s] Merge request !%s ' . Colorize::colorize('test hook', Colorize::COLOR_DARK_RED) . ' by %s: %s [ %s ]';
           break;
         case 'approved':
+        case 'approval':
           $fill = '[%s] Merge request !%s ' . Colorize::colorize('approved', Colorize::COLOR_GREEN) . ' by %s: %s [ %s ]';
           break;
         case 'unapproved':
