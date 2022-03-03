@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a3b2cac71be148572a2021dda0f9764",
+    "content-hash": "58a220097e16fb9b6e372469f5c92161",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
@@ -1668,17 +1668,17 @@
         },
         {
             "name": "drenso/symfony-shared",
-            "version": "1.28.0",
+            "version": "1.28.1",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.drenso.dev:intern/symfony-shared.git",
-                "reference": "d18c7ab2aee42164a3863ec306c29a62507aa0b5"
+                "reference": "bc9db69ce2aeab32736a4ef8d198ea368c7919da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.drenso.dev/dist/drenso/symfony-shared/drenso-symfony-shared-1.28.0-685458.zip",
-                "reference": "d18c7ab2aee42164a3863ec306c29a62507aa0b5",
-                "shasum": "158d69ee90cde5450c913a794ec57088aa366ad7"
+                "url": "https://composer.drenso.dev/dist/drenso/symfony-shared/drenso-symfony-shared-1.28.1-2b2f34.zip",
+                "reference": "bc9db69ce2aeab32736a4ef8d198ea368c7919da",
+                "shasum": "e2d3ee2543b65dc2a3de5db883a310089d05766a"
             },
             "require": {
                 "ext-iconv": "*",
@@ -1759,7 +1759,7 @@
                 "shared",
                 "symfony"
             ],
-            "time": "2022-02-23T09:18:02+00:00"
+            "time": "2022-03-03T16:47:48+00:00"
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
@@ -5408,16 +5408,16 @@
         },
         {
             "name": "symfony/form",
-            "version": "v5.4.3",
+            "version": "v5.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/form.git",
-                "reference": "2fa60c186cb70c940c766ca009b59949cfacd9cc"
+                "reference": "18f4f8209d2db06fc3cf5ba3b2eb8e4706b34aac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/form/zipball/2fa60c186cb70c940c766ca009b59949cfacd9cc",
-                "reference": "2fa60c186cb70c940c766ca009b59949cfacd9cc",
+                "url": "https://api.github.com/repos/symfony/form/zipball/18f4f8209d2db06fc3cf5ba3b2eb8e4706b34aac",
+                "reference": "18f4f8209d2db06fc3cf5ba3b2eb8e4706b34aac",
                 "shasum": ""
             },
             "require": {
@@ -5491,7 +5491,7 @@
             "description": "Allows to easily create, process and reuse HTML forms",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/form/tree/v5.4.3"
+                "source": "https://github.com/symfony/form/tree/v5.4.5"
             },
             "funding": [
                 {
@@ -5507,7 +5507,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-26T16:28:35+00:00"
+            "time": "2022-02-04T23:26:40+00:00"
         },
         {
             "name": "symfony/framework-bundle",
