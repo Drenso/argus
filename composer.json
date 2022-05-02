@@ -36,7 +36,7 @@
         "symfony/dotenv": "5.4.5",
         "symfony/event-dispatcher": "5.4.3",
         "symfony/event-dispatcher-contracts": "2.5.1",
-        "symfony/flex": "2.1.7",
+        "symfony/flex": "2.1.8",
         "symfony/framework-bundle": "5.4.8",
         "symfony/http-client": "5.4.8",
         "symfony/http-client-contracts": "2.5.1",
