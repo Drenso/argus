@@ -65,7 +65,7 @@
         "axios": "0.27.2",
         "big.js": "6.1.1",
         "bootstrap-vue": "2.22.0",
-        "core-js": "3.22.3",
+        "core-js": "3.22.4",
         "direct-vuex": "0.12.1",
         "jquery": "3.6.0",
         "messageformat": "2.3.0",
