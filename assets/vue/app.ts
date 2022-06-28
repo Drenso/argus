@@ -20,17 +20,18 @@ Vue.component('FontAwesomeIcon', FontAwesomeIcon);
 Vue.component('FontAwesomeLayers', FontAwesomeLayers);
 
 // Sentry
-import * as Sentry from '@sentry/browser';
-import * as Integrations from '@sentry/integrations';
+import * as Sentry from '@sentry/vue';
 
 // Only bind when production mode is set
 if (window.SENTRY_DSN) {
-  // Create the default sentry client
-  // This instance will communicate any default JS errors, as long as the Vue integration does not override it
-  // Vue must always be loaded after this default app.ts!
+  console.log('Setting up Sentry client');
+
   Sentry.init({
+    Vue,
     dsn: window.SENTRY_DSN,
     release: window.SENTRY_RELEASE,
+    attachProps: true,
+    logErrors: true
   });
 }
 
@@ -74,20 +75,6 @@ Vue.use(Plugins.Router, {
 Vue.use(Plugins.Text);
 Vue.use(Plugins.Translator, I18n);
 Vue.use(Plugins.Validation);
-
-// Only bind when production mode is set
-if (window.SENTRY_DSN) {
-  // Bind the new error client with Vue integration
-  // This instance will communicate any JS errors and overrides the default integration in app.ts
-  // Vue must always be loaded after out default app!
-  Sentry.getCurrentHub().bindClient(
-      new Sentry.BrowserClient({
-        dsn: window.SENTRY_DSN,
-        release: window.SENTRY_RELEASE,
-        integrations: [new Integrations.Vue({Vue, attachProps: true, logErrors: true})],
-      }),
-  );
-}
 
 // Prepare routing
 import VueRouter from 'vue-router';
