@@ -68,7 +68,7 @@
         "direct-vuex": "0.12.1",
         "jquery": "3.6.0",
         "messageformat": "2.3.0",
-        "moment": "2.29.3",
+        "moment": "2.29.4",
         "moment-timezone": "0.5.34",
         "regenerator-runtime": "0.13.9",
         "select2": "4.1.0-rc.0",
@@ -82,7 +82,7 @@
         "vuex": "3.6.2"
     },
     "resolutions": {
-        "moment": "2.29.3",
+        "moment": "2.29.4",
         "vue-loader": "15.9.8"
     }
 }
