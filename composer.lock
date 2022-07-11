@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c90be9bd73d7710f56762491f97dd1f7",
+    "content-hash": "1424105d0af79c12a936ff05ed3daabe",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
@@ -1866,16 +1866,16 @@
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
-            "version": "3.2.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSJsRoutingBundle.git",
-                "reference": "7ba26afbeda954b0d12ff3afc3404d7614e060ac"
+                "reference": "fb188bfe352ccd7ecff06c08eca05fed47f30de4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/7ba26afbeda954b0d12ff3afc3404d7614e060ac",
-                "reference": "7ba26afbeda954b0d12ff3afc3404d7614e060ac",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/fb188bfe352ccd7ecff06c08eca05fed47f30de4",
+                "reference": "fb188bfe352ccd7ecff06c08eca05fed47f30de4",
                 "shasum": ""
             },
             "require": {
@@ -1926,9 +1926,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FriendsOfSymfony/FOSJsRoutingBundle/issues",
-                "source": "https://github.com/FriendsOfSymfony/FOSJsRoutingBundle/tree/3.2.0"
+                "source": "https://github.com/FriendsOfSymfony/FOSJsRoutingBundle/tree/3.2.1"
             },
-            "time": "2022-06-30T20:02:59+00:00"
+            "time": "2022-07-01T11:50:22+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
