@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5abd89d7dbec593ab055265f2efacdf9",
+    "content-hash": "6640e78e36a7e4f47389a98bef78efd5",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
@@ -1692,17 +1692,17 @@
         },
         {
             "name": "drenso/symfony-shared",
-            "version": "1.29.0",
+            "version": "1.29.1",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.drenso.dev:intern/symfony-shared.git",
-                "reference": "e499d4483ebe9118c4269aaf34bb097142c75e7f"
+                "reference": "602fd2c49addf320e8af79556a6622794ac5a536"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.drenso.dev/dist/drenso/symfony-shared/drenso-symfony-shared-1.29.0-8f3fb2.zip",
-                "reference": "e499d4483ebe9118c4269aaf34bb097142c75e7f",
-                "shasum": "fe52ef3aff8d27dba7c6b4dda705b94b460429a9"
+                "url": "https://composer.drenso.dev/dist/drenso/symfony-shared/drenso-symfony-shared-1.29.1-12183f.zip",
+                "reference": "602fd2c49addf320e8af79556a6622794ac5a536",
+                "shasum": "f3929eed625793988c3d0b7e57a91d741f8a12b1"
             },
             "require": {
                 "ext-iconv": "*",
@@ -1784,7 +1784,7 @@
                 "shared",
                 "symfony"
             ],
-            "time": "2022-07-11T09:58:04+00:00"
+            "time": "2022-08-11T07:56:16+00:00"
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
