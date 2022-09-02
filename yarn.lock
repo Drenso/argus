@@ -5453,10 +5453,10 @@ moment-locales-webpack-plugin@1.2.0:
   dependencies:
     lodash.difference "^4.5.0"
 
-moment-timezone@*, moment-timezone@0.5.36:
-  version "0.5.36"
-  resolved "https://npm.drenso.dev/moment-timezone/-/moment-timezone-0.5.36.tgz#28d7371957329428bed16b556bc58ccfd9aa5a3b"
-  integrity sha512-yxiQanbZOzU9rX9a1svFjjHyDExMTnTUK9cQWpogjEOdycdD94kIsLYbHHkUQC0dlQbzp/c2Og+Xb4yeDbgo6Q==
+moment-timezone@*, moment-timezone@0.5.37:
+  version "0.5.37"
+  resolved "https://npm.drenso.dev/moment-timezone/-/moment-timezone-0.5.37.tgz#adf97f719c4e458fdb12e2b4e87b8bec9f4eef1e"
+  integrity sha512-uEDzDNFhfaywRl+vwXxffjjq1q0Vzr+fcQpQ1bU0kbzorfS7zVtZnCnGc8mhWmF39d4g4YriF6kwA75mJKE/Zg==
   dependencies:
     moment ">= 2.9.0"
 

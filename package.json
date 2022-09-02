@@ -69,7 +69,7 @@
         "jquery": "3.6.0",
         "messageformat": "2.3.0",
         "moment": "2.29.4",
-        "moment-timezone": "0.5.36",
+        "moment-timezone": "0.5.37",
         "regenerator-runtime": "0.13.9",
         "select2": "4.1.0-rc.0",
         "uuid": "8.3.2",
