@@ -967,10 +967,10 @@
   resolved "https://npm.drenso.dev/@discoveryjs%2fjson-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
-"@drenso/vue-frontend-shared@0.13.1":
-  version "0.13.1"
-  resolved "https://npm.drenso.dev/@drenso%2fvue-frontend-shared/-/vue-frontend-shared-0.13.1.tgz#9b38a56251b7877ce4f5aaf9070f1ff33aa8bf98"
-  integrity sha512-9JlarPqFv31fYlwSVaXcKnSGiOyWuro60D7lkWXgrStnplp9mAM0++2ETEYkB7QGyvON7bm3PDgehH8oaqc0zg==
+"@drenso/vue-frontend-shared@0.14.0":
+  version "0.14.0"
+  resolved "https://npm.drenso.dev/@drenso%2fvue-frontend-shared/-/vue-frontend-shared-0.14.0.tgz#df3585105a1f381d7a2e37a98806a3958e6d0bb9"
+  integrity sha512-HQ9qGZbv5DLwkWgGER9oxOP8EtoE1wazKuPB+f31Y38noEZB+SZXCooo+SRpMHpKfq7xICBAihYcxGrt7LcJqQ==
 
 "@es-joy/jsdoccomment@0.10.8":
   version "0.10.8"
@@ -5393,14 +5393,7 @@ minimalistic-assert@^1.0.0:
   resolved "https://npm.drenso.dev/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
   integrity sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==
 
-minimatch@^3.0.4:
-  version "3.1.2"
-  resolved "https://npm.drenso.dev/minimatch/-/minimatch-3.1.2.tgz#19cd194bfd3e428f049a70817c038d89ab4be35b"
-  integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
-  dependencies:
-    brace-expansion "^1.1.7"
-
-minimatch@~3.0.2:
+minimatch@^3.0.4, minimatch@~3.0.2:
   version "3.0.8"
   resolved "https://npm.drenso.dev/minimatch/-/minimatch-3.0.8.tgz#5e6a59bd11e2ab0de1cfb843eb2d82e546c321c1"
   integrity sha512-6FsRAQsxQ61mw+qP1ZzbL9Bc78x2p5OqNgNpnoAFLTrX8n5Kxph0CsnhmKKNXTWjXqU5L0pGPR7hYk+XWZr60Q==
