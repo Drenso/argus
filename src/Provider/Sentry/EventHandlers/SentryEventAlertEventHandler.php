@@ -99,7 +99,8 @@ class SentryEventAlertEventHandler extends AbstractSentryEventHandler implements
     $this->usageEvent(new UsageErrorEvent(
         $release ?? 'unknown@unknown',
         $this->getProp($data, '[title]'),
-        $this->getProp($data, '[web_url]')
+        $this->getProp($data, '[web_url]'),
+        $this->getProp($data, '[level]')
     ));
   }
 }
