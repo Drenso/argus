@@ -74,7 +74,7 @@ Vue.use(Plugins.Router, {
 });
 Vue.use(Plugins.Text);
 Vue.use(Plugins.Translator, {
-  messages: I18n
+  messages: I18n,
 });
 Vue.use(Plugins.Validation);
 
