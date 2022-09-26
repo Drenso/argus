@@ -73,7 +73,9 @@ Vue.use(Plugins.Router, {
   routes: fosRoutes,
 });
 Vue.use(Plugins.Text);
-Vue.use(Plugins.Translator, I18n);
+Vue.use(Plugins.Translator, {
+  messages: I18n
+});
 Vue.use(Plugins.Validation);
 
 // Prepare routing
