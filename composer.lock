@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9ba1d9bfd9edfe5995fbd7d3d7f2502d",
+    "content-hash": "c15982e12701ce62bef1067cea7cd5a3",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
@@ -3989,16 +3989,16 @@
         },
         {
             "name": "sentry/sentry-symfony",
-            "version": "4.3.0",
+            "version": "4.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-symfony.git",
-                "reference": "12d0f9674b8a829fdf1a2cfbb3fd6b94ec4de893"
+                "reference": "a0c76b8026282a3046da47e96139958814c1c88a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/12d0f9674b8a829fdf1a2cfbb3fd6b94ec4de893",
-                "reference": "12d0f9674b8a829fdf1a2cfbb3fd6b94ec4de893",
+                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/a0c76b8026282a3046da47e96139958814c1c88a",
+                "reference": "a0c76b8026282a3046da47e96139958814c1c88a",
                 "shasum": ""
             },
             "require": {
@@ -4088,7 +4088,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-symfony/issues",
-                "source": "https://github.com/getsentry/sentry-symfony/tree/4.3.0"
+                "source": "https://github.com/getsentry/sentry-symfony/tree/4.3.1"
             },
             "funding": [
                 {
@@ -4100,7 +4100,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-05-30T12:09:35+00:00"
+            "time": "2022-10-10T09:52:04+00:00"
         },
         {
             "name": "stella-maris/clock",
