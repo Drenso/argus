@@ -111,6 +111,7 @@
         ]
     },
     "conflict": {
+        "doctrine/dbal": "3.5.0",
         "symfony/symfony": "*"
     },
     "extra": {
