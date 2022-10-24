@@ -21,7 +21,7 @@
         "doctrine/doctrine-migrations-bundle": "3.2.2",
         "doctrine/orm": "2.13.3",
         "doctrine/persistence": "2.5.5",
-        "drenso/symfony-shared": "1.30.0",
+        "drenso/symfony-shared": "1.31.0",
         "friendsofsymfony/jsrouting-bundle": "3.2.1",
         "jms/serializer": "3.18.2",
         "jms/serializer-bundle": "5.0.0",

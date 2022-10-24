@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5df39ad449176f7a516af1f6a06ef724",
+    "content-hash": "9ebf5e6676527c01fbc66e104071835c",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
@@ -1693,17 +1693,17 @@
         },
         {
             "name": "drenso/symfony-shared",
-            "version": "1.30.0",
+            "version": "1.31.0",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.drenso.dev:intern/symfony-shared.git",
-                "reference": "f35ef9e7846d3317392103994bb05af1a04bf3da"
+                "reference": "72aa957c3ae950dc81ee302449c1ef73ea1ed92e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.drenso.dev/dist/drenso/symfony-shared/drenso-symfony-shared-1.30.0-9e1b80.zip",
-                "reference": "f35ef9e7846d3317392103994bb05af1a04bf3da",
-                "shasum": "6629887320b408cdd44f1bb3054c2d10609e8857"
+                "url": "https://composer.drenso.dev/dist/drenso/symfony-shared/drenso-symfony-shared-1.31.0-d06804.zip",
+                "reference": "72aa957c3ae950dc81ee302449c1ef73ea1ed92e",
+                "shasum": "78ec9f234d0fabec11034a2b3f53416de5735839"
             },
             "require": {
                 "ext-iconv": "*",
@@ -1723,7 +1723,7 @@
                 "bomo/ical-bundle": "^2.0.2",
                 "doctrine/orm": "^2.7",
                 "drenso/phan-extensions": "~2.5 || ~3.0",
-                "jms/serializer-bundle": "^3.3 || ^4.0",
+                "jms/serializer-bundle": "^3.14 || ^4.0 || ^5.0",
                 "kigkonsult/icalcreator": "^2.39",
                 "maennchen/zipstream-php": "^2.1",
                 "php-decimal/php-decimal": "^1.1",
@@ -1785,7 +1785,7 @@
                 "shared",
                 "symfony"
             ],
-            "time": "2022-09-15T12:30:27+00:00"
+            "time": "2022-10-24T11:49:31+00:00"
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
