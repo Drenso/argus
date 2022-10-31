@@ -648,23 +648,23 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.4.6",
+            "version": "3.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "3ce132f7c0b83d33b26ab6ed308e9e9260699bc4"
+                "reference": "f38ee8aaca2d58ee88653cb34a6a3880c23f38a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/3ce132f7c0b83d33b26ab6ed308e9e9260699bc4",
-                "reference": "3ce132f7c0b83d33b26ab6ed308e9e9260699bc4",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/f38ee8aaca2d58ee88653cb34a6a3880c23f38a5",
+                "reference": "f38ee8aaca2d58ee88653cb34a6a3880c23f38a5",
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2",
                 "doctrine/cache": "^1.11|^2.0",
                 "doctrine/deprecations": "^0.5.3|^1",
-                "doctrine/event-manager": "^1.0",
+                "doctrine/event-manager": "^1|^2",
                 "php": "^7.4 || ^8.0",
                 "psr/cache": "^1|^2|^3",
                 "psr/log": "^1|^2|^3"
@@ -739,7 +739,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.4.6"
+                "source": "https://github.com/doctrine/dbal/tree/3.5.1"
             },
             "funding": [
                 {
@@ -755,7 +755,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-21T14:38:43+00:00"
+            "time": "2022-10-24T07:26:18+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -4150,16 +4150,16 @@
         },
         {
             "name": "symfony/amqp-messenger",
-            "version": "v5.4.13",
+            "version": "v5.4.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/amqp-messenger.git",
-                "reference": "def93f2a7841cfa1a4a1fa487b84054d0d53e521"
+                "reference": "8775f97adc4f3dc8ce21f5d25c330d4081681bb6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/amqp-messenger/zipball/def93f2a7841cfa1a4a1fa487b84054d0d53e521",
-                "reference": "def93f2a7841cfa1a4a1fa487b84054d0d53e521",
+                "url": "https://api.github.com/repos/symfony/amqp-messenger/zipball/8775f97adc4f3dc8ce21f5d25c330d4081681bb6",
+                "reference": "8775f97adc4f3dc8ce21f5d25c330d4081681bb6",
                 "shasum": ""
             },
             "require": {
@@ -4199,7 +4199,7 @@
             "description": "Symfony AMQP extension Messenger Bridge",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/amqp-messenger/tree/v5.4.13"
+                "source": "https://github.com/symfony/amqp-messenger/tree/v5.4.15"
             },
             "funding": [
                 {
@@ -4215,7 +4215,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-09-11T09:11:59+00:00"
+            "time": "2022-10-11T16:57:44+00:00"
         },
         {
             "name": "symfony/asset",
@@ -4293,16 +4293,16 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v5.4.13",
+            "version": "v5.4.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "89bb6a0fe27205636d80e568ffaf9bbb52f691e3"
+                "reference": "60e87188abbacd29ccde44d69c5392a33e888e98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/89bb6a0fe27205636d80e568ffaf9bbb52f691e3",
-                "reference": "89bb6a0fe27205636d80e568ffaf9bbb52f691e3",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/60e87188abbacd29ccde44d69c5392a33e888e98",
+                "reference": "60e87188abbacd29ccde44d69c5392a33e888e98",
                 "shasum": ""
             },
             "require": {
@@ -4370,7 +4370,7 @@
                 "psr6"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache/tree/v5.4.13"
+                "source": "https://github.com/symfony/cache/tree/v5.4.15"
             },
             "funding": [
                 {
@@ -4386,7 +4386,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-09-06T13:23:31+00:00"
+            "time": "2022-10-27T07:55:40+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -4803,16 +4803,16 @@
         },
         {
             "name": "symfony/doctrine-bridge",
-            "version": "v5.4.14",
+            "version": "v5.4.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/doctrine-bridge.git",
-                "reference": "3e1e56af2174c205d60a73f5acd7eff89cef65b2"
+                "reference": "d25538867d961bb0ce8a71a1b6ff92758cf01d25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/doctrine-bridge/zipball/3e1e56af2174c205d60a73f5acd7eff89cef65b2",
-                "reference": "3e1e56af2174c205d60a73f5acd7eff89cef65b2",
+                "url": "https://api.github.com/repos/symfony/doctrine-bridge/zipball/d25538867d961bb0ce8a71a1b6ff92758cf01d25",
+                "reference": "d25538867d961bb0ce8a71a1b6ff92758cf01d25",
                 "shasum": ""
             },
             "require": {
@@ -4900,7 +4900,7 @@
             "description": "Provides integration for Doctrine with various Symfony components",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/doctrine-bridge/tree/v5.4.14"
+                "source": "https://github.com/symfony/doctrine-bridge/tree/v5.4.15"
             },
             "funding": [
                 {
@@ -4916,7 +4916,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-09T21:15:07+00:00"
+            "time": "2022-10-14T11:25:13+00:00"
         },
         {
             "name": "symfony/doctrine-messenger",
@@ -5064,16 +5064,16 @@
         },
         {
             "name": "symfony/error-handler",
-            "version": "v5.4.14",
+            "version": "v5.4.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/error-handler.git",
-                "reference": "5fe6d42ffeb68b094df8fdbf3acf23f391cc6be0"
+                "reference": "539cf1428b8442303c6e876ad7bf5a7babd91091"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/error-handler/zipball/5fe6d42ffeb68b094df8fdbf3acf23f391cc6be0",
-                "reference": "5fe6d42ffeb68b094df8fdbf3acf23f391cc6be0",
+                "url": "https://api.github.com/repos/symfony/error-handler/zipball/539cf1428b8442303c6e876ad7bf5a7babd91091",
+                "reference": "539cf1428b8442303c6e876ad7bf5a7babd91091",
                 "shasum": ""
             },
             "require": {
@@ -5115,7 +5115,7 @@
             "description": "Provides tools to manage errors and ease debugging PHP code",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/error-handler/tree/v5.4.14"
+                "source": "https://github.com/symfony/error-handler/tree/v5.4.15"
             },
             "funding": [
                 {
@@ -5131,7 +5131,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-03T15:15:50+00:00"
+            "time": "2022-10-27T06:32:25+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -5491,16 +5491,16 @@
         },
         {
             "name": "symfony/form",
-            "version": "v5.4.13",
+            "version": "v5.4.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/form.git",
-                "reference": "d9d661776636ce689bc879b66fb06c6a6895f1a7"
+                "reference": "e6a97a09c7672b3b3d26335ca66f366734f6df56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/form/zipball/d9d661776636ce689bc879b66fb06c6a6895f1a7",
-                "reference": "d9d661776636ce689bc879b66fb06c6a6895f1a7",
+                "url": "https://api.github.com/repos/symfony/form/zipball/e6a97a09c7672b3b3d26335ca66f366734f6df56",
+                "reference": "e6a97a09c7672b3b3d26335ca66f366734f6df56",
                 "shasum": ""
             },
             "require": {
@@ -5574,7 +5574,7 @@
             "description": "Allows to easily create, process and reuse HTML forms",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/form/tree/v5.4.13"
+                "source": "https://github.com/symfony/form/tree/v5.4.15"
             },
             "funding": [
                 {
@@ -5590,7 +5590,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-09-28T15:33:58+00:00"
+            "time": "2022-10-23T10:30:41+00:00"
         },
         {
             "name": "symfony/framework-bundle",
@@ -7402,16 +7402,16 @@
         },
         {
             "name": "symfony/property-info",
-            "version": "v5.4.14",
+            "version": "v5.4.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/property-info.git",
-                "reference": "dc7ac44b5ea36c9f7532051b01ba64b1737932d1"
+                "reference": "3ef5e026a71a39345da241292c153979893033c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/property-info/zipball/dc7ac44b5ea36c9f7532051b01ba64b1737932d1",
-                "reference": "dc7ac44b5ea36c9f7532051b01ba64b1737932d1",
+                "url": "https://api.github.com/repos/symfony/property-info/zipball/3ef5e026a71a39345da241292c153979893033c2",
+                "reference": "3ef5e026a71a39345da241292c153979893033c2",
                 "shasum": ""
             },
             "require": {
@@ -7473,7 +7473,7 @@
                 "validator"
             ],
             "support": {
-                "source": "https://github.com/symfony/property-info/tree/v5.4.14"
+                "source": "https://github.com/symfony/property-info/tree/v5.4.15"
             },
             "funding": [
                 {
@@ -7489,7 +7489,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-07T08:01:20+00:00"
+            "time": "2022-10-27T07:55:40+00:00"
         },
         {
             "name": "symfony/proxy-manager-bridge",
@@ -7648,16 +7648,16 @@
         },
         {
             "name": "symfony/redis-messenger",
-            "version": "v5.4.13",
+            "version": "v5.4.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/redis-messenger.git",
-                "reference": "d3028b772de91e9aa0342c92ff71c77b130ac9c4"
+                "reference": "cff610d031586c341b9118f3682c8294d959f929"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/redis-messenger/zipball/d3028b772de91e9aa0342c92ff71c77b130ac9c4",
-                "reference": "d3028b772de91e9aa0342c92ff71c77b130ac9c4",
+                "url": "https://api.github.com/repos/symfony/redis-messenger/zipball/cff610d031586c341b9118f3682c8294d959f929",
+                "reference": "cff610d031586c341b9118f3682c8294d959f929",
                 "shasum": ""
             },
             "require": {
@@ -7695,7 +7695,7 @@
             "description": "Symfony Redis extension Messenger Bridge",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/redis-messenger/tree/v5.4.13"
+                "source": "https://github.com/symfony/redis-messenger/tree/v5.4.15"
             },
             "funding": [
                 {
@@ -7711,7 +7711,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-09-11T09:11:59+00:00"
+            "time": "2022-10-27T07:55:40+00:00"
         },
         {
             "name": "symfony/routing",
@@ -8224,16 +8224,16 @@
         },
         {
             "name": "symfony/serializer",
-            "version": "v5.4.14",
+            "version": "v5.4.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/serializer.git",
-                "reference": "21c329453e3c9345b51bf4b67b187c963a4edc45"
+                "reference": "e80871599f6f0929bb349afc3d9ecaba783e68bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/serializer/zipball/21c329453e3c9345b51bf4b67b187c963a4edc45",
-                "reference": "21c329453e3c9345b51bf4b67b187c963a4edc45",
+                "url": "https://api.github.com/repos/symfony/serializer/zipball/e80871599f6f0929bb349afc3d9ecaba783e68bd",
+                "reference": "e80871599f6f0929bb349afc3d9ecaba783e68bd",
                 "shasum": ""
             },
             "require": {
@@ -8307,7 +8307,7 @@
             "description": "Handles serializing and deserializing data structures, including object graphs, into array structures or other formats like XML and JSON.",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/serializer/tree/v5.4.14"
+                "source": "https://github.com/symfony/serializer/tree/v5.4.15"
             },
             "funding": [
                 {
@@ -8323,7 +8323,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-11T15:16:01+00:00"
+            "time": "2022-10-23T09:52:07+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -9761,16 +9761,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.17",
+            "version": "9.2.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "aa94dc41e8661fe90c7316849907cba3007b10d8"
+                "reference": "12fddc491826940cf9b7e88ad9664cf51f0f6d0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/aa94dc41e8661fe90c7316849907cba3007b10d8",
-                "reference": "aa94dc41e8661fe90c7316849907cba3007b10d8",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/12fddc491826940cf9b7e88ad9664cf51f0f6d0a",
+                "reference": "12fddc491826940cf9b7e88ad9664cf51f0f6d0a",
                 "shasum": ""
             },
             "require": {
@@ -9826,7 +9826,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.17"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.18"
             },
             "funding": [
                 {
@@ -9834,7 +9834,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-08-30T12:24:04+00:00"
+            "time": "2022-10-27T13:35:33+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -11283,16 +11283,16 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v5.4.12",
+            "version": "v5.4.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "291c1e92281a09152dda089f782e23dedd34bd4f"
+                "reference": "b8fd0ff9a0f00d944f1534f6d21e84f92eda7258"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/291c1e92281a09152dda089f782e23dedd34bd4f",
-                "reference": "291c1e92281a09152dda089f782e23dedd34bd4f",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/b8fd0ff9a0f00d944f1534f6d21e84f92eda7258",
+                "reference": "b8fd0ff9a0f00d944f1534f6d21e84f92eda7258",
                 "shasum": ""
             },
             "require": {
@@ -11338,7 +11338,7 @@
             "description": "Eases DOM navigation for HTML and XML documents",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/dom-crawler/tree/v5.4.12"
+                "source": "https://github.com/symfony/dom-crawler/tree/v5.4.15"
             },
             "funding": [
                 {
@@ -11354,7 +11354,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-08-03T13:09:21+00:00"
+            "time": "2022-10-27T08:04:35+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
