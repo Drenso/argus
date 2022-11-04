@@ -62,7 +62,7 @@
     },
     "require-dev": {
         "drenso/phan-extensions": "3.5.1",
-        "phpunit/phpunit": "9.5.25",
+        "phpunit/phpunit": "9.5.26",
         "symfony/browser-kit": "5.4.11",
         "symfony/css-selector": "5.4.11",
         "symfony/phpunit-bridge": "5.4.14",
