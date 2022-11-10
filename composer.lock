@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dce892620c0ebed0ec2770caf767257d",
+    "content-hash": "8adb513aba775122309b1ef230b15f81",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
@@ -2524,16 +2524,16 @@
         },
         {
             "name": "jms/serializer-bundle",
-            "version": "5.0.1",
+            "version": "5.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSSerializerBundle.git",
-                "reference": "79dc368e94a0f53f1d19c8c1d532f306c412cce3"
+                "reference": "aadf3d14cfb4bf1347ecf0a5426c82a7b99a48f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/79dc368e94a0f53f1d19c8c1d532f306c412cce3",
-                "reference": "79dc368e94a0f53f1d19c8c1d532f306c412cce3",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/aadf3d14cfb4bf1347ecf0a5426c82a7b99a48f5",
+                "reference": "aadf3d14cfb4bf1347ecf0a5426c82a7b99a48f5",
                 "shasum": ""
             },
             "require": {
@@ -2599,7 +2599,7 @@
             ],
             "support": {
                 "issues": "https://github.com/schmittjoh/JMSSerializerBundle/issues",
-                "source": "https://github.com/schmittjoh/JMSSerializerBundle/tree/5.0.1"
+                "source": "https://github.com/schmittjoh/JMSSerializerBundle/tree/5.0.2"
             },
             "funding": [
                 {
@@ -2607,7 +2607,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-10-24T16:28:09+00:00"
+            "time": "2022-11-03T11:53:29+00:00"
         },
         {
             "name": "laminas/laminas-code",
