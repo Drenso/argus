@@ -70,7 +70,7 @@
         "messageformat": "2.3.0",
         "moment": "2.29.4",
         "moment-timezone": "0.5.39",
-        "regenerator-runtime": "0.13.10",
+        "regenerator-runtime": "0.13.11",
         "select2": "4.1.0-rc.0",
         "uuid": "9.0.0",
         "vee-validate": "3.4.14",
