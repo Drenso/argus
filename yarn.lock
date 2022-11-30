@@ -1141,47 +1141,47 @@
   resolved "https://npm.drenso.dev/@polka%2furl/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
-"@sentry/browser@7.20.1":
-  version "7.20.1"
-  resolved "https://npm.drenso.dev/@sentry%2fbrowser/-/browser-7.20.1.tgz#bce606db24fa02fb72e71187e510ff890f8be903"
-  integrity sha512-SE6mI4LkMzjEi5KB02Py24e2bKYZc/HZI/ZlTn36BuUQX/KYhzzKwzXucOJ5Qws9Ar9CViyKJDb07LxVQLYCGw==
+"@sentry/browser@7.21.0":
+  version "7.21.0"
+  resolved "https://npm.drenso.dev/@sentry%2fbrowser/-/browser-7.21.0.tgz#25a4ef5a87635a7a36de9a8aa6b59669819e6409"
+  integrity sha512-ZSI83tkBLmnqGSM8A9qsFOlzu0HjNTpe2QnQwlrnCxokNZIU4zFOGLujXSxKx1rpb8+TRMOyDG979kGNWFzbww==
   dependencies:
-    "@sentry/core" "7.20.1"
-    "@sentry/types" "7.20.1"
-    "@sentry/utils" "7.20.1"
+    "@sentry/core" "7.21.0"
+    "@sentry/types" "7.21.0"
+    "@sentry/utils" "7.21.0"
     tslib "^1.9.3"
 
-"@sentry/core@7.20.1":
-  version "7.20.1"
-  resolved "https://npm.drenso.dev/@sentry%2fcore/-/core-7.20.1.tgz#b06f36dddba96e2cc7dfa2d24cb72ff39ecd7a59"
-  integrity sha512-Sc7vtNgO4QcE683qrR+b+KFQkkhvQv7gizN46QQPOWeqLDrai7x0+NspTFDLJyvdDuDh2rjoLfRwNsgbwe7Erw==
+"@sentry/core@7.21.0":
+  version "7.21.0"
+  resolved "https://npm.drenso.dev/@sentry%2fcore/-/core-7.21.0.tgz#e0a7d7e772120ca0dbabd19049f340a2de74bb8a"
+  integrity sha512-5ZHwfHPm4svny7iXsNmlnRg0q1jw/N5/ugzAku+g98R769RCv2aSBaK9BIYlJmJ1SWwR7nQuR/GOCOdv5mA8jw==
   dependencies:
-    "@sentry/types" "7.20.1"
-    "@sentry/utils" "7.20.1"
+    "@sentry/types" "7.21.0"
+    "@sentry/utils" "7.21.0"
     tslib "^1.9.3"
 
-"@sentry/types@7.20.1":
-  version "7.20.1"
-  resolved "https://npm.drenso.dev/@sentry%2ftypes/-/types-7.20.1.tgz#26c6fc94dd25a66aeabbd795fa8985d768190970"
-  integrity sha512-bI4t5IXGLIQYH5MegKRl4x2LDSlPVbQJ5eE6NJCMrCm8PcFUo3WgkwP6toG9ThQwpTx/DhUo1sVNKrr0oW4cpA==
+"@sentry/types@7.21.0":
+  version "7.21.0"
+  resolved "https://npm.drenso.dev/@sentry%2ftypes/-/types-7.21.0.tgz#b5611a60d4ce5c88e76429c3ad79af8f08de48fc"
+  integrity sha512-DqQi0HLp17x0++zCjI9jVST0cuszsQtrVIMQRQXpy8J/ay3IGxwFoX1qMrwFP2tmVQDsy8YKIz50J5e6caXwSw==
 
-"@sentry/utils@7.20.1":
-  version "7.20.1"
-  resolved "https://npm.drenso.dev/@sentry%2futils/-/utils-7.20.1.tgz#01b881b82598fca5c04af771ffe44663b66dee6f"
-  integrity sha512-wToW0710OijQLUZnbbOx1pxwJ4mXUZ5ZFl4/x7ubNftkOz5NwJ+F3ylRqHXpZJaR9pUfR5CNdInTFZn05h/KeQ==
+"@sentry/utils@7.21.0":
+  version "7.21.0"
+  resolved "https://npm.drenso.dev/@sentry%2futils/-/utils-7.21.0.tgz#50d841990953ea1ff006c2776e997620d091790f"
+  integrity sha512-Dn9zsPOfz1kbBua8KSYUPrka31Lh+am9BVJWnzqzGbALthf134oUTbp2vcwpMyEW7NxX+4Qd+36BvTzapfRINQ==
   dependencies:
-    "@sentry/types" "7.20.1"
+    "@sentry/types" "7.21.0"
     tslib "^1.9.3"
 
-"@sentry/vue@7.20.1":
-  version "7.20.1"
-  resolved "https://npm.drenso.dev/@sentry%2fvue/-/vue-7.20.1.tgz#2b400ad273c35cfcf724b062e774d6c9233f0547"
-  integrity sha512-mbNIREqKCkGYnc1TUuSoYYZwwUFHfK7Eddt6XroSl+kaSNMje04e6tJPF3raZM3WXKKYnU5OP/3c+FdsEyRzfw==
+"@sentry/vue@7.21.0":
+  version "7.21.0"
+  resolved "https://npm.drenso.dev/@sentry%2fvue/-/vue-7.21.0.tgz#7a1edad07bd1148a2ea9877fa1ce71e21810168b"
+  integrity sha512-IDI9/kQiHessasdCAaEFOzH5WdLOKDw8+vqTeNblnJgzgm0MI1aeTdvwJGzBZp4y9QHbyUUwR/MJwC+IGNSgfA==
   dependencies:
-    "@sentry/browser" "7.20.1"
-    "@sentry/core" "7.20.1"
-    "@sentry/types" "7.20.1"
-    "@sentry/utils" "7.20.1"
+    "@sentry/browser" "7.21.0"
+    "@sentry/core" "7.21.0"
+    "@sentry/types" "7.21.0"
+    "@sentry/utils" "7.21.0"
     tslib "^1.9.3"
 
 "@sideway/address@^4.1.3":
