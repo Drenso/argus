@@ -61,7 +61,7 @@
         "@fortawesome/fontawesome-svg-core": "1.2.36",
         "@fortawesome/vue-fontawesome": "2.0.8",
         "@sentry/vue": "7.23.0",
-        "axios": "1.2.0",
+        "axios": "1.2.1",
         "big.js": "6.2.1",
         "bootstrap-vue": "2.22.0",
         "core-js": "3.26.1",
